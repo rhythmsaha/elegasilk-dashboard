@@ -18,6 +18,8 @@ interface IAuthStore {
     isAuthenticating: boolean;
 
     initializeAuthState: () => void;
+    startAuthLoading: () => void;
+    stopAuthLoading: () => void;
     login: (user: IUserState, token: string) => void;
     logout: () => void;
 }
@@ -27,10 +29,18 @@ export const useAuthStore = create<IAuthStore>((set) => ({
     accessToken: null,
     isAuthenticated: false,
     isAuthenticating: false,
-    isInitialized: false,
+    isInitialized: true,
 
     initializeAuthState: () => {
-        set({ isInitialized: true, isAuthenticating: true, isAuthenticated: false, user: null, accessToken: null });
+        set({ isAuthenticating: true, isAuthenticated: false, user: null, accessToken: null });
+    },
+
+    startAuthLoading: () => {
+        set({ isAuthenticating: true });
+    },
+
+    stopAuthLoading: () => {
+        set({ isAuthenticating: false });
     },
 
     login: (user, token) => {
@@ -44,6 +54,6 @@ export const useAuthStore = create<IAuthStore>((set) => ({
     },
 
     logout: () => {
-        set({ isAuthenticated: false, user: null, accessToken: null, isInitialized: true, isAuthenticating: false });
+        set({ isAuthenticated: false, user: null, accessToken: null, isAuthenticating: false });
     },
 }));
