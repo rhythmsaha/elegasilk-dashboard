@@ -13,11 +13,14 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     const logout = useAuthStore((state) => state.logout);
     const startAuthLoading = useAuthStore((state) => state.startAuthLoading);
     const stopAuthLoading = useAuthStore((state) => state.stopAuthLoading);
+    const initializeAuthState = useAuthStore(
+        (state) => state.initializeAuthState
+    );
 
     useEffect(() => {
         try {
             const initialize = async () => {
-                const token = await getSession();
+                const token = getSession();
 
                 startAuthLoading();
 
@@ -33,12 +36,13 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
                 login(data.user, data.accessToken);
             };
 
+            initializeAuthState();
             initialize();
         } catch (error) {
             console.log(error);
             logout();
         }
-    }, [login, logout, startAuthLoading, stopAuthLoading]);
+    }, [initializeAuthState, login, logout, startAuthLoading, stopAuthLoading]);
 
     return <>{children}</>;
 };

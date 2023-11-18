@@ -19,8 +19,7 @@ const GuestGuard: FC<Props> = ({ children }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated]);
 
-    if (isInitialized && isAuthenticating && !isAuthenticated)
-        return <LoadingScreen />;
+    if (isAuthenticating) return <LoadingScreen />;
 
     return <>{children}</>;
 };

@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import { Toaster } from 'react-hot-toast';
 import AuthProvider from '@/providers/AuthProvider';
 import '@/styles/globals.css';
+import Head from 'next/head';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode;
@@ -18,12 +19,18 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     const getLayout = Component.getLayout ?? ((page) => page);
 
     return (
-        <AuthProvider>
-            <NextUIProvider>
-                {getLayout(<Component {...pageProps} />)}
-            </NextUIProvider>
+        <>
+            <Head>
+                <title>Elegasilk | Admin Panel</title>
+            </Head>
 
-            <Toaster position="top-center" reverseOrder={false} />
-        </AuthProvider>
+            <AuthProvider>
+                <NextUIProvider>
+                    {getLayout(<Component {...pageProps} />)}
+                </NextUIProvider>
+
+                <Toaster position="top-center" reverseOrder={false} />
+            </AuthProvider>
+        </>
     );
 }

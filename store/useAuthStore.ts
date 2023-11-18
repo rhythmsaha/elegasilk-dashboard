@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface IUserState {
     _id: string;
@@ -29,10 +29,12 @@ export const useAuthStore = create<IAuthStore>((set) => ({
     accessToken: null,
     isAuthenticated: false,
     isAuthenticating: false,
-    isInitialized: true,
+    isInitialized: false,
 
     initializeAuthState: () => {
-        set({ isAuthenticating: true, isAuthenticated: false, user: null, accessToken: null });
+        set({
+            isInitialized: true,
+        });
     },
 
     startAuthLoading: () => {
@@ -54,6 +56,11 @@ export const useAuthStore = create<IAuthStore>((set) => ({
     },
 
     logout: () => {
-        set({ isAuthenticated: false, user: null, accessToken: null, isAuthenticating: false });
+        set({
+            isAuthenticated: false,
+            user: null,
+            accessToken: null,
+            isAuthenticating: false,
+        });
     },
 }));
