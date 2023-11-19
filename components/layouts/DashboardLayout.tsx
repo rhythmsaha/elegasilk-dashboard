@@ -16,10 +16,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
                 {width >= 1280 && <Sidebar />}
 
                 <main className="relative flex-1 overflow-y-auto overflow-x-hidden">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
-                    iste alias odio incidunt nam? A quis incidunt aliquid illum?
-                    Eaque in iste ratione assumenda vitae quod quam laborum
-                    similique repellendus.
+                    {children}
                 </main>
             </div>
         </AuthGuard>

@@ -6,7 +6,7 @@ interface ISidebarStore {
 }
 
 export const useSidebarStore = create<ISidebarStore>((set) => ({
-    isExpanded: false,
+    isExpanded: true,
 
     toggleSidebar: () => {
         set((state) => ({ isExpanded: !state.isExpanded }));
