@@ -2,6 +2,7 @@ import React from 'react';
 import AuthGuard from '@/guards/AuthGuard';
 import { useWindowSize } from 'react-use';
 import Sidebar from '../sidebar/Sidebar';
+import Header from '../header/Header';
 
 interface Props {
     children: React.ReactNode;
@@ -16,7 +17,8 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
                 {width >= 1280 && <Sidebar />}
 
                 <main className="relative flex-1 overflow-y-auto overflow-x-hidden">
-                    {children}
+                    <Header />
+                    <div>{children}</div>
                 </main>
             </div>
         </AuthGuard>
