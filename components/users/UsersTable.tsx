@@ -1,14 +1,4 @@
-import {
-    Avatar,
-    Chip,
-    ChipProps,
-    Table,
-    TableBody,
-    TableCell,
-    TableColumn,
-    TableHeader,
-    TableRow,
-} from '@nextui-org/react';
+import { Avatar, Chip, ChipProps, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import React, { FC } from 'react';
 
 interface Props {
@@ -49,27 +39,17 @@ const UsersTable: FC<Props> = ({ usersData }) => {
                                     <Avatar src={user.avatar} size="md" />
                                     <div>
                                         <p>
-                                            {user.first_name} {user.last_name}
+                                            {user.firstName} {user.lastName}
                                         </p>
 
-                                        <span className="mt-2">
-                                            @{user.username}
-                                        </span>
+                                        <span className="mt-2">@{user.username}</span>
                                     </div>
                                 </div>
                             </TableCell>
-                            <TableCell>{user.phone}</TableCell>
+                            <TableCell>{user.phone || '-'}</TableCell>
                             <TableCell>{user.role}</TableCell>
                             <TableCell>
-                                <Chip
-                                    variant="flat"
-                                    size="sm"
-                                    color={
-                                        statusColorMap[
-                                            user.status ? 'active' : 'inactive'
-                                        ]
-                                    }
-                                >
+                                <Chip variant="flat" size="sm" color={statusColorMap[user.status ? 'active' : 'inactive']}>
                                     {user.status ? 'Active' : 'Inactive'}
                                 </Chip>
                             </TableCell>

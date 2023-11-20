@@ -1,15 +1,9 @@
-import {
-    Button,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-} from '@nextui-org/react';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Selection } from '@nextui-org/react';
 import React, { FC } from 'react';
 
 interface Props {
-    rowsPerPage: string;
-    setRowsPerPage: React.Dispatch<React.SetStateAction<string>>;
+    rowsPerPage: Selection;
+    setRowsPerPage: React.Dispatch<React.SetStateAction<any>>;
 }
 const TableRowsControl: FC<Props> = ({ rowsPerPage, setRowsPerPage }) => {
     return (
@@ -38,7 +32,7 @@ const TableRowsControl: FC<Props> = ({ rowsPerPage, setRowsPerPage }) => {
                 >
                     <DropdownItem key="5">5</DropdownItem>
                     <DropdownItem key="10">10</DropdownItem>
-                    <DropdownItem key="15">15</DropdownItem>
+                    <DropdownItem key="25">25</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>
