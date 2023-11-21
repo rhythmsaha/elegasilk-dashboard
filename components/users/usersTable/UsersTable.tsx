@@ -1,14 +1,12 @@
-import { Avatar, Chip, ChipProps, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import React, { FC } from 'react';
-import moment from 'moment';
 import TableHeaderCol, { IColumn } from './TableHeaderCol';
-
-interface Props {
-    usersData: any[];
-    sortBy: string;
-    sortOrder: string;
-    changeSortHandler: (key: string) => void;
-}
+import NameCell from './tableBody/NameCell';
+import { BsDash } from 'react-icons/bs';
+import StatusCell from './tableBody/StatusCell';
+import RoleCell from './tableBody/RoleCell';
+import formatTimestamp from '@/utils/formatTimestamp';
+import ActionsCell from './tableBody/ActionsCell';
 
 export interface IUserTableData {
     _id: number;
@@ -25,14 +23,11 @@ export interface IUserTableData {
     avatar: string;
 }
 
-const statusColorMap: Record<string, ChipProps['color']> = {
-    active: 'success',
-    inactive: 'danger',
-};
-
-function formatDateOrTime(date: string) {
-    const inputDate = moment(date);
-    return inputDate.format('YYYY-MM-DD');
+interface Props {
+    usersData: IUserTableData[];
+    sortBy: string;
+    sortOrder: string;
+    changeSortHandler: (key: string) => void;
 }
 
 const columns: IColumn[] = [
@@ -47,7 +42,7 @@ const columns: IColumn[] = [
 
 const UsersTable: FC<Props> = ({ usersData, changeSortHandler, sortBy, sortOrder }) => {
     return (
-        <div className="overflow-x-auto pb-2">
+        <div className="mt-6 overflow-x-auto pb-2">
             <Table
                 aria-label="Users list table"
                 removeWrapper
@@ -67,28 +62,27 @@ const UsersTable: FC<Props> = ({ usersData, changeSortHandler, sortBy, sortOrder
 
                 <TableBody>
                     {usersData.map((user) => (
-                        <TableRow key={user._id}>
+                        <TableRow key={user._id} className="text-gray-600">
                             <TableCell>
-                                <div className="flex items-center gap-2">
-                                    <Avatar src={user.avatar} size="md" />
-                                    <div>
-                                        <p>{user.fullName}</p>
-
-                                        <span className="mt-2">@{user.username}</span>
-                                    </div>
-                                </div>
+                                <NameCell user={user} />
                             </TableCell>
-                            <TableCell>{user.phone || '-'}</TableCell>
-                            <TableCell>{user.role}</TableCell>
+
+                            <TableCell>{user.phone || <BsDash />}</TableCell>
+
                             <TableCell>
-                                <Chip variant="flat" size="sm" color={statusColorMap[user.status ? 'active' : 'inactive']}>
-                                    {user.status ? 'Active' : 'Inactive'}
-                                </Chip>
+                                <RoleCell role={user.role} />
                             </TableCell>
-                            <TableCell>{formatDateOrTime(user.createdAt)}</TableCell>
 
-                            <TableCell>{formatDateOrTime(user.updatedAt)}</TableCell>
-                            <TableCell>test</TableCell>
+                            <TableCell>
+                                <StatusCell status={user.status} />
+                            </TableCell>
+
+                            <TableCell>{formatTimestamp(user.createdAt)}</TableCell>
+                            <TableCell>{formatTimestamp(user.updatedAt)}</TableCell>
+
+                            <TableCell>
+                                <ActionsCell />
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

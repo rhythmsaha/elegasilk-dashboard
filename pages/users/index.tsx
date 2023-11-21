@@ -98,23 +98,23 @@ const UsersPage: NextPageWithLayout = () => {
 
         let sortedUsers = [...filteredUsers]; // Copy filtered users
 
-        if (sortBy === 'fullName') sortedUsers.sort((a, b) => (sortOrder === 'asc' ? a.fullName.localeCompare(b.fullName) : b.fullName.localeCompare(a.fullName)));
+        if (sortBy === 'fullName') sortedUsers.sort((a, b) => (sortOrder === 'asc' ? a.fullName?.localeCompare(b.fullName) : b.fullName?.localeCompare(a.fullName)));
 
-        if (sortBy === 'role') sortedUsers.sort((a, b) => (sortOrder === 'asc' ? a.role.localeCompare(b.role) : b.role.localeCompare(a.role)));
+        if (sortBy === 'role') sortedUsers.sort((a, b) => (sortOrder === 'asc' ? a.role?.localeCompare(b.role) : b.role?.localeCompare(a.role)));
 
         if (sortBy === 'status') {
             sortedUsers.sort((a, b) =>
                 sortOrder === 'asc'
-                    ? String(a.status).localeCompare(String(b.status))
+                    ? String(a.status)?.localeCompare(String(b.status))
                     : sortOrder === 'desc'
-                      ? String(b.status).localeCompare(String(a.status))
-                      : String(a.status).localeCompare(String(b.status))
+                      ? String(b.status)?.localeCompare(String(a.status))
+                      : String(a.status)?.localeCompare(String(b.status))
             );
         }
 
         if (sortBy === 'phone') {
             sortedUsers.sort((a, b) => {
-                return sortOrder === 'asc' ? a.phone.localeCompare(b.phone) : sortOrder === 'desc' ? b.phone.localeCompare(a.phone) : a.phone.localeCompare(b.phone);
+                return sortOrder === 'asc' ? a.phone?.localeCompare(b.phone) : sortOrder === 'desc' ? b.phone?.localeCompare(a.phone) : a.phone?.localeCompare(b.phone);
             });
         }
 
@@ -152,50 +152,45 @@ const UsersPage: NextPageWithLayout = () => {
                 ]}
             />
 
-            <div className="mt-10">
-                <Card shadow="sm">
-                    <CardBody className="w-full overflow-hidden sm:py-6">
-                        <div className="flex w-full flex-col items-center justify-between gap-x-6 gap-y-2 md:flex-row">
-                            <div className="w-full flex-grow md:w-auto">
-                                <TableSearch />
-                            </div>
-
-                            <div className="flex w-full items-center justify-between gap-2 md:w-max">
-                                <StatusFilter selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} />
-                                <RolesFilter selectedRoles={selectedRoles} setSelectedRoles={setSelectedRoles} />
-                            </div>
+            <Card shadow="sm" className="mt-10">
+                <CardBody className="w-full overflow-hidden sm:py-6">
+                    <div className="flex w-full flex-col items-center justify-between gap-x-6 gap-y-2 md:flex-row">
+                        <div className="w-full flex-grow md:w-auto">
+                            <TableSearch />
                         </div>
 
-                        <div className="mt-6">
-                            <UsersTable usersData={users} changeSortHandler={changeSortHandler} sortBy={sortBy} sortOrder={sortOrder} />
+                        <div className="flex w-full items-center justify-between gap-2 md:w-max">
+                            <StatusFilter selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} />
+                            <RolesFilter selectedRoles={selectedRoles} setSelectedRoles={setSelectedRoles} />
                         </div>
+                    </div>
 
-                        {isLoading && <TableLoading rows={5} />}
+                    <UsersTable usersData={users} changeSortHandler={changeSortHandler} sortBy={sortBy} sortOrder={sortOrder} />
 
-                        {users.length === 0 && !isLoading && <EmptyState message="No Users Found" />}
+                    {isLoading && <TableLoading rows={5} />}
 
-                        {!isLoading && users.length !== 0 && (
-                            <div className="px-4 pt-4">
-                                <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-                                    <Pagination
-                                        total={maxPage}
-                                        initialPage={1}
-                                        showControls
-                                        size="sm"
-                                        page={pageNo}
-                                        onChange={setPageNo}
-                                        radius="full"
-                                        className="order-1 sm:order-none"
-                                        siblings={0}
-                                        boundaries={0}
-                                    />
-                                    <TableRowsControl rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} />
-                                </div>
-                            </div>
-                        )}
-                    </CardBody>
-                </Card>
-            </div>
+                    {users.length === 0 && !isLoading && <EmptyState message="No Users Found" />}
+
+                    {!isLoading && users.length !== 0 && (
+                        <div className="flex flex-col items-center justify-between gap-4 px-4 pt-4 sm:flex-row">
+                            <Pagination
+                                total={maxPage}
+                                initialPage={1}
+                                showControls
+                                size="sm"
+                                page={pageNo}
+                                onChange={setPageNo}
+                                radius="full"
+                                className="order-1 sm:order-none"
+                                siblings={0}
+                                boundaries={0}
+                            />
+
+                            <TableRowsControl rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} />
+                        </div>
+                    )}
+                </CardBody>
+            </Card>
         </div>
     );
 };
