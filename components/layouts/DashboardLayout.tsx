@@ -3,16 +3,18 @@ import AuthGuard from '@/guards/AuthGuard';
 import { useWindowSize } from 'react-use';
 import Sidebar from '../sidebar/Sidebar';
 import Header from '../header/Header';
+import { IUserRoles } from '@/Typings';
 
 interface Props {
     children: React.ReactNode;
+    roles?: IUserRoles[];
 }
 
-const DashboardLayout: React.FC<Props> = ({ children }) => {
+const DashboardLayout: React.FC<Props> = ({ children, roles }) => {
     const { width } = useWindowSize();
 
     return (
-        <AuthGuard>
+        <AuthGuard roles={roles}>
             <div className="flex h-screen overflow-hidden">
                 {width >= 1280 && <Sidebar />}
 

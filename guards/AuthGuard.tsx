@@ -1,16 +1,20 @@
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import { useAuthStore } from '@/store/useAuthStore';
+import { IUserRoles } from '@/Typings';
+
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
 interface Props {
     children: React.ReactNode;
+    roles?: IUserRoles[];
 }
 
-const AuthGuard: React.FC<Props> = ({ children }) => {
+const AuthGuard: React.FC<Props> = ({ children, roles }) => {
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const isInitialized = useAuthStore((state) => state.isInitialized);
     const isAuthenticating = useAuthStore((state) => state.isAuthenticating);
+    const userRole = useAuthStore((state) => state.user?.role);
 
     const router = useRouter();
 
@@ -34,7 +38,11 @@ const AuthGuard: React.FC<Props> = ({ children }) => {
         return <LoadingScreen />;
     }
 
-    return <div>{children}</div>;
+    if (roles && !roles.includes(userRole!)) {
+        return <div>Unauthorized</div>;
+    }
+
+    return <>{children}</>;
 };
 
 export default AuthGuard;

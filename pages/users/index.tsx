@@ -219,7 +219,7 @@ const UsersPage: NextPageWithLayout = () => {
 };
 
 UsersPage.getLayout = function getLayout(page: any) {
-    return <DashboardLayout>{page}</DashboardLayout>;
+    return <DashboardLayout roles={['superadmin', 'admin']}>{page}</DashboardLayout>;
 };
 
 export default UsersPage;

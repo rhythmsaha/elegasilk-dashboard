@@ -1,3 +1,4 @@
+import { IUserRoles } from '@/Typings';
 import { create } from 'zustand';
 
 interface IUserState {
@@ -6,7 +7,7 @@ interface IUserState {
     lastName: string;
     username: string;
     email: string;
-    role: string;
+    role: IUserRoles;
     avatar: string;
 }
 

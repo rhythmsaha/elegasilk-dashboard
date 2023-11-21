@@ -28,6 +28,7 @@ export const sidebarConfig = [
                 title: 'Users',
                 icon: MdManageAccounts,
                 path: '/users',
+                roles: ['admin', 'superadmin'],
             },
 
             {
