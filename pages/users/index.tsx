@@ -16,6 +16,7 @@ import usersData from '@/lib/usersData';
 import paginate from '@/utils/paginate';
 import EmptyState from '@/components/ui/table/EmptyState';
 import TableLoading from '@/components/ui/table/TableLoading';
+import Fuse, { IFuseOptions } from 'fuse.js';
 
 const CreateNewUserButton = () => {
     return (
@@ -29,6 +30,13 @@ const CreateNewUserButton = () => {
     );
 };
 
+const fuseOptions: IFuseOptions<IUserTableData> = {
+    isCaseSensitive: false,
+    keys: ['fullName', 'firstName', 'lastName'],
+    location: 0,
+    threshold: 0.0,
+};
+
 const UsersPage: NextPageWithLayout = () => {
     const [selectedRoles, setSelectedRoles] = useState<Selection>(new Set([])); //State for roles selection filter
     const [selectedStatus, setSelectedStatus] = useState<Selection>(new Set([])); // State for status selection filter
@@ -36,10 +44,13 @@ const UsersPage: NextPageWithLayout = () => {
     const [maxPage, setmMaxPage] = useState(1);
     const [pageNo, setPageNo] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
+
     const [fetchedUsers, setFetchedUsers] = useState<IUserTableData[]>([]);
     const [users, setUsers] = useState<IUserTableData[]>([]);
+
     const [sortBy, setSortBy] = useState('fullName'); // State for sorting
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+    const [searchQuery, setSearchQuery] = useState('');
 
     const changeSortHandler = (key: string) => {
         if (sortBy === key) {
@@ -50,6 +61,10 @@ const UsersPage: NextPageWithLayout = () => {
         }
     };
 
+    const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+    };
+
     // Fetch users from API
     useEffect(() => {
         async function fetchUsers() {
@@ -58,7 +73,7 @@ const UsersPage: NextPageWithLayout = () => {
             setIsLoading(false);
 
             if (data.users.length !== 0) {
-                setFetchedUsers(usersData);
+                setFetchedUsers(data.users);
             }
         }
 
@@ -91,14 +106,16 @@ const UsersPage: NextPageWithLayout = () => {
             return roleMatch && activeStatus;
         });
 
-        const maxRows = Array.from(rowsPerPage)[0] as string; // Max rows per page
-        const totalPage = Math.ceil(filteredUsers.length / Number(maxRows)); // Total paginated pages
-
-        setmMaxPage(totalPage); // Set max page state
-
         let sortedUsers = [...filteredUsers]; // Copy filtered users
 
         if (sortBy === 'fullName') sortedUsers.sort((a, b) => (sortOrder === 'asc' ? a.fullName?.localeCompare(b.fullName) : b.fullName?.localeCompare(a.fullName)));
+
+        if (searchQuery.length !== 0) {
+            const fuse = new Fuse(sortedUsers, fuseOptions);
+            const searchPattern = searchQuery;
+            const s = fuse.search(searchPattern);
+            sortedUsers = s.map((result) => result.item);
+        }
 
         if (sortBy === 'role') sortedUsers.sort((a, b) => (sortOrder === 'asc' ? a.role?.localeCompare(b.role) : b.role?.localeCompare(a.role)));
 
@@ -138,8 +155,14 @@ const UsersPage: NextPageWithLayout = () => {
             );
         }
 
+        const maxRows = Array.from(rowsPerPage)[0] as string; // Max rows per page
+        const totalPage = Math.floor(sortedUsers.length / Number(maxRows)); // Total paginated pages
+
+        if (totalPage < pageNo) setPageNo(1); // Reset page no if current page is greater than total page
+        setmMaxPage(totalPage); // Set max page state
+
         setUsers(paginate(sortedUsers, pageNo, Number(maxRows)));
-    }, [fetchedUsers, pageNo, rowsPerPage, selectedRoles, selectedStatus, sortBy, sortOrder]);
+    }, [fetchedUsers, pageNo, rowsPerPage, searchQuery, selectedRoles, selectedStatus, sortBy, sortOrder]);
 
     return (
         <div className="mx-auto mt-2 w-11/12 max-w-screen-xl pb-20">
@@ -156,7 +179,7 @@ const UsersPage: NextPageWithLayout = () => {
                 <CardBody className="w-full overflow-hidden sm:py-6">
                     <div className="flex w-full flex-col items-center justify-between gap-x-6 gap-y-2 md:flex-row">
                         <div className="w-full flex-grow md:w-auto">
-                            <TableSearch />
+                            <TableSearch searchState={searchQuery} onChange={searchHandler} />
                         </div>
 
                         <div className="flex w-full items-center justify-between gap-2 md:w-max">
