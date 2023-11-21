@@ -1,8 +1,28 @@
 import { Avatar, Chip, ChipProps, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import React, { FC } from 'react';
+import moment from 'moment';
+import TableHeaderCol, { IColumn } from './TableHeaderCol';
 
 interface Props {
     usersData: any[];
+    sortBy: string;
+    sortOrder: string;
+    changeSortHandler: (key: string) => void;
+}
+
+export interface IUserTableData {
+    _id: number;
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    email: string;
+    username: string;
+    phone: string;
+    role: string;
+    status: boolean;
+    createdAt: string;
+    updatedAt: string;
+    avatar: string;
 }
 
 const statusColorMap: Record<string, ChipProps['color']> = {
@@ -10,37 +30,49 @@ const statusColorMap: Record<string, ChipProps['color']> = {
     inactive: 'danger',
 };
 
-const UsersTable: FC<Props> = ({ usersData }) => {
+function formatDateOrTime(date: string) {
+    const inputDate = moment(date);
+    return inputDate.format('YYYY-MM-DD');
+}
+
+const columns: IColumn[] = [
+    { label: 'Name', key: 'fullName', sortable: true },
+    { label: 'Phone', key: 'phone', sortable: true },
+    { label: 'Role', key: 'role', sortable: true },
+    { label: 'Status', key: 'status', sortable: true },
+    { label: 'Created', key: 'createdAt', sortable: true },
+    { label: 'Updated', key: 'updatedAt', sortable: true },
+    { label: '', key: 'actions', sortable: false },
+];
+
+const UsersTable: FC<Props> = ({ usersData, changeSortHandler, sortBy, sortOrder }) => {
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto pb-2">
             <Table
+                aria-label="Users list table"
                 removeWrapper
                 classNames={{
                     th: 'px-4 md:px-4 py-3 md:py-4 text-sm font-semibold text-default-800',
                     td: 'px-4 md:px-4 py-3 md:py-4 whitespace-nowrap first:rounded-l-xl last:rounded-r-xl',
                     tr: 'hover:bg-default-50 border-b border-default-100 border-dashed',
                 }}
-                aria-label="Users list table"
             >
                 <TableHeader className="">
-                    <TableColumn className="">Name</TableColumn>
-                    <TableColumn>Phone</TableColumn>
-                    <TableColumn>Role</TableColumn>
-                    <TableColumn>Status</TableColumn>
-                    <TableColumn>Created At</TableColumn>
-                    <TableColumn>Updated At</TableColumn>
+                    {columns.map((column) => (
+                        <TableColumn className="" key={column.key}>
+                            <TableHeaderCol changeSortHandler={changeSortHandler} column={column} sortBy={sortBy} sortOrder={sortOrder} />
+                        </TableColumn>
+                    ))}
                 </TableHeader>
 
                 <TableBody>
                     {usersData.map((user) => (
-                        <TableRow key={user.id}>
+                        <TableRow key={user._id}>
                             <TableCell>
                                 <div className="flex items-center gap-2">
                                     <Avatar src={user.avatar} size="md" />
                                     <div>
-                                        <p>
-                                            {user.firstName} {user.lastName}
-                                        </p>
+                                        <p>{user.fullName}</p>
 
                                         <span className="mt-2">@{user.username}</span>
                                     </div>
@@ -53,9 +85,10 @@ const UsersTable: FC<Props> = ({ usersData }) => {
                                     {user.status ? 'Active' : 'Inactive'}
                                 </Chip>
                             </TableCell>
-                            <TableCell>{user.createdAt}</TableCell>
+                            <TableCell>{formatDateOrTime(user.createdAt)}</TableCell>
 
-                            <TableCell>{user.updatedAt}</TableCell>
+                            <TableCell>{formatDateOrTime(user.updatedAt)}</TableCell>
+                            <TableCell>test</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
