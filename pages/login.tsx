@@ -29,16 +29,10 @@ const LoginPage: NextPageWithLayout = () => {
     const {
         register,
         handleSubmit,
-        setError,
         formState: { errors, isSubmitting },
-        setValue,
-        getValues,
     } = useForm<ILoginInput>();
 
-    const onSubmit: SubmitHandler<ILoginInput> = async ({
-        password,
-        username,
-    }) => {
+    const onSubmit: SubmitHandler<ILoginInput> = async ({ password, username }) => {
         if (isSubmitting) return;
 
         try {
@@ -57,24 +51,12 @@ const LoginPage: NextPageWithLayout = () => {
     return (
         <div className="mx-auto w-11/12 max-w-md pt-[10vh] lg:pt-[15vh] xl:pt-[20vh]">
             <div>
-                <Image
-                    src="/logo/logo_black.svg"
-                    alt="logo"
-                    width="100"
-                    height="100"
-                    className="mx-auto w-40 object-contain py-5"
-                />
+                <Image src="/logo/logo_black.svg" alt="logo" width="100" height="100" className="mx-auto w-40 object-contain py-5" />
 
-                <h4 className="px-1 text-center text-xl font-extrabold text-gray-700 sm:text-2xl ">
-                    Sign in to your account
-                </h4>
+                <h4 className="px-1 text-center text-xl font-extrabold text-gray-700 sm:text-2xl ">Sign in to your account</h4>
             </div>
 
-            <form
-                className="mt-8 space-y-4"
-                onSubmit={handleSubmit(onSubmit)}
-                autoComplete="new-password"
-            >
+            <form className="mt-8 space-y-4" onSubmit={handleSubmit(onSubmit)} autoComplete="new-password">
                 <Input
                     type="text"
                     variant="flat"
@@ -99,16 +81,8 @@ const LoginPage: NextPageWithLayout = () => {
                     disabled={isSubmitting}
                     startContent={<FaKey className="text-gray-500" />}
                     endContent={
-                        <button
-                            className="focus:outline-none"
-                            type="button"
-                            onClick={toggleVisibility}
-                        >
-                            {isVisible ? (
-                                <BsEyeSlashFill className="pointer-events-none text-2xl text-default-400" />
-                            ) : (
-                                <BsEyeFill className="pointer-events-none text-2xl text-default-400" />
-                            )}
+                        <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                            {isVisible ? <BsEyeSlashFill className="pointer-events-none text-2xl text-default-400" /> : <BsEyeFill className="pointer-events-none text-2xl text-default-400" />}
                         </button>
                     }
                     type={isVisible ? 'text' : 'password'}
@@ -117,24 +91,13 @@ const LoginPage: NextPageWithLayout = () => {
                     isInvalid={!!errors.password}
                 />
 
-                <Button
-                    type="submit"
-                    color="primary"
-                    variant="shadow"
-                    fullWidth
-                    size="md"
-                    spinner={<CgSpinner className="animate-spin" />}
-                    isLoading={isSubmitting}
-                >
+                <Button type="submit" color="primary" variant="shadow" fullWidth size="md" spinner={<CgSpinner className="animate-spin" />} isLoading={isSubmitting}>
                     Sign In
                 </Button>
             </form>
 
             <div className="flex select-none items-center justify-center py-3">
-                <Link
-                    href=""
-                    className="text-xs font-medium text-primary transition  hover:underline sm:text-sm"
-                >
+                <Link href="" className="text-xs font-medium text-primary transition  hover:underline sm:text-sm">
                     Forgot your password?
                 </Link>
             </div>

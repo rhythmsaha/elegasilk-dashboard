@@ -4,13 +4,11 @@ import { Card, CardBody } from '@nextui-org/react';
 
 const SecuritySection = () => {
     return (
-        <div>
-            <Card shadow="sm">
-                <CardBody className="p-6">
-                    <PasswordChangeForm />
-                </CardBody>
-            </Card>
-        </div>
+        <Card shadow="sm">
+            <CardBody className="sm:p-6">
+                <PasswordChangeForm />
+            </CardBody>
+        </Card>
     );
 };
 
