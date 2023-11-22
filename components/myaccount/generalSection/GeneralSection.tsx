@@ -1,9 +1,8 @@
 import { IUserAccount, IUserRoles } from '@/Typings';
-import { Card, CardBody, CardFooter, CardHeader, Input } from '@nextui-org/react';
-import { FC, useEffect } from 'react';
+import { Card, CardBody } from '@nextui-org/react';
+import { FC } from 'react';
 import GeneralForm from './GeneralForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useEffectOnce } from 'react-use';
 
 interface Props {
     user?: IUserAccount;
@@ -23,8 +22,6 @@ const GeneralSection: FC<Props> = ({}) => {
     const {
         register,
         handleSubmit,
-        getValues,
-        setValue,
         formState: { errors, isSubmitting },
     } = useForm<IMyAccountFormData>();
 

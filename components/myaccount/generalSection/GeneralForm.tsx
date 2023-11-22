@@ -10,7 +10,7 @@ interface Props {
     errors?: FieldErrors<IMyAccountFormData>;
 }
 
-const inputClassNames: SlotsToClasses<InputSlots> = {
+export const inputClassNames: SlotsToClasses<InputSlots> = {
     inputWrapper: 'border-1 focus-within:border-2',
 };
 
