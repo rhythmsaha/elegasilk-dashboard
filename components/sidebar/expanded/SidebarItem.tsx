@@ -21,9 +21,7 @@ const SidebarItem: React.FC<Props> = ({ title, Icon, path, id }) => {
             color={router.pathname === path ? 'primary' : 'default'}
             radius="md"
             fullWidth
-            className={`flex items-center justify-start gap-2 text-sm font-medium   ${
-                router.pathname !== path && 'text-default-500'
-            }`}
+            className={`flex items-center justify-start gap-2 text-sm font-medium   ${router.pathname !== path && 'text-default-500'}`}
         >
             <span>{<Icon className="text-medium" />}</span>
             {title}

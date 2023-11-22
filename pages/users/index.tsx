@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NextPageWithLayout } from '../_app';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
-import { Button, Card, CardBody, Selection, Pagination, Spinner, Image, Skeleton } from '@nextui-org/react';
+import { Button, Card, CardBody, Selection, Pagination } from '@nextui-org/react';
 import PageName from '@/components/ui/PageName';
 import Link from 'next/link';
 import { BiPlus } from 'react-icons/bi';
@@ -12,7 +12,6 @@ import UsersTable, { IUserTableData } from '@/components/users/usersTable/UsersT
 import TableRowsControl from '@/components/ui/table/TableRowsControl';
 import axios from '@/utils/axios';
 import API_URLS from '@/lib/ApiUrls';
-import usersData from '@/lib/usersData';
 import paginate from '@/utils/paginate';
 import EmptyState from '@/components/ui/table/EmptyState';
 import TableLoading from '@/components/ui/table/TableLoading';
@@ -156,7 +155,7 @@ const UsersPage: NextPageWithLayout = () => {
         }
 
         const maxRows = Array.from(rowsPerPage)[0] as string; // Max rows per page
-        const totalPage = Math.floor(sortedUsers.length / Number(maxRows)); // Total paginated pages
+        const totalPage = Math.ceil(sortedUsers.length / Number(maxRows)); // Total paginated pages
 
         if (totalPage < pageNo) setPageNo(1); // Reset page no if current page is greater than total page
         setmMaxPage(totalPage); // Set max page state

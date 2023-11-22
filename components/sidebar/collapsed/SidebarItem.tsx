@@ -21,9 +21,7 @@ const SidebarItem: React.FC<Props> = ({ title, Icon, path, id }) => {
             variant={router.pathname === path ? 'solid' : 'light'}
             color={router.pathname === path ? 'primary' : 'default'}
             radius="md"
-            className={`flex h-16 w-full min-w-0 max-w-full flex-col items-center justify-center gap-0.5  ${
-                router.pathname !== path && 'text-default-500'
-            }`}
+            className={`flex h-16 w-full min-w-0 max-w-full flex-col items-center justify-center gap-0.5  ${router.pathname !== path && 'text-default-500'}`}
         >
             <span>
                 <Icon className="text-2xl" />
@@ -35,16 +33,3 @@ const SidebarItem: React.FC<Props> = ({ title, Icon, path, id }) => {
 };
 
 export default SidebarItem;
-
-// <div
-//     key={link.id}
-//     className=""
-// >
-//     <span>
-//         <link.icon className="text-2xl" />
-//     </span>
-
-//     <span className="text-xs font-medium">
-//         {link.title}
-//     </span>
-// </div>

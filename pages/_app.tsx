@@ -1,4 +1,4 @@
-import type { ReactElement, ReactNode } from 'react';
+import { useEffect, type ReactElement, type ReactNode } from 'react';
 import type { NextPage } from 'next';
 import { NextUIProvider } from '@nextui-org/react';
 import type { AppProps } from 'next/app';
@@ -25,9 +25,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             </Head>
 
             <AuthProvider>
-                <NextUIProvider>
-                    {getLayout(<Component {...pageProps} />)}
-                </NextUIProvider>
+                <NextUIProvider>{getLayout(<Component {...pageProps} />)}</NextUIProvider>
 
                 <Toaster position="top-center" reverseOrder={false} />
             </AuthProvider>
