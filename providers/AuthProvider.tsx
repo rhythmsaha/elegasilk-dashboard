@@ -13,35 +13,34 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     const logout = useAuthStore((state) => state.logout);
     const startAuthLoading = useAuthStore((state) => state.startAuthLoading);
     const stopAuthLoading = useAuthStore((state) => state.stopAuthLoading);
-    const initializeAuthState = useAuthStore(
-        (state) => state.initializeAuthState
-    );
+    const initializeAuthState = useAuthStore((state) => state.initializeAuthState);
+    const isInitialized = useAuthStore((state) => state.isInitialized);
 
     useEffect(() => {
-        try {
-            const initialize = async () => {
-                const token = getSession();
+        if (isInitialized) return;
+        initializeAuthState();
+    }, [initializeAuthState, isInitialized]);
 
-                startAuthLoading();
+    useEffect(() => {
+        const initialize = async () => {
+            const token = getSession();
+            startAuthLoading();
+            if (!token) return logout();
 
-                if (!token) {
-                    logout();
-                    return;
-                }
-
+            try {
                 const response = await axios.get(API_URLS.session);
+                console.log(response);
+
                 const data = await response.data;
 
                 setSession(data.accessToken);
                 login(data.user, data.accessToken);
-            };
+            } catch (error) {
+                logout();
+            }
+        };
 
-            initializeAuthState();
-            initialize();
-        } catch (error) {
-            console.log(error);
-            logout();
-        }
+        initialize();
     }, [initializeAuthState, login, logout, startAuthLoading, stopAuthLoading]);
 
     return <>{children}</>;

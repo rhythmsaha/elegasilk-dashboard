@@ -10,7 +10,7 @@ export const isTokenValid = (token: string) => {
     return decodedToken?.exp > currentTime;
 };
 
-export const setSession = (token: string) => {
+export const setSession = (token?: string) => {
     if (token) {
         localStorage.setItem('accessToken', token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

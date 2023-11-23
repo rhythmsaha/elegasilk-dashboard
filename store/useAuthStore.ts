@@ -1,4 +1,5 @@
 import { IUserRoles } from '@/Typings';
+import { setSession } from '@/utils/jwt';
 import { create } from 'zustand';
 
 interface IUserState {
@@ -57,6 +58,7 @@ export const useAuthStore = create<IAuthStore>((set) => ({
     },
 
     logout: () => {
+        setSession();
         set({
             isAuthenticated: false,
             user: null,
