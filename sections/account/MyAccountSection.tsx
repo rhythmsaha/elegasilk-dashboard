@@ -3,8 +3,6 @@ import SettingTabs, { ITabKeys } from '@/components/myaccount/SettingTabs';
 import GeneralSection from '@/components/myaccount/generalSection/GeneralSection';
 import SecuritySection from '@/components/myaccount/securitySection/SecutirySection';
 
-type Props = {};
-
 const ConditionalSection = ({ selectedTab }: { selectedTab: ITabKeys }) => {
     if (selectedTab === 'General') {
         return <GeneralSection />;
@@ -17,7 +15,7 @@ const ConditionalSection = ({ selectedTab }: { selectedTab: ITabKeys }) => {
     return null;
 };
 
-const MyAccountSection = (props: Props) => {
+const MyAccountSection = () => {
     const [selectedTab, setSelectedTab] = useState<ITabKeys>('General');
 
     const handleTabChange = (tab: ITabKeys) => {

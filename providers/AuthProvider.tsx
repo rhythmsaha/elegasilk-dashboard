@@ -29,7 +29,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
             try {
                 const response = await axios.get(API_URLS.session);
-                console.log(response);
 
                 const data = await response.data;
 

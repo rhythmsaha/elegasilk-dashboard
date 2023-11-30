@@ -9,13 +9,13 @@ import formatTimestamp from '@/utils/formatTimestamp';
 import ActionsCell from './tableBody/ActionsCell';
 
 export interface IUserTableData {
-    _id: number;
+    _id: string;
     firstName: string;
     lastName: string;
     fullName: string;
     email: string;
     username: string;
-    phone: string;
+    phone?: string;
     role: string;
     status: boolean;
     createdAt: string;
@@ -32,7 +32,7 @@ interface Props {
 
 const columns: IColumn[] = [
     { label: 'Name', key: 'fullName', sortable: true },
-    { label: 'Phone', key: 'phone', sortable: true },
+    { label: 'Email', key: 'email', sortable: true },
     { label: 'Role', key: 'role', sortable: true },
     { label: 'Status', key: 'status', sortable: true },
     { label: 'Created', key: 'createdAt', sortable: true },
@@ -67,7 +67,7 @@ const UsersTable: FC<Props> = ({ usersData, changeSortHandler, sortBy, sortOrder
                                 <NameCell user={user} />
                             </TableCell>
 
-                            <TableCell>{user.phone || <BsDash />}</TableCell>
+                            <TableCell>{user.email || <BsDash />}</TableCell>
 
                             <TableCell>
                                 <RoleCell role={user.role} />

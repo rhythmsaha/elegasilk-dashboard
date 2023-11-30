@@ -3,6 +3,8 @@ import { FC } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { IMyAccountFormData } from './GeneralSection';
 import validator from 'validator';
+import { useAuthStore } from '@/store/useAuthStore';
+import UserRoleSelect from '@/components/ui/inputs/UserRoleSelect';
 
 interface Props {
     register: UseFormRegister<IMyAccountFormData>;
@@ -15,6 +17,9 @@ export const inputClassNames: SlotsToClasses<InputSlots> = {
 };
 
 const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
+    const user = useAuthStore((state) => state.user);
+    const role = useAuthStore((state) => state.user?.role);
+
     return (
         <CardBody className="p-4 sm:p-6">
             <div className="grid gap-4 md:grid-cols-2">
@@ -26,6 +31,7 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                     disabled={loading}
                     isInvalid={!!errors?.firstName}
                     errorMessage={errors?.firstName?.message}
+                    defaultValue={user?.firstName}
                     {...register('firstName', {
                         required: 'First Name is required',
                         validate: (value) => validator.isAlpha(value) || 'First Name must be alphabetic',
@@ -49,6 +55,7 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                     disabled={loading}
                     isInvalid={!!errors?.lastName}
                     errorMessage={errors?.lastName?.message}
+                    defaultValue={user?.lastName}
                     {...register('lastName', {
                         required: 'Last Name is required',
                         validate: (value) => validator.isAlpha(value) || 'Last Name must be alphabetic',
@@ -74,6 +81,7 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                     type="text"
                     label="username"
                     variant="bordered"
+                    defaultValue={user?.username}
                     classNames={inputClassNames}
                     disabled={loading}
                     isInvalid={!!errors?.username}
@@ -87,41 +95,25 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                     type="email"
                     label="Email"
                     variant="bordered"
+                    defaultValue={user?.email}
                     classNames={inputClassNames}
                     disabled={loading}
                     isInvalid={!!errors?.email}
                     errorMessage={errors?.email?.message}
                 />
 
-                <Input
-                    {...register('phone', {
-                        validate: (value) => (value?.toString().length === 0 ? true : validator.isMobilePhone(value!.toString()) || 'Please Enter a valid phone number!'),
-                    })}
-                    type="tel"
-                    label="Phone"
-                    variant="bordered"
-                    classNames={inputClassNames}
-                    disabled={loading}
-                    isInvalid={!!errors?.phone}
-                    errorMessage={errors?.phone?.message}
-                />
-
-                <Select
+                <UserRoleSelect
                     {...register('role', {
                         validate: (value) => (value!.length === 0 ? true : ['superadmin', 'admin', 'moderator'].includes(value!) || 'Please select a valid role!'),
                     })}
                     label="Role"
                     variant="bordered"
                     classNames={{ trigger: 'border-1 focus-within:border-2 focus-visible:border-2 focus:border-2 active:border-2' }}
-                    isDisabled={loading}
+                    isDisabled={loading || role !== 'superadmin'}
                     isInvalid={!!errors?.role}
                     errorMessage={errors?.role?.message}
-                    defaultSelectedKeys={['admin']}
-                >
-                    <SelectItem key="superadmin">Super Admin</SelectItem>
-                    <SelectItem key="admin">Admin</SelectItem>
-                    <SelectItem key="moderator">Moderator</SelectItem>
-                </Select>
+                    defaultSelectedKeys={[role!]}
+                />
             </div>
 
             <div className="mt-8">
