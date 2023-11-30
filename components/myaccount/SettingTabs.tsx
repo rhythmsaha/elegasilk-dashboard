@@ -1,9 +1,9 @@
 import { ScrollShadow, Tab, Tabs } from '@nextui-org/react';
 import React, { FC } from 'react';
 import TabButton from './TabButton';
-import { FaBell, FaGear, FaKey } from 'react-icons/fa6';
+import { FaGear, FaKey } from 'react-icons/fa6';
 
-export type ITabKeys = 'General' | 'Notifications' | 'Security';
+export type ITabKeys = 'General' | 'Security';
 
 interface Props {
     selectedTab: ITabKeys;
@@ -27,7 +27,6 @@ const SettingTabs: FC<Props> = ({ selectedTab, handleTabChange }) => {
                 }}
             >
                 <Tab key="General" title={<TabButton label="General" Icon={FaGear} />} />
-                <Tab key="Notifications" title={<TabButton label="Notifications" Icon={FaBell} />} />
                 <Tab key="Security" title={<TabButton label="Security" Icon={FaKey} />} />
             </Tabs>
         </ScrollShadow>

@@ -1,4 +1,4 @@
-import { Button, Input, InputSlots, Select, SelectItem, SlotsToClasses } from '@nextui-org/react';
+import { Button, CardBody, Input, InputSlots, Select, SelectItem, SlotsToClasses } from '@nextui-org/react';
 import { FC } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { IMyAccountFormData } from './GeneralSection';
@@ -16,7 +16,7 @@ export const inputClassNames: SlotsToClasses<InputSlots> = {
 
 const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
     return (
-        <div>
+        <CardBody className="p-4 sm:p-6">
             <div className="grid gap-4 md:grid-cols-2">
                 <Input
                     type="text"
@@ -129,7 +129,7 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                     Save Changes
                 </Button>
             </div>
-        </div>
+        </CardBody>
     );
 };
 

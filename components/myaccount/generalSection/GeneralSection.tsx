@@ -1,8 +1,9 @@
 import { IUserAccount, IUserRoles } from '@/Typings';
-import { Card, CardBody } from '@nextui-org/react';
-import { FC } from 'react';
+import { Card } from '@nextui-org/react';
+import { FC, useState } from 'react';
 import GeneralForm from './GeneralForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import AvararSettings from './AvararSettings';
 
 interface Props {
     user?: IUserAccount;
@@ -18,7 +19,13 @@ export interface IMyAccountFormData {
     avatar?: string;
 }
 
+export type IAvatarType = File & {
+    preview: string;
+};
+
 const GeneralSection: FC<Props> = ({}) => {
+    const [avatar, setAvatar] = useState<IAvatarType>();
+
     const {
         register,
         handleSubmit,
@@ -35,16 +42,11 @@ const GeneralSection: FC<Props> = ({}) => {
         <form onSubmit={handleSubmit(submitHandler)}>
             <div className="grid gap-5 lg:grid-cols-3">
                 <Card shadow="sm" className="lg:col-span-1">
-                    <CardBody className="p-6">
-                        {/* Avatar Comp */}
-                        {/* Delete User Button */}
-                    </CardBody>
+                    <AvararSettings setAvatar={setAvatar} avatar={avatar} />
                 </Card>
 
                 <Card shadow="sm" className="lg:col-span-2">
-                    <CardBody className="p-6">
-                        <GeneralForm register={register} loading={isSubmitting} errors={errors} />
-                    </CardBody>
+                    <GeneralForm register={register} loading={isSubmitting} errors={errors} />
                 </Card>
             </div>
         </form>
