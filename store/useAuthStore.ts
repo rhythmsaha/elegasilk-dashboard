@@ -1,6 +1,7 @@
 import { IUserRoles } from '@/Typings';
 import { setSession } from '@/utils/jwt';
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 interface IUserState {
     _id: string;
@@ -26,44 +27,62 @@ interface IAuthStore {
     logout: () => void;
 }
 
-export const useAuthStore = create<IAuthStore>((set) => ({
-    user: null,
-    accessToken: null,
-    isAuthenticated: false,
-    isAuthenticating: false,
-    isInitialized: false,
-
-    initializeAuthState: () => {
-        set({
-            isInitialized: true,
-        });
-    },
-
-    startAuthLoading: () => {
-        set({ isAuthenticating: true });
-    },
-
-    stopAuthLoading: () => {
-        set({ isAuthenticating: false });
-    },
-
-    login: (user, token) => {
-        set({
-            isInitialized: true,
-            isAuthenticating: false,
-            isAuthenticated: true,
-            user: user,
-            accessToken: token,
-        });
-    },
-
-    logout: () => {
-        setSession();
-        set({
-            isAuthenticated: false,
+export const useAuthStore = create<IAuthStore>()(
+    devtools(
+        (set) => ({
             user: null,
             accessToken: null,
+            isAuthenticated: false,
             isAuthenticating: false,
-        });
-    },
-}));
+            isInitialized: false,
+
+            initializeAuthState: () => {
+                set(
+                    {
+                        isInitialized: true,
+                    },
+                    false,
+                    'initializeAuthState'
+                );
+            },
+
+            startAuthLoading: () => {
+                set({ isAuthenticating: true }, false, 'startAuthLoading');
+            },
+
+            stopAuthLoading: () => {
+                set({ isAuthenticating: false }, false, 'stopAuthLoading');
+            },
+
+            login: (user, token) => {
+                set(
+                    {
+                        isInitialized: true,
+                        isAuthenticating: false,
+                        isAuthenticated: true,
+                        user: user,
+                        accessToken: token,
+                    },
+                    false,
+                    'login'
+                );
+            },
+
+            logout: () => {
+                setSession();
+                set(
+                    {
+                        isAuthenticated: false,
+                        user: null,
+                        accessToken: null,
+                        isAuthenticating: false,
+                    },
+                    false,
+                    'logout'
+                );
+            },
+        }),
+
+        { name: 'AuthStore' }
+    )
+);

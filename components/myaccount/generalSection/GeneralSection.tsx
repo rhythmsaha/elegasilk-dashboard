@@ -33,7 +33,11 @@ const GeneralSection: FC<Props> = ({}) => {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-    } = useForm<IMyAccountFormData>();
+    } = useForm<IMyAccountFormData>({
+        defaultValues: {
+            role: user?.role,
+        },
+    });
 
     const submitHandler: SubmitHandler<IMyAccountFormData> = (data) => {
         try {

@@ -1,24 +1,25 @@
-import { Button, CardBody, Input, InputSlots, Select, SelectItem, SlotsToClasses } from '@nextui-org/react';
-import { FC } from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { IMyAccountFormData } from './GeneralSection';
-import validator from 'validator';
 import { useAuthStore } from '@/store/useAuthStore';
-import UserRoleSelect from '@/components/ui/inputs/UserRoleSelect';
+import { Button, CardBody, Input } from '@nextui-org/react';
+import React, { useState } from 'react';
+import { FieldErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import { inputClassNames } from '../myaccount/generalSection/GeneralForm';
+import { ICreateNewUserFormData } from '@/sections/users/CreateNewUserSection';
+import validator from 'validator';
+import UserRoleSelect from '../ui/inputs/UserRoleSelect';
+import ShowHidePasswordButton from '../ui/inputs/TogglePasswordButton';
+import PasswordStrengthIndicator from '../ui/inputs/PasswordStrengthIndicator';
 
 interface Props {
-    register: UseFormRegister<IMyAccountFormData>;
+    register: UseFormRegister<ICreateNewUserFormData>;
     loading?: boolean;
-    errors?: FieldErrors<IMyAccountFormData>;
+    errors?: FieldErrors<ICreateNewUserFormData>;
+    getValues: UseFormGetValues<ICreateNewUserFormData>;
 }
 
-export const inputClassNames: SlotsToClasses<InputSlots> = {
-    inputWrapper: 'border-1 focus-within:border-2',
-};
+const UserForm: React.FC<Props> = ({ register, errors, loading, getValues }) => {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
-    const user = useAuthStore((state) => state.user);
-    const role = useAuthStore((state) => state.user?.role);
+    const togglePasswordVisibility = () => setIsPasswordVisible((state) => !state);
 
     return (
         <CardBody className="p-4 sm:p-6">
@@ -31,7 +32,6 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                     disabled={loading}
                     isInvalid={!!errors?.firstName}
                     errorMessage={errors?.firstName?.message}
-                    defaultValue={user?.firstName}
                     {...register('firstName', {
                         required: 'First Name is required',
                         validate: (value) => validator.isAlpha(value) || 'First Name must be alphabetic',
@@ -45,6 +45,7 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                             message: 'First Name must not exceed 50 characters',
                         },
                     })}
+                    className="md:order-1"
                 />
 
                 <Input
@@ -55,7 +56,6 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                     disabled={loading}
                     isInvalid={!!errors?.lastName}
                     errorMessage={errors?.lastName?.message}
-                    defaultValue={user?.lastName}
                     {...register('lastName', {
                         required: 'Last Name is required',
                         validate: (value) => validator.isAlpha(value) || 'Last Name must be alphabetic',
@@ -69,6 +69,7 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                             message: 'Last Name must not exceed 50 characters',
                         },
                     })}
+                    className="md:order-2"
                 />
 
                 <Input
@@ -81,36 +82,75 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                     type="text"
                     label="username"
                     variant="bordered"
-                    defaultValue={user?.username}
                     classNames={inputClassNames}
                     disabled={loading}
                     isInvalid={!!errors?.username}
                     errorMessage={errors?.username?.message}
+                    className="md:order-3"
                 />
 
                 <Input
                     {...register('email', {
+                        required: 'Email is required',
                         validate: (value) => (value?.length === 0 ? true : validator.isEmail(value!) || 'Please enter a valid email address!'),
                     })}
                     type="email"
                     label="Email"
                     variant="bordered"
-                    defaultValue={user?.email}
                     classNames={inputClassNames}
                     disabled={loading}
                     isInvalid={!!errors?.email}
                     errorMessage={errors?.email?.message}
+                    className="md:order-4"
+                />
+
+                <Input
+                    type={isPasswordVisible ? 'text' : 'password'}
+                    label="New Password"
+                    variant="bordered"
+                    autoComplete="new-password"
+                    description={<PasswordStrengthIndicator message="Password must be 8+ characters long" />}
+                    classNames={inputClassNames}
+                    endContent={<ShowHidePasswordButton visible={isPasswordVisible} onToggle={togglePasswordVisibility} />}
+                    isInvalid={!!errors?.password}
+                    errorMessage={errors?.password?.message && <PasswordStrengthIndicator message={errors?.password?.message} />}
+                    {...register('password', {
+                        required: 'New Password is required',
+                        minLength: { value: 8, message: 'New Password must be at least 8 characters' },
+                        maxLength: { value: 50, message: 'New Password must not exceed 50 characters' },
+                        validate: (value) => validator.isStrongPassword(value) || 'New Password is not strong enough',
+                    })}
+                    className="md:order-5"
+                />
+
+                <Input
+                    type={isPasswordVisible ? 'text' : 'password'}
+                    label="Confirm Password"
+                    variant="bordered"
+                    classNames={inputClassNames}
+                    endContent={<ShowHidePasswordButton visible={isPasswordVisible} onToggle={togglePasswordVisibility} />}
+                    isInvalid={!!errors?.confirmPassword}
+                    errorMessage={errors?.confirmPassword?.message && <PasswordStrengthIndicator message={errors?.confirmPassword?.message} />}
+                    {...register('confirmPassword', {
+                        required: 'Confirm Password is required',
+                        minLength: { value: 8, message: 'Confirm Password must be at least 8 characters' },
+                        maxLength: { value: 50, message: 'Confirm Password must not exceed 50 characters' },
+                        validate: (value) => validator.equals(value, getValues('password')) || 'Confirm Password must match New Password',
+                    })}
+                    className="md:order-7"
                 />
 
                 <UserRoleSelect
-                    {...register('role')}
+                    {...register('role', {
+                        validate: (value) => (value && value!.length === 0 ? true : ['superadmin', 'admin', 'moderator'].includes(value!) || 'Please select a valid role!'),
+                    })}
                     label="Role"
                     variant="bordered"
                     classNames={{ trigger: 'border-1 focus-within:border-2 focus-visible:border-2 focus:border-2 active:border-2' }}
-                    isDisabled={loading || role !== 'superadmin'}
+                    isDisabled={loading}
                     isInvalid={!!errors?.role}
                     errorMessage={errors?.role?.message}
-                    defaultSelectedKeys={[role!]}
+                    className="md:order-6"
                 />
             </div>
 
@@ -123,4 +163,4 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
     );
 };
 
-export default GeneralForm;
+export default UserForm;

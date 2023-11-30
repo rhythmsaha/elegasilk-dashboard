@@ -192,7 +192,7 @@ const UsersSection = () => {
                 {users.length === 0 && !isLoading && <EmptyState message="No Users Found" />}
 
                 {!isLoading && users.length !== 0 && (
-                    <div className="flex flex-col items-center justify-between gap-4 px-4 pt-4 sm:flex-row ">
+                    <div className="flex flex-col items-center justify-between gap-4 px-4 pt-4 sm:flex-row">
                         <Pagination
                             total={maxPage}
                             initialPage={1}

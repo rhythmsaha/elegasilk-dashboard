@@ -6,6 +6,8 @@ import { IChangePasswordFormData } from './SecutirySection';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { inputClassNames } from '../generalSection/GeneralForm';
 import validator from 'validator';
+import PasswordStrengthIndicator from '@/components/ui/inputs/PasswordStrengthIndicator';
+import ShowHidePasswordButton from '@/components/ui/inputs/TogglePasswordButton';
 
 const PasswordChangeForm = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -86,20 +88,3 @@ const PasswordChangeForm = () => {
 };
 
 export default PasswordChangeForm;
-
-function ShowHidePasswordButton({ onToggle, visible }: { visible: boolean; onToggle: () => void }) {
-    return (
-        <Button isIconOnly variant="light" radius="full" className="h-full focus:outline-none" type="button" onClick={onToggle}>
-            {visible ? <BsEyeSlashFill className="pointer-events-none text-2xl text-inherit opacity-30" /> : <BsEyeFill className="pointer-events-none text-2xl text-inherit opacity-30" />}
-        </Button>
-    );
-}
-
-function PasswordStrengthIndicator({ message }: { message: string }) {
-    return (
-        <p className="flex items-center gap-2">
-            <FaCircleExclamation className="inline-block" />
-            <span>{message}</span>
-        </p>
-    );
-}
