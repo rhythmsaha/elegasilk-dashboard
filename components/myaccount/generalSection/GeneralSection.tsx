@@ -5,6 +5,10 @@ import GeneralForm from './GeneralForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AvararSettings from './AvararSettings';
 import { useAuthStore } from '@/store/useAuthStore';
+import axios from '@/utils/axios';
+import API_URLS from '@/lib/ApiUrls';
+import toast from 'react-hot-toast';
+import uploadToCloudinary from '@/utils/uploadToCloudinary';
 
 interface Props {
     user?: IUserAccount;
@@ -15,9 +19,8 @@ export interface IMyAccountFormData {
     lastName: string;
     username: string;
     email?: string;
-    phone?: number;
+
     role?: IUserRoles;
-    avatar?: string;
 }
 
 export type IAvatarType = File & {
@@ -26,8 +29,8 @@ export type IAvatarType = File & {
 
 const GeneralSection: FC<Props> = ({}) => {
     const [avatar, setAvatar] = useState<IAvatarType>();
-
     const user = useAuthStore((state) => state.user);
+    const updateAccount = useAuthStore((state) => state.updateAccount);
 
     const {
         register,
@@ -39,10 +42,34 @@ const GeneralSection: FC<Props> = ({}) => {
         },
     });
 
-    const submitHandler: SubmitHandler<IMyAccountFormData> = (data) => {
+    const submitHandler: SubmitHandler<IMyAccountFormData> = async ({ firstName, lastName, username, email }) => {
+        if (isSubmitting) return;
+        toast.dismiss();
+
+        const payload: any = { firstName, lastName, username, email };
+
         try {
-            console.log({ ...data, avatar: avatar?.preview || user?.avatar });
-        } catch (error: any) {}
+            if (avatar) {
+                let avatarUrl = await uploadToCloudinary(avatar);
+
+                if (avatarUrl) {
+                    payload.avatar = avatarUrl;
+                } else {
+                    throw new Error('Failed to upload avatar!');
+                }
+            }
+
+            const response = await axios.put(API_URLS.upadateAccount, payload);
+            if (response.statusText !== 'OK') throw new Error(response.statusText);
+
+            if (response?.data?.user) {
+                updateAccount(response?.data?.user);
+            }
+
+            toast.success(response?.data?.message || 'Account updated successfully!');
+        } catch (error: any) {
+            toast.error(error?.message || error || 'Something went wrong!');
+        }
     };
 
     return (

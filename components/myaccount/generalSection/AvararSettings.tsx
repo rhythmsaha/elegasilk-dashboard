@@ -1,4 +1,4 @@
-import { CardBody, Image } from '@nextui-org/react';
+import { Avatar, CardBody, Image } from '@nextui-org/react';
 import React, { FC, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -47,9 +47,9 @@ const AvararSettings: FC<Props> = ({ avatar, setAvatar, defaultAvatarUrl }) => {
                     onMouseEnter={() => setHoverState(true)}
                     onMouseLeave={() => setHoverState(false)}
                 >
-                    {avatar?.preview && <Image src={avatar.preview} className="relative h-full w-full rounded-full border object-cover" alt="" />}
+                    {avatar?.preview && <Avatar size="lg" src={avatar.preview} className="relative h-full w-full rounded-full border object-cover" alt="" />}
 
-                    {defaultAvatarUrl && !avatar?.preview && <Image src={defaultAvatarUrl} className="relative h-full w-full rounded-full border object-cover" alt="" />}
+                    {defaultAvatarUrl && !avatar?.preview && <Avatar size="lg" src={defaultAvatarUrl} className="relative h-full w-full rounded-full border object-cover" alt="" />}
 
                     {!avatar?.preview && !defaultAvatarUrl && <FaUser className="h-full w-full rounded-full border p-10 text-gray-500" />}
 

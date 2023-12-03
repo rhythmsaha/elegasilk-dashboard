@@ -1,4 +1,4 @@
-import { Button, CardBody, Input, InputSlots, Select, SelectItem, SlotsToClasses } from '@nextui-org/react';
+import { Button, CardBody, Input, InputSlots, SlotsToClasses } from '@nextui-org/react';
 import { FC } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { IMyAccountFormData } from './GeneralSection';
@@ -107,7 +107,7 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                     label="Role"
                     variant="bordered"
                     classNames={{ trigger: 'border-1 focus-within:border-2 focus-visible:border-2 focus:border-2 active:border-2' }}
-                    isDisabled={loading || role !== 'superadmin'}
+                    isDisabled
                     isInvalid={!!errors?.role}
                     errorMessage={errors?.role?.message}
                     defaultSelectedKeys={[role!]}
@@ -116,8 +116,8 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
             </div>
 
             <div className="mt-8">
-                <Button className="ml-auto block w-full md:w-auto" variant="shadow" color="primary" type="submit">
-                    Save Changes
+                <Button className="ml-auto block w-full  min-w-[120px] md:w-auto" variant="shadow" color="primary" type="submit" isDisabled={loading}>
+                    {loading ? 'Please Wait...' : 'Save Changes'}
                 </Button>
             </div>
         </CardBody>

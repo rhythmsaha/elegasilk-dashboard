@@ -16,7 +16,7 @@ const UserMenu = () => {
     return (
         <Dropdown placement="bottom-end">
             <DropdownTrigger>
-                <Avatar isBordered as="button" className="transition-transform" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
+                <Avatar isBordered as="button" className="transition-transform" src={user?.avatar} title={user?.firstName} />
             </DropdownTrigger>
 
             <DropdownMenu aria-label="Static Actions" disabledKeys={['profileData']}>
@@ -29,8 +29,10 @@ const UserMenu = () => {
                 >
                     <DropdownItem key="profileData" isReadOnly className="h-14 gap-2 opacity-100" textValue="Profile Details">
                         <div>
-                            <span className="block font-medium text-gray-700">Rhythm Saha</span>
-                            <span className="block text-gray-400">@rhythmsaha</span>
+                            <span className="block font-medium text-gray-700">
+                                {user?.firstName} {user?.lastName}
+                            </span>
+                            <span className="block text-gray-400">@{user?.username}</span>
                         </div>
                     </DropdownItem>
                 </DropdownSection>

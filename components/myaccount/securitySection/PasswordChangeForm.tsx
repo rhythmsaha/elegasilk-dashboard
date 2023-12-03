@@ -8,6 +8,9 @@ import { inputClassNames } from '../generalSection/GeneralForm';
 import validator from 'validator';
 import PasswordStrengthIndicator from '@/components/ui/inputs/PasswordStrengthIndicator';
 import ShowHidePasswordButton from '@/components/ui/inputs/TogglePasswordButton';
+import toast from 'react-hot-toast';
+import axios from '@/utils/axios';
+import API_URLS from '@/lib/ApiUrls';
 
 const PasswordChangeForm = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -17,12 +20,25 @@ const PasswordChangeForm = () => {
         handleSubmit,
         getValues,
         formState: { errors, isSubmitting },
+        reset,
     } = useForm<IChangePasswordFormData>();
 
     const togglePasswordVisibility = () => setIsPasswordVisible((state) => !state);
 
-    const submitHandler: SubmitHandler<IChangePasswordFormData> = (data) => {
-        console.log(data);
+    const submitHandler: SubmitHandler<IChangePasswordFormData> = async ({ newPassword, oldPassword }) => {
+        if (isSubmitting) return;
+        toast.dismiss();
+
+        const payload = { currentPassword: oldPassword, newPassword: newPassword };
+
+        try {
+            const response = await axios.put(API_URLS.updatePassword, payload);
+            if (response.statusText !== 'OK') throw new Error(response.statusText);
+            toast.success('Password changed successfully!');
+            reset();
+        } catch (error: any) {
+            toast.error(error?.message || error || 'Something went wrong!');
+        }
     };
 
     return (

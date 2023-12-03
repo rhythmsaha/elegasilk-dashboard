@@ -25,6 +25,7 @@ interface IAuthStore {
     stopAuthLoading: () => void;
     login: (user: IUserState, token: string) => void;
     logout: () => void;
+    updateAccount: (user: IUserState) => void;
 }
 
 export const useAuthStore = create<IAuthStore>()(
@@ -79,6 +80,18 @@ export const useAuthStore = create<IAuthStore>()(
                     },
                     false,
                     'logout'
+                );
+            },
+
+            updateAccount: (user: IUserState) => {
+                set(
+                    {
+                        user: {
+                            ...user,
+                        },
+                    },
+                    false,
+                    'updateAccount'
                 );
             },
         }),

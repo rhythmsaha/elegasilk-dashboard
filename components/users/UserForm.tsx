@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/store/useAuthStore';
 import { Button, CardBody, Input } from '@nextui-org/react';
 import React, { useState } from 'react';
-import { FieldErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import { Control, Controller, FieldErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
 import { inputClassNames } from '../myaccount/generalSection/GeneralForm';
 import { ICreateNewUserFormData } from '@/sections/users/CreateNewUserSection';
 import validator from 'validator';
@@ -14,9 +14,10 @@ interface Props {
     loading?: boolean;
     errors?: FieldErrors<ICreateNewUserFormData>;
     getValues: UseFormGetValues<ICreateNewUserFormData>;
+    control?: Control<ICreateNewUserFormData, any>;
 }
 
-const UserForm: React.FC<Props> = ({ register, errors, loading, getValues }) => {
+const UserForm: React.FC<Props> = ({ register, errors, loading, getValues, control }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const togglePasswordVisibility = () => setIsPasswordVisible((state) => !state);
@@ -24,15 +25,9 @@ const UserForm: React.FC<Props> = ({ register, errors, loading, getValues }) => 
     return (
         <CardBody className="p-4 sm:p-6">
             <div className="grid gap-4 md:grid-cols-2">
-                <Input
-                    type="text"
-                    label="First Name"
-                    variant="bordered"
-                    classNames={inputClassNames}
-                    disabled={loading}
-                    isInvalid={!!errors?.firstName}
-                    errorMessage={errors?.firstName?.message}
-                    {...register('firstName', {
+                <Controller
+                    name="firstName"
+                    rules={{
                         required: 'First Name is required',
                         validate: (value) => validator.isAlpha(value) || 'First Name must be alphabetic',
                         minLength: {
@@ -44,19 +39,29 @@ const UserForm: React.FC<Props> = ({ register, errors, loading, getValues }) => 
                             value: 50,
                             message: 'First Name must not exceed 50 characters',
                         },
-                    })}
-                    className="md:order-1"
+                    }}
+                    control={control}
+                    render={({ field: { name, onBlur, onChange, value }, formState, fieldState: { invalid, error } }) => (
+                        <Input
+                            name={name}
+                            onValueChange={onChange}
+                            defaultValue={value}
+                            onBlur={onBlur}
+                            type="text"
+                            label="First Name"
+                            variant="bordered"
+                            classNames={inputClassNames}
+                            disabled={formState.isSubmitting}
+                            isInvalid={invalid}
+                            errorMessage={error?.message}
+                            className="md:order-1"
+                        />
+                    )}
                 />
 
-                <Input
-                    type="text"
-                    label="Last Name"
-                    variant="bordered"
-                    classNames={inputClassNames}
-                    disabled={loading}
-                    isInvalid={!!errors?.lastName}
-                    errorMessage={errors?.lastName?.message}
-                    {...register('lastName', {
+                <Controller
+                    name="lastName"
+                    rules={{
                         required: 'Last Name is required',
                         validate: (value) => validator.isAlpha(value) || 'Last Name must be alphabetic',
                         minLength: {
@@ -68,90 +73,153 @@ const UserForm: React.FC<Props> = ({ register, errors, loading, getValues }) => 
                             value: 50,
                             message: 'Last Name must not exceed 50 characters',
                         },
-                    })}
-                    className="md:order-2"
+                    }}
+                    control={control}
+                    render={({ field: { name, onBlur, onChange, value }, formState, fieldState }) => (
+                        <Input
+                            name={name}
+                            onValueChange={onChange}
+                            defaultValue={value}
+                            onBlur={onBlur}
+                            type="text"
+                            label="Last Name"
+                            variant="bordered"
+                            classNames={inputClassNames}
+                            disabled={formState.isSubmitting}
+                            isInvalid={fieldState.invalid}
+                            errorMessage={fieldState.error?.message}
+                            className="md:order-2"
+                        />
+                    )}
                 />
 
-                <Input
-                    {...register('username', {
+                <Controller
+                    name="username"
+                    rules={{
                         required: 'username is required',
                         validate: (value) => (validator.isNumeric(value) ? false : validator.isAlphanumeric(value) || `Username can't contain special characters or numbers only`),
                         minLength: { value: 4, message: 'Username must be at least 4 characters' },
                         maxLength: { value: 15, message: 'Username must not exceed 15 characters' },
-                    })}
-                    type="text"
-                    label="username"
-                    variant="bordered"
-                    classNames={inputClassNames}
-                    disabled={loading}
-                    isInvalid={!!errors?.username}
-                    errorMessage={errors?.username?.message}
-                    className="md:order-3"
+                    }}
+                    control={control}
+                    render={({ field: { name, onBlur, onChange, value }, formState, fieldState }) => (
+                        <Input
+                            name={name}
+                            onValueChange={onChange}
+                            defaultValue={value}
+                            onBlur={onBlur}
+                            type="text"
+                            label="username"
+                            variant="bordered"
+                            classNames={inputClassNames}
+                            disabled={formState.isSubmitting}
+                            isInvalid={fieldState.invalid}
+                            errorMessage={fieldState.error?.message}
+                            className="md:order-3"
+                        />
+                    )}
                 />
 
-                <Input
-                    {...register('email', {
+                <Controller
+                    name="email"
+                    rules={{
                         required: 'Email is required',
-                        validate: (value) => (value?.length === 0 ? true : validator.isEmail(value!) || 'Please enter a valid email address!'),
-                    })}
-                    type="email"
-                    label="Email"
-                    variant="bordered"
-                    classNames={inputClassNames}
-                    disabled={loading}
-                    isInvalid={!!errors?.email}
-                    errorMessage={errors?.email?.message}
-                    className="md:order-4"
+                        validate: (value) => (value?.length === 0 ? true : validator.isEmail(value) || 'Please enter a valid email address!'),
+                    }}
+                    control={control}
+                    render={({ field: { name, onBlur, onChange, value }, formState, fieldState }) => (
+                        <Input
+                            name={name}
+                            onValueChange={onChange}
+                            defaultValue={value}
+                            onBlur={onBlur}
+                            label="Email"
+                            variant="bordered"
+                            classNames={inputClassNames}
+                            disabled={formState.isSubmitting}
+                            isInvalid={fieldState.invalid}
+                            errorMessage={fieldState.error?.message}
+                            className="md:order-4"
+                        />
+                    )}
                 />
 
-                <Input
-                    type={isPasswordVisible ? 'text' : 'password'}
-                    label="New Password"
-                    variant="bordered"
-                    autoComplete="new-password"
-                    description={<PasswordStrengthIndicator message="Password must be 8+ characters long" />}
-                    classNames={inputClassNames}
-                    endContent={<ShowHidePasswordButton visible={isPasswordVisible} onToggle={togglePasswordVisibility} />}
-                    isInvalid={!!errors?.password}
-                    errorMessage={errors?.password?.message && <PasswordStrengthIndicator message={errors?.password?.message} />}
-                    {...register('password', {
+                <Controller
+                    control={control}
+                    name="password"
+                    rules={{
                         required: 'New Password is required',
                         minLength: { value: 8, message: 'New Password must be at least 8 characters' },
                         maxLength: { value: 50, message: 'New Password must not exceed 50 characters' },
                         validate: (value) => validator.isStrongPassword(value) || 'New Password is not strong enough',
-                    })}
-                    className="md:order-5"
+                    }}
+                    render={({ field: { name, onBlur, onChange, value }, formState, fieldState }) => (
+                        <Input
+                            name={name}
+                            onValueChange={onChange}
+                            defaultValue={value}
+                            onBlur={onBlur}
+                            type={isPasswordVisible ? 'text' : 'password'}
+                            label="New Password"
+                            variant="bordered"
+                            autoComplete="new-password"
+                            classNames={inputClassNames}
+                            isInvalid={fieldState.invalid}
+                            description={<PasswordStrengthIndicator message="Password must be 8+ characters long" />}
+                            endContent={<ShowHidePasswordButton visible={isPasswordVisible} onToggle={togglePasswordVisibility} />}
+                            errorMessage={fieldState.error?.message && <PasswordStrengthIndicator message={fieldState.error?.message} />}
+                            className="md:order-5"
+                        />
+                    )}
                 />
 
-                <Input
-                    type={isPasswordVisible ? 'text' : 'password'}
-                    label="Confirm Password"
-                    variant="bordered"
-                    classNames={inputClassNames}
-                    endContent={<ShowHidePasswordButton visible={isPasswordVisible} onToggle={togglePasswordVisibility} />}
-                    isInvalid={!!errors?.confirmPassword}
-                    errorMessage={errors?.confirmPassword?.message && <PasswordStrengthIndicator message={errors?.confirmPassword?.message} />}
-                    {...register('confirmPassword', {
-                        required: 'Confirm Password is required',
-                        minLength: { value: 8, message: 'Confirm Password must be at least 8 characters' },
-                        maxLength: { value: 50, message: 'Confirm Password must not exceed 50 characters' },
-                        validate: (value) => validator.equals(value, getValues('password')) || 'Confirm Password must match New Password',
-                    })}
-                    className="md:order-7"
+                <Controller
+                    control={control}
+                    name="confirmPassword"
+                    rules={{
+                        required: 'New Password is required',
+                        minLength: { value: 8, message: 'New Password must be at least 8 characters' },
+                        maxLength: { value: 50, message: 'New Password must not exceed 50 characters' },
+                        validate: (value) => validator.isStrongPassword(value) || 'New Password is not strong enough',
+                    }}
+                    render={({ field: { name, onBlur, onChange, value }, formState, fieldState }) => (
+                        <Input
+                            name={name}
+                            onValueChange={onChange}
+                            defaultValue={value}
+                            onBlur={onBlur}
+                            type={isPasswordVisible ? 'text' : 'password'}
+                            label="Confirm Password"
+                            variant="bordered"
+                            autoComplete="new-password"
+                            classNames={inputClassNames}
+                            endContent={<ShowHidePasswordButton visible={isPasswordVisible} onToggle={togglePasswordVisibility} />}
+                            description={<PasswordStrengthIndicator message="Password must be 8+ characters long" />}
+                            isInvalid={fieldState.invalid}
+                            errorMessage={fieldState.error?.message && <PasswordStrengthIndicator message={fieldState.error?.message} />}
+                            className="md:order-7"
+                        />
+                    )}
                 />
 
-                <UserRoleSelect
-                    {...register('role', {
-                        validate: (value) => (value && value!.length === 0 ? true : ['superadmin', 'admin', 'moderator'].includes(value!) || 'Please select a valid role!'),
-                    })}
-                    label="Role"
-                    variant="bordered"
-                    classNames={{ trigger: 'border-1 focus-within:border-2 focus-visible:border-2 focus:border-2 active:border-2' }}
-                    isDisabled={loading}
-                    isInvalid={!!errors?.role}
-                    errorMessage={errors?.role?.message}
-                    className="md:order-6"
-                    mode="others"
+                <Controller
+                    control={control}
+                    name="role"
+                    rules={{ validate: (value) => (value && value!.length === 0 ? true : ['superadmin', 'admin', 'moderator'].includes(value!) || 'Please select a valid role!') }}
+                    render={({ field, formState, fieldState }) => (
+                        <UserRoleSelect
+                            {...field}
+                            defaultSelectedKeys={field.value ? [field.value] : []}
+                            label="Role"
+                            variant="bordered"
+                            classNames={{ trigger: 'border-1 focus-within:border-2 focus-visible:border-2 focus:border-2 active:border-2' }}
+                            isDisabled={formState.isSubmitting}
+                            isInvalid={fieldState.invalid}
+                            errorMessage={fieldState.error?.message && <PasswordStrengthIndicator message={fieldState.error?.message} />}
+                            className="md:order-6"
+                            mode="others"
+                        />
+                    )}
                 />
             </div>
 
