@@ -151,6 +151,7 @@ const UserForm: React.FC<Props> = ({ register, errors, loading, getValues }) => 
                     isInvalid={!!errors?.role}
                     errorMessage={errors?.role?.message}
                     className="md:order-6"
+                    mode="others"
                 />
             </div>
 

@@ -1,13 +1,18 @@
 import { IMyAccountFormData } from '@/components/myaccount/generalSection/GeneralSection';
 import { useAuthStore } from '@/store/useAuthStore';
 import { Select, SelectItem, SelectProps } from '@nextui-org/react';
-import React, { FC, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 
-type Props = Omit<SelectProps, 'children'>;
+type Props = Omit<SelectProps, 'children'> & {
+    register?: UseFormRegister<IMyAccountFormData>;
+    loading?: boolean;
+    mode?: 'self' | 'others';
+};
 
 const UserRoleSelect = forwardRef((props: Props, ref) => {
     const role = useAuthStore((state) => state.user?.role);
+    let isSelfEdit = props.mode === 'self';
 
     const elements = [];
 
@@ -16,7 +21,10 @@ const UserRoleSelect = forwardRef((props: Props, ref) => {
         elements.push(<SelectItem key="admin">Admin</SelectItem>);
         elements.push(<SelectItem key="moderator">Moderator</SelectItem>);
     } else if (role === 'admin') {
-        elements.push(<SelectItem key="admin">Admin</SelectItem>);
+        if (isSelfEdit) {
+            elements.push(<SelectItem key="admin">Admin</SelectItem>);
+        }
+
         elements.push(<SelectItem key="moderator">Moderator</SelectItem>);
     } else if (role === 'moderator') {
         elements.push(<SelectItem key="moderator">Moderator</SelectItem>);

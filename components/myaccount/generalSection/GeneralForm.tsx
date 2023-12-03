@@ -111,6 +111,7 @@ const GeneralForm: FC<Props> = ({ register, errors, loading }) => {
                     isInvalid={!!errors?.role}
                     errorMessage={errors?.role?.message}
                     defaultSelectedKeys={[role!]}
+                    mode="self"
                 />
             </div>
 

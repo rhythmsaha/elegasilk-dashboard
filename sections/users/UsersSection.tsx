@@ -78,13 +78,12 @@ const UsersSection = () => {
             setIsLoading(false);
 
             if (data.users.length !== 0) {
-                setFetchedUsers(data.users);
+                // setFetchedUsers(data.users);
+                setFetchedUsers(createRandomUsers(100));
             }
         }
 
-        // fetchUsers();
-        setIsLoading(false);
-        setFetchedUsers(createRandomUsers(100));
+        fetchUsers();
     }, []);
 
     useEffect(() => {
@@ -170,6 +169,8 @@ const UsersSection = () => {
 
         setUsers(paginate(sortedUsers, pageNo, Number(maxRows)));
     }, [fetchedUsers, pageNo, rowsPerPage, searchQuery, selectedRoles, selectedStatus, sortBy, sortOrder]);
+
+    // w-full flex-col items-center justify-between gap-x-6 gap-y-2 border md:flex-row
 
     return (
         <Card shadow="sm" className="mt-10">

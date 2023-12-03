@@ -10,7 +10,7 @@ const Sidebar: FC<Props> = ({}) => {
     const { isExpanded, toggleSidebar } = useSidebarStore((state) => state);
 
     return (
-        <div className="relative z-20  h-screen select-none border-r border-gray-100">
+        <div className="relative z-50  h-screen select-none border-r border-gray-100">
             <Button
                 isIconOnly
                 radius="full"
