@@ -54,6 +54,12 @@ const CreateNewUserSection = () => {
 
             const response = await axios.post(API_URLS.createNewAdmin, payload);
 
+            if (response.status !== 201) {
+                throw new Error('Failed to create new user!');
+            }
+
+            router.replace('/users');
+
             toast.success(response?.data?.message || 'Account updated successfully!');
         } catch (error: any) {
             toast.error(error?.message || error || 'Something went wrong!');

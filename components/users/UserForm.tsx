@@ -224,8 +224,8 @@ const UserForm: React.FC<Props> = ({ register, errors, loading, getValues, contr
             </div>
 
             <div className="mt-8">
-                <Button className="ml-auto block w-full md:w-auto" variant="shadow" color="primary" type="submit">
-                    Save Changes
+                <Button className="ml-auto block w-full min-w-[120px] md:w-auto" variant="shadow" color="primary" type="submit">
+                    {loading ? 'Please Wait...' : ' Save Changes'}
                 </Button>
             </div>
         </CardBody>

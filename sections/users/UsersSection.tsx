@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import EmptyState from '@/components/ui/table/EmptyState';
 import TableLoading from '@/components/ui/table/TableLoading';
 import TableRowsControl from '@/components/ui/table/TableRowsControl';
@@ -11,31 +11,6 @@ import axios from '@/utils/axios';
 import paginate from '@/utils/paginate';
 import { Card, CardBody, Pagination, Selection } from '@nextui-org/react';
 import Fuse, { IFuseOptions } from 'fuse.js';
-import { IUserRoles } from '@/Typings';
-import { faker } from '@faker-js/faker';
-
-const createRandomUser = (): IUserTableData => {
-    const obj = {
-        _id: faker.string.uuid(),
-        avatar: faker.image.avatar(),
-        firstName: faker.person.firstName(),
-        lastName: faker.person.lastName(),
-        username: faker.internet.userName(),
-        email: faker.internet.email(),
-        status: faker.datatype.boolean(),
-        role: faker.helpers.arrayElement(['superadmin', 'admin', 'moderator']),
-        createdAt: faker.date.past().toISOString(),
-        updatedAt: faker.date.recent().toISOString(),
-    };
-    return {
-        ...obj,
-        fullName: `${obj.firstName} ${obj.lastName}`,
-    };
-};
-
-const createRandomUsers = (count: number): IUserTableData[] => {
-    return [...Array(count)].map(() => createRandomUser());
-};
 
 const fuseOptions: IFuseOptions<IUserTableData> = {
     isCaseSensitive: false,
@@ -57,6 +32,17 @@ const UsersSection = () => {
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [searchQuery, setSearchQuery] = useState('');
 
+    // Fetch users from API
+    const fetchUsers = useCallback(async () => {
+        const response = await axios.get(API_URLS.getUsers);
+        const data = await response.data;
+        setIsLoading(false);
+
+        if (data.users.length !== 0) {
+            setFetchedUsers(data.users);
+        }
+    }, []);
+
     const changeSortHandler = (key: string) => {
         if (sortBy === key) {
             setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -70,21 +56,9 @@ const UsersSection = () => {
         setSearchQuery(e.target.value);
     };
 
-    // Fetch users from API
     useEffect(() => {
-        async function fetchUsers() {
-            const response = await axios.get(API_URLS.getUsers);
-            const data = await response.data;
-            setIsLoading(false);
-
-            if (data.users.length !== 0) {
-                // setFetchedUsers(data.users);
-                setFetchedUsers(createRandomUsers(100));
-            }
-        }
-
         fetchUsers();
-    }, []);
+    }, [fetchUsers]);
 
     useEffect(() => {
         if (fetchedUsers.length === 0) return;
