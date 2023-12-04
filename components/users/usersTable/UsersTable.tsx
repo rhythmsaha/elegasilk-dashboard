@@ -28,6 +28,7 @@ interface Props {
     sortBy: string;
     sortOrder: string;
     changeSortHandler: (key: string) => void;
+    onDelete: (userId: string) => void;
 }
 
 const columns: IColumn[] = [
@@ -40,7 +41,7 @@ const columns: IColumn[] = [
     { label: '', key: 'actions', sortable: false },
 ];
 
-const UsersTable: FC<Props> = ({ usersData, changeSortHandler, sortBy, sortOrder }) => {
+const UsersTable: FC<Props> = ({ usersData, changeSortHandler, sortBy, sortOrder, onDelete }) => {
     return (
         <div className="mt-6 overflow-x-auto pb-2">
             <Table
@@ -81,7 +82,7 @@ const UsersTable: FC<Props> = ({ usersData, changeSortHandler, sortBy, sortOrder
                             <TableCell>{formatTimestamp(user.updatedAt)}</TableCell>
 
                             <TableCell>
-                                <ActionsCell userId={user._id} />
+                                <ActionsCell userId={user._id} onDelete={onDelete} />
                             </TableCell>
                         </TableRow>
                     ))}

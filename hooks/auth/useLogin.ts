@@ -15,7 +15,7 @@ type ILoginAPIFunction = (payload: ILoginPayload) => void;
 const useLogin = () => {
     const login = useAuthStore((state) => state.login);
 
-    const ApiLogin = async (payload: ILoginPayload) => {
+    const ApiLogin: ILoginAPIFunction = async (payload) => {
         try {
             const response = await axios.post(API_URLS.login, payload);
 

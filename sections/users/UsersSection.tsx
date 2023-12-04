@@ -41,6 +41,20 @@ const UsersSection = () => {
         }
     }, []);
 
+    const deleteUser = useCallback(
+        async (userId: string) => {
+            const _users = [...fetchedUsers];
+
+            const index = _users.findIndex((user) => user._id === userId);
+
+            if (index !== -1) {
+                _users.splice(index, 1);
+                setFetchedUsers(_users);
+            }
+        },
+        [fetchedUsers]
+    );
+
     const changeSortHandler = (key: string) => {
         if (sortBy === key) {
             setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -156,7 +170,7 @@ const UsersSection = () => {
 
                 {isLoading && <TableLoading rows={5} />}
 
-                {users.length !== 0 && !isLoading && <UsersTable usersData={users} changeSortHandler={changeSortHandler} sortBy={sortBy} sortOrder={sortOrder} />}
+                {users.length !== 0 && !isLoading && <UsersTable usersData={users} changeSortHandler={changeSortHandler} sortBy={sortBy} sortOrder={sortOrder} onDelete={deleteUser} />}
                 {users.length === 0 && !isLoading && <EmptyState message="No Users Found" />}
 
                 {!isLoading && users.length !== 0 && (

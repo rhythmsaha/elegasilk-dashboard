@@ -26,7 +26,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
             <AuthProvider>
                 <NextUIProvider>{getLayout(<Component {...pageProps} />)}</NextUIProvider>
-
                 <Toaster position="top-center" reverseOrder={false} />
             </AuthProvider>
         </>

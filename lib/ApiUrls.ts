@@ -12,6 +12,7 @@ const API_URLS = {
     createNewAdmin: '/admin/create-new',
     getUsers: '/admin/users',
     updateUser: '/admin/user',
+    deleteUser: (userId: string) => `/admin/user/${userId}`,
 
     // forgetPassword: "/auth/seller/forgetpassword",
     // resetPassword: "/auth/seller/resetpassword",
