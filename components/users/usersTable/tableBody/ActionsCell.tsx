@@ -1,6 +1,9 @@
 import React from 'react';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, cn } from '@nextui-org/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { useAuthStore } from '@/store/useAuthStore';
+import { PiProhibitBold } from 'react-icons/pi';
+import Link from 'next/link';
 
 export const EditDocumentIcon = (props: any) => (
     <svg aria-hidden="true" fill="none" focusable="false" height="1em" role="presentation" viewBox="0 0 24 24" width="1em" {...props}>
@@ -31,8 +34,14 @@ export const DeleteDocumentIcon = (props: any) => (
     </svg>
 );
 
-const ActionsCell = () => {
+interface Props {
+    userId: string;
+}
+
+const ActionsCell: React.FC<Props> = ({ userId }) => {
     const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0';
+    const loggedInUserId = useAuthStore((state) => state.user?._id);
+    const isYou = loggedInUserId === userId;
 
     return (
         <Dropdown
@@ -42,13 +51,13 @@ const ActionsCell = () => {
             }}
         >
             <DropdownTrigger>
-                <Button variant="light" isIconOnly radius="full">
-                    <BsThreeDotsVertical />
+                <Button variant="light" isIconOnly radius="full" isDisabled={isYou}>
+                    {isYou ? <PiProhibitBold className={iconClasses} /> : <BsThreeDotsVertical className={iconClasses} />}
                 </Button>
             </DropdownTrigger>
 
             <DropdownMenu variant="faded" aria-label="Dropdown menu with icons">
-                <DropdownItem key="edit" startContent={<EditDocumentIcon className={iconClasses} />} className="pr-10">
+                <DropdownItem key="edit" startContent={<EditDocumentIcon className={iconClasses} />} className="pr-10" href={`/users/edit/${userId}`} as={Link}>
                     Edit User
                 </DropdownItem>
 

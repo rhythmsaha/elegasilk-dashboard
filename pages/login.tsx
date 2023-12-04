@@ -1,18 +1,16 @@
 import { Button, Input } from '@nextui-org/react';
 import { FaKey, FaUser } from 'react-icons/fa';
 import { CgSpinner } from 'react-icons/cg';
-
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import API_URLS from '@/lib/ApiUrls';
-import axios from '@/utils/axios';
 import { useAuthStore } from '@/store/useAuthStore';
-import { setSession } from '@/utils/jwt';
 import { NextPageWithLayout } from './_app';
 import GuestGuard from '@/guards/GuestGuard';
+import useLogin from '@/hooks/auth/useLogin';
+import toast from 'react-hot-toast';
 
 interface ILoginInput {
     username: string;
@@ -22,9 +20,9 @@ interface ILoginInput {
 const LoginPage: NextPageWithLayout = () => {
     const [isVisible, setIsVisible] = useState(false);
 
-    const login = useAuthStore((state) => state.login);
-
     const toggleVisibility = () => setIsVisible(!isVisible);
+
+    const { ApiLogin } = useLogin();
 
     const {
         register,
@@ -34,18 +32,8 @@ const LoginPage: NextPageWithLayout = () => {
 
     const onSubmit: SubmitHandler<ILoginInput> = async ({ password, username }) => {
         if (isSubmitting) return;
-
-        try {
-            const response = await axios.post(API_URLS.login, {
-                username,
-                password,
-            });
-
-            const { accessToken, user, message } = await response.data;
-
-            login(user, accessToken);
-            setSession(accessToken);
-        } catch (error: any) {}
+        toast.dismiss();
+        ApiLogin({ username, password });
     };
 
     return (

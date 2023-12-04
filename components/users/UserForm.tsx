@@ -15,9 +15,11 @@ interface Props {
     errors?: FieldErrors<ICreateNewUserFormData>;
     getValues: UseFormGetValues<ICreateNewUserFormData>;
     control?: Control<ICreateNewUserFormData, any>;
+
+    editMode?: boolean;
 }
 
-const UserForm: React.FC<Props> = ({ register, errors, loading, getValues, control }) => {
+const UserForm: React.FC<Props> = ({ register, errors, loading, getValues, control, editMode }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const togglePasswordVisibility = () => setIsPasswordVisible((state) => !state);
@@ -148,10 +150,10 @@ const UserForm: React.FC<Props> = ({ register, errors, loading, getValues, contr
                     control={control}
                     name="password"
                     rules={{
-                        required: 'New Password is required',
+                        required: { value: editMode ? false : true, message: 'New Password is required' },
                         minLength: { value: 8, message: 'New Password must be at least 8 characters' },
                         maxLength: { value: 50, message: 'New Password must not exceed 50 characters' },
-                        validate: (value) => validator.isStrongPassword(value) || 'New Password is not strong enough',
+                        validate: (value) => (value && value.length !== 0 ? validator.isStrongPassword(value) : true) || 'New Password is not strong enough',
                     }}
                     render={({ field: { name, onBlur, onChange, value }, formState, fieldState }) => (
                         <Input
@@ -177,10 +179,18 @@ const UserForm: React.FC<Props> = ({ register, errors, loading, getValues, contr
                     control={control}
                     name="confirmPassword"
                     rules={{
-                        required: 'New Password is required',
-                        minLength: { value: 8, message: 'New Password must be at least 8 characters' },
-                        maxLength: { value: 50, message: 'New Password must not exceed 50 characters' },
-                        validate: (value) => validator.isStrongPassword(value) || 'New Password is not strong enough',
+                        required: { value: editMode ? false : true, message: 'Confirm Password is required' },
+                        minLength: { value: 8, message: 'Confirm Password must be at least 8 characters' },
+                        maxLength: { value: 50, message: 'Confirm Password must not exceed 50 characters' },
+                        validate: (value) => {
+                            if (value && value.length !== 0) {
+                                if (value !== getValues('password')) {
+                                    return 'Confirm Password does not match!';
+                                }
+                            } else {
+                                ('Confirm Password is not strong enough');
+                            }
+                        },
                     }}
                     render={({ field: { name, onBlur, onChange, value }, formState, fieldState }) => (
                         <Input

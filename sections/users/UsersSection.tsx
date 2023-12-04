@@ -2,15 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import EmptyState from '@/components/ui/table/EmptyState';
 import TableLoading from '@/components/ui/table/TableLoading';
 import TableRowsControl from '@/components/ui/table/TableRowsControl';
-import TableSearch from '@/components/ui/table/TableSearch';
-import RolesFilter from '@/components/users/RolesFilter';
-import StatusFilter from '@/components/users/StatusFilter';
 import UsersTable, { IUserTableData } from '@/components/users/usersTable/UsersTable';
 import API_URLS from '@/lib/ApiUrls';
 import axios from '@/utils/axios';
 import paginate from '@/utils/paginate';
-import { Card, CardBody, Pagination, Selection } from '@nextui-org/react';
+import { Card, CardBody, Pagination, Selection, user } from '@nextui-org/react';
 import Fuse, { IFuseOptions } from 'fuse.js';
+import UsersFilter from '@/pages/users/UsersFilter';
 
 const fuseOptions: IFuseOptions<IUserTableData> = {
     isCaseSensitive: false,
@@ -147,21 +145,18 @@ const UsersSection = () => {
     return (
         <Card shadow="sm" className="mt-10">
             <CardBody className="w-full overflow-hidden sm:py-6">
-                <div className="flex w-full flex-col items-center justify-between gap-x-6 gap-y-2 md:flex-row">
-                    <div className="w-full flex-grow md:w-auto">
-                        <TableSearch searchState={searchQuery} onChange={searchHandler} />
-                    </div>
-
-                    <div className="flex w-full items-center justify-between gap-2 md:w-max">
-                        <StatusFilter selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} />
-                        <RolesFilter selectedRoles={selectedRoles} setSelectedRoles={setSelectedRoles} />
-                    </div>
-                </div>
-
-                <UsersTable usersData={users} changeSortHandler={changeSortHandler} sortBy={sortBy} sortOrder={sortOrder} />
+                <UsersFilter
+                    searchState={searchQuery}
+                    onChange={searchHandler}
+                    selectedStatus={selectedStatus}
+                    setSelectedStatus={setSelectedStatus}
+                    selectedRoles={selectedRoles}
+                    setSelectedRoles={setSelectedRoles}
+                />
 
                 {isLoading && <TableLoading rows={5} />}
 
+                {users.length !== 0 && !isLoading && <UsersTable usersData={users} changeSortHandler={changeSortHandler} sortBy={sortBy} sortOrder={sortOrder} />}
                 {users.length === 0 && !isLoading && <EmptyState message="No Users Found" />}
 
                 {!isLoading && users.length !== 0 && (

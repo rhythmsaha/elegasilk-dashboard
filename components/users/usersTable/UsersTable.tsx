@@ -62,7 +62,7 @@ const UsersTable: FC<Props> = ({ usersData, changeSortHandler, sortBy, sortOrder
 
                 <TableBody>
                     {usersData.map((user) => (
-                        <TableRow key={user._id} className="text-gray-600">
+                        <TableRow key={user._id} className={`text-gray-600`}>
                             <TableCell>
                                 <NameCell user={user} />
                             </TableCell>
@@ -81,7 +81,7 @@ const UsersTable: FC<Props> = ({ usersData, changeSortHandler, sortBy, sortOrder
                             <TableCell>{formatTimestamp(user.updatedAt)}</TableCell>
 
                             <TableCell>
-                                <ActionsCell />
+                                <ActionsCell userId={user._id} />
                             </TableCell>
                         </TableRow>
                     ))}

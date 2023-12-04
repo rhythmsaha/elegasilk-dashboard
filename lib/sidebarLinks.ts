@@ -31,12 +31,12 @@ export const sidebarConfig = [
                 roles: ['admin', 'superadmin'],
             },
 
-            {
-                id: 'customersmenu',
-                title: 'Customers',
-                icon: FaUserFriends,
-                path: '/customers',
-            },
+            // {
+            //     id: 'customersmenu',
+            //     title: 'Customers',
+            //     icon: FaUserFriends,
+            //     path: '/customers',
+            // },
 
             {
                 id: 'categoriesmenu',
@@ -45,19 +45,19 @@ export const sidebarConfig = [
                 path: '/categories',
             },
 
-            {
-                id: 'link3',
-                title: 'Products',
-                icon: BsFillCartFill,
-                path: '/products',
-            },
+            // {
+            //     id: 'link3',
+            //     title: 'Products',
+            //     icon: BsFillCartFill,
+            //     path: '/products',
+            // },
 
-            {
-                id: 'link4',
-                title: 'Orders',
-                icon: IoDocumentText,
-                path: '/invoices',
-            },
+            // {
+            //     id: 'link4',
+            //     title: 'Orders',
+            //     icon: IoDocumentText,
+            //     path: '/invoices',
+            // },
         ],
     },
 ];
