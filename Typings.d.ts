@@ -12,3 +12,7 @@ export interface IUserAccount {
     role: IUserRoles;
     avatar: string;
 }
+
+type ImageFileType = File & {
+    preview: string;
+};

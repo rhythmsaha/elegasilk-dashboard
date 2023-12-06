@@ -23,8 +23,6 @@ const useDeleteUser = () => {
 
             onDelete(userId);
             toast.success('User Deleted Successfully!');
-
-            setIsLoading(false);
         } catch (error: any) {
             setIsLoading(false);
             toast.error(error.message);

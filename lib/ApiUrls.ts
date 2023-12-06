@@ -14,6 +14,9 @@ const API_URLS = {
     updateUser: '/admin/user',
     deleteUser: (userId: string) => `/admin/user/${userId}`,
 
+    // Admin Categories
+    createCategory: '/category/create-new',
+
     // forgetPassword: "/auth/seller/forgetpassword",
     // resetPassword: "/auth/seller/resetpassword",
     // updatePassword: "/auth/seller/changepassword",
