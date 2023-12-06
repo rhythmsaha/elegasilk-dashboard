@@ -19,7 +19,7 @@ export interface IcategoryFormData {
 
 const NewCategorySection = () => {
     const [image, setImage] = useState<ImageFileType>();
-    const router = useRouter();
+
     const {
         handleSubmit,
         control,

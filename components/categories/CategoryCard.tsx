@@ -8,6 +8,7 @@ export interface ICategory {
     name: string;
     slug: string;
     description: string;
+    status: boolean;
     image: string;
     createdAt: string;
     updatedAt: string;
@@ -45,7 +46,7 @@ const CategoryCard: FC<Props> = ({ category: { _id, createdAt, description, imag
                         <AiOutlineEye className="min-w-min text-lg" />
                     </Button>
 
-                    <Button color="success" variant="flat" radius="full" size="lg" className="text-base" isIconOnly as={Link} href={`/categories/edit/${_id}`}>
+                    <Button color="success" variant="flat" radius="full" size="lg" className="text-base" isIconOnly as={Link} href={`/categories/edit/${slug}`}>
                         <AiOutlineEdit className="min-w-min text-lg" />
                     </Button>
 

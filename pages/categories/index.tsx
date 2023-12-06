@@ -8,6 +8,7 @@ import { BiPlus } from 'react-icons/bi';
 import { faker } from '@faker-js/faker';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import CategoryCard from '@/components/categories/CategoryCard';
+import CategoriesSection from '@/sections/categories/CategoriesSection';
 // import Image from 'next/image';
 
 const CreateNewCategoryButton = () => {
@@ -22,23 +23,7 @@ const CreateNewCategoryButton = () => {
     );
 };
 
-const categoriesDemo = Array.from({ length: 10 }, () => ({
-    _id: faker.datatype.uuid(),
-    name: faker.commerce.department(),
-    slug: faker.lorem.slug(),
-    description: faker.commerce.productDescription(),
-    image: faker.image.urlLoremFlickr({ category: 'saree' }),
-    createdAt: faker.date.past().toLocaleDateString(),
-    updatedAt: faker.date.recent().toLocaleDateString(),
-}));
-
 const CategoriesPage: NextPageWithLayout = () => {
-    const [categories, setCategories] = useState<typeof categoriesDemo>([]);
-
-    useEffect(() => {
-        setCategories([...categoriesDemo]);
-    }, []);
-
     return (
         <div className="mx-auto mt-2 w-11/12 max-w-screen-xl pb-20">
             <PageName
@@ -50,11 +35,7 @@ const CategoriesPage: NextPageWithLayout = () => {
                 Button={CreateNewCategoryButton}
             />
 
-            <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {categories.map((category) => (
-                    <CategoryCard key={category._id} category={category} />
-                ))}
-            </div>
+            <CategoriesSection />
         </div>
     );
 };

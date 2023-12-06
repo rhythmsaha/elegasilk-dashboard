@@ -15,7 +15,9 @@ const API_URLS = {
     deleteUser: (userId: string) => `/admin/user/${userId}`,
 
     // Admin Categories
-    createCategory: '/category/create-new',
+    createCategory: '/categories/create-new',
+    getCategories: '/categories',
+    getSingleCategory: (categoryId: string) => `/categories/${categoryId}`,
 
     // forgetPassword: "/auth/seller/forgetpassword",
     // resetPassword: "/auth/seller/resetpassword",
