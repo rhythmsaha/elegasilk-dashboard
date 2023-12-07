@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, CardFooter, Divider, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Tooltip, useDisclosure } from '@nextui-org/react';
+import { Avatar, Button, Card, CardFooter, Chip, Divider, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Tooltip, useDisclosure } from '@nextui-org/react';
 import Link from 'next/link';
 import React, { FC } from 'react';
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from 'react-icons/ai';
@@ -20,12 +20,12 @@ interface Props {
     onDelete: (id: string) => void;
 }
 
-const CategoryCard: FC<Props> = ({ category: { _id, createdAt, description, image, name, slug, updatedAt }, onDelete }) => {
+const CategoryCard: FC<Props> = ({ category: { _id, createdAt, description, image, name, slug, updatedAt, status }, onDelete }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     return (
         <>
-            <Card className="w-full rounded-2xl p-0" radius="none">
+            <Card className="relative w-full rounded-2xl p-0" radius="none">
                 <div className="relative w-full overflow-hidden">
                     <Image src={image} alt="categories" width={'100%'} className="h-44 w-full scale-110 object-cover blur-sm saturate-0 md:h-48" radius="none" />
                 </div>
@@ -48,7 +48,7 @@ const CategoryCard: FC<Props> = ({ category: { _id, createdAt, description, imag
                 <CardFooter className="p-8">
                     <div className="flex w-full items-center  justify-center gap-6  ">
                         <Tooltip showArrow={true} radius="sm" content="View more" placement="top">
-                            <Button color="primary" variant="flat" radius="full" size="lg" className="text-base" isIconOnly>
+                            <Button color="primary" variant="flat" radius="full" size="lg" className="text-base" isIconOnly as={Link} href={`/categories/${slug}`}>
                                 <AiOutlineEye className="min-w-min text-lg" />
                             </Button>
                         </Tooltip>
@@ -66,6 +66,16 @@ const CategoryCard: FC<Props> = ({ category: { _id, createdAt, description, imag
                         </Tooltip>
                     </div>
                 </CardFooter>
+
+                {status ? (
+                    <Chip color="success" variant="solid" className="absolute right-3 top-3 !text-white" style={{ zIndex: 10 }}>
+                        Active
+                    </Chip>
+                ) : (
+                    <Chip color="danger" variant="solid" className="absolute right-3 top-3 !text-white" style={{ zIndex: 10 }}>
+                        Inactive
+                    </Chip>
+                )}
             </Card>
 
             <CategoryDeleteModal isOpen={isOpen} onOpenChange={onOpenChange} id={_id} onDelete={onDelete} />
