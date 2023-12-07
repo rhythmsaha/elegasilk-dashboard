@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 import uploadToCloudinary from '@/utils/uploadToCloudinary';
 import axios from '@/utils/axios';
 import API_URLS from '@/lib/ApiUrls';
+import { useRouter } from 'next/router';
 
 interface Props {
     category: ICategory;
@@ -18,6 +19,8 @@ interface Props {
 
 const EditCategorySection: FC<Props> = ({ category }) => {
     const [image, setImage] = useState<ImageFileType>();
+
+    const router = useRouter();
 
     const {
         handleSubmit,
@@ -58,6 +61,7 @@ const EditCategorySection: FC<Props> = ({ category }) => {
             }));
 
             toast.success('Category updated successfully!');
+            router.push(`/categories/edit/${response.data.data.slug}`);
         } catch (error: any) {
             toast.error('Failed to update category!');
         }
