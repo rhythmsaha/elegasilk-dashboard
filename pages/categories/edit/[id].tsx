@@ -18,7 +18,7 @@ const EditCategoryPage: NextPageWithLayout = () => {
         getCategory(id as string);
     }, [getCategory, id]);
 
-    if (isLoading) {
+    if (!category && isLoading) {
         return (
             <div className="absolute inset-0 flex min-h-screen w-full items-center justify-center">
                 <Spinner />
