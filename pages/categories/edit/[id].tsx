@@ -1,15 +1,11 @@
-import { ICategory } from '@/components/categories/CategoryCard';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
-import LoadingScreen from '@/components/ui/LoadingScreen';
 import PageName from '@/components/ui/PageName';
 import useCategory from '@/hooks/category/useCategory';
-import useFetchCategory from '@/hooks/category/useFetchCategory';
 import { NextPageWithLayout } from '@/pages/_app';
 import EditCategorySection from '@/sections/categories/EditCategorySection';
-import axios from '@/utils/axios';
 import { Spinner } from '@nextui-org/react';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 const EditCategoryPage: NextPageWithLayout = () => {
     const { category, error, getCategory, isLoading } = useCategory();
@@ -31,11 +27,7 @@ const EditCategoryPage: NextPageWithLayout = () => {
     }
 
     if (error) {
-        return (
-            <div className="absolute inset-0 flex min-h-screen w-full items-center justify-center">
-                <h1>Error Occured</h1>
-            </div>
-        );
+        router.push('/404');
     }
 
     if (!category) {

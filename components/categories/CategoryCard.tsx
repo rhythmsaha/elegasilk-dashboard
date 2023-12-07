@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, CardFooter, Divider, Image } from '@nextui-org/react';
+import { Avatar, Button, Card, CardFooter, Divider, Image, Tooltip } from '@nextui-org/react';
 import Link from 'next/link';
 import React, { FC } from 'react';
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from 'react-icons/ai';
@@ -42,17 +42,23 @@ const CategoryCard: FC<Props> = ({ category: { _id, createdAt, description, imag
 
             <CardFooter className="p-8">
                 <div className="flex w-full items-center  justify-center gap-6  ">
-                    <Button color="primary" variant="flat" radius="full" size="lg" className="text-base" isIconOnly>
-                        <AiOutlineEye className="min-w-min text-lg" />
-                    </Button>
+                    <Tooltip showArrow={true} radius="sm" content="View more" placement="top">
+                        <Button color="primary" variant="flat" radius="full" size="lg" className="text-base" isIconOnly>
+                            <AiOutlineEye className="min-w-min text-lg" />
+                        </Button>
+                    </Tooltip>
 
-                    <Button color="success" variant="flat" radius="full" size="lg" className="text-base" isIconOnly as={Link} href={`/categories/edit/${slug}`}>
-                        <AiOutlineEdit className="min-w-min text-lg" />
-                    </Button>
+                    <Tooltip showArrow={true} radius="sm" content="Edit" placement="top">
+                        <Button color="success" variant="flat" radius="full" size="lg" className="text-base" isIconOnly as={Link} href={`/categories/edit/${slug}`}>
+                            <AiOutlineEdit className="min-w-min text-lg" />
+                        </Button>
+                    </Tooltip>
 
-                    <Button color="danger" variant="flat" radius="full" size="lg" className="text-base" isIconOnly>
-                        <AiOutlineDelete className="min-w-min text-lg" />
-                    </Button>
+                    <Tooltip showArrow={true} radius="sm" content="Delete" placement="top">
+                        <Button color="danger" variant="flat" radius="full" size="lg" className="text-base" isIconOnly>
+                            <AiOutlineDelete className="min-w-min text-lg" />
+                        </Button>
+                    </Tooltip>
                 </div>
             </CardFooter>
         </Card>

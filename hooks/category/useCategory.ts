@@ -14,6 +14,7 @@ const useCategory = () => {
         setIsLoading(true);
         try {
             const response = await axios.get(API_URLS.getSingleCategory(id));
+
             if (response.status !== 200) throw new Error('Something Went Wrong!');
             setCategory(response.data?.data);
             setIsLoading(false);
