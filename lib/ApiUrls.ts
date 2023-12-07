@@ -19,6 +19,7 @@ const API_URLS = {
     getCategories: '/categories',
     getSingleCategory: (categoryId: string) => `/categories/${categoryId}`,
     updateCategory: (categoryId: string) => `/categories/${categoryId}`,
+    deleteCategory: (categoryId: string) => `/categories/${categoryId}`,
 
     // forgetPassword: "/auth/seller/forgetpassword",
     // resetPassword: "/auth/seller/resetpassword",

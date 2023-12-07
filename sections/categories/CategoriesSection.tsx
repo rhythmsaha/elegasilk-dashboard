@@ -4,7 +4,7 @@ import { Card, Skeleton, Spinner } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 
 const CategoriesSection = () => {
-    const { categories, isLoading, error, getCategories } = useFetchCategory();
+    const { categories, isLoading, error, getCategories, deleteCategory } = useFetchCategory();
 
     useEffect(() => {
         // delay
@@ -22,7 +22,7 @@ const CategoriesSection = () => {
     return (
         <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {categories.map((category) => (
-                <CategoryCard key={category._id} category={category} />
+                <CategoryCard key={category._id} category={category} onDelete={deleteCategory} />
             ))}
         </div>
     );

@@ -24,7 +24,12 @@ const useFetchCategory = () => {
         }
     }, []);
 
-    return { categories, isLoading, error, getCategories };
+    // delete a category from state with id
+    const deleteCategory = (id: string) => {
+        setCategories((prevCategories) => prevCategories.filter((category) => category._id !== id));
+    };
+
+    return { categories, isLoading, error, getCategories, deleteCategory };
 };
 
 export default useFetchCategory;
