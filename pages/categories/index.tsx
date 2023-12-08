@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { NextPageWithLayout } from '../_app';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import PageName from '@/components/ui/PageName';
-import { Avatar, Button, Card, CardFooter, Divider, Image } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { BiPlus } from 'react-icons/bi';
-import { faker } from '@faker-js/faker';
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
-import CategoryCard from '@/components/categories/CategoryCard';
+
 import CategoriesSection from '@/sections/categories/CategoriesSection';
 // import Image from 'next/image';
 

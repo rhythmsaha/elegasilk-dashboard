@@ -11,7 +11,7 @@ interface CreateNewButtonProps {
     Icon?: JSX.Element;
 }
 
-const CreateNewUserButton: FC<CreateNewButtonProps> = ({ as, href, onClick, Icon, text }) => {
+const CreateNewButton: FC<CreateNewButtonProps> = ({ as, href, onClick, Icon, text }) => {
     return (
         <Button as={as} href={href || undefined} onClick={onClick} variant="shadow" color="primary">
             <span>{Icon}</span>
@@ -20,4 +20,4 @@ const CreateNewUserButton: FC<CreateNewButtonProps> = ({ as, href, onClick, Icon
     );
 };
 
-export default CreateNewUserButton;
+export default CreateNewButton;
