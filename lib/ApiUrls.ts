@@ -21,6 +21,9 @@ const API_URLS = {
     updateCategory: (categoryId: string) => `/categories/${categoryId}`,
     deleteCategory: (categoryId: string) => `/categories/${categoryId}`,
 
+    // Sub Categories
+    createSubCategory: '/api/subcategories/create-new',
+
     // forgetPassword: "/auth/seller/forgetpassword",
     // resetPassword: "/auth/seller/resetpassword",
     // updatePassword: "/auth/seller/changepassword",
