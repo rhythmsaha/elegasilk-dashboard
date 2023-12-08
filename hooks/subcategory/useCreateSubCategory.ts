@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
-type APICreateFunction = (subcategory: any) => void;
+type APICreateFunction = (subcategory: any, categorySlug?: string) => void;
 
 const useCreateSubCategory = () => {
     const router = useRouter();
 
-    const createSubCategory: APICreateFunction = async (subcategory: any) => {
+    const createSubCategory: APICreateFunction = async (subcategory, categorySlug) => {
         try {
             toast.dismiss();
             if (!subcategory) throw new Error('Sub Category is required!');
@@ -17,7 +17,7 @@ const useCreateSubCategory = () => {
             const response = await axios.post(API_URLS.createSubCategory, subcategory);
             if (response.status !== 201) throw new Error('Something Went Wrong!');
 
-            await router.push(`/categories`);
+            await router.push(`/categories/${categorySlug}`);
 
             toast.success('Sub Category Created Successfully!');
         } catch (error: any) {

@@ -1,11 +1,13 @@
+import { ICategory } from '@/components/categories/CategoryCard';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
+import { ISubCategory } from '@/components/subcategories/SubCategoryCard';
 import FullScreenSpinner from '@/components/ui/FullScreenSpinner';
 import PageName, { INavLink } from '@/components/ui/PageName';
 import CreateNewButton from '@/components/ui/buttons/CreateNewButton';
 import API_URLS from '@/lib/ApiUrls';
 import { NextPageWithLayout } from '@/pages/_app';
+import SubCategoriesSetion from '@/sections/subcategories/SubCategoriesSetion';
 import axios from '@/utils/axios';
-import { Spinner } from '@nextui-org/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -19,21 +21,19 @@ const CategoryPage: NextPageWithLayout = () => {
     ]);
 
     const [isLoading, setIsLoading] = useState(true);
-    const [subcategories, setSubcategories] = useState([]);
-    const [category, setCategory] = useState<any>();
+    const [subcategories, setSubcategories] = useState<ISubCategory[]>([]);
+    const [category, setCategory] = useState<ICategory>();
 
     const router = useRouter();
 
     useEffect(() => {
         setIsLoading(true);
         axios
-            .get(API_URLS.getSingleCategory('fabric') + '?subcategories=true', {})
+            .get(API_URLS.getSingleCategory(router.query.slug as string) + '?subcategories=true', {})
             .then((response) => {
                 setSubcategories(response.data.data.subcategories);
                 const categoryObj = { ...response.data.data };
                 delete categoryObj.subcategories;
-
-                console.log(categoryObj);
 
                 setCategory(categoryObj);
                 setBreadCumbs([
@@ -50,6 +50,12 @@ const CategoryPage: NextPageWithLayout = () => {
             });
     }, []);
 
+    const onDelete = (id: string) => {
+        // filter subcategories
+        const newSubCategories = subcategories.filter((subcategory) => subcategory._id !== id);
+        setSubcategories(newSubCategories);
+    };
+
     if (isLoading && !category) {
         return <FullScreenSpinner />;
     }
@@ -62,10 +68,12 @@ const CategoryPage: NextPageWithLayout = () => {
                 Button={CreateNewButton.bind(null, {
                     text: 'Create New',
                     Icon: <BiPlus />,
-                    href: '/subcategories/new/' + category?._id,
+                    href: '/subcategories/new/' + category?.slug,
                     as: Link,
                 })}
             />
+
+            <SubCategoriesSetion subcategories={subcategories} onDelete={onDelete} />
         </div>
     );
 };

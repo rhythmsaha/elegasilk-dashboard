@@ -33,7 +33,7 @@ const NewSubCategory: NextPageWithLayout = () => {
                 ]}
             />
 
-            <CreateSubCategorySection categoryId={categoryId} />
+            <CreateSubCategorySection categoryId={category?._id!} categorySlug={category?.slug} />
         </div>
     );
 };

@@ -23,7 +23,7 @@ const NewCategorySection = () => {
     const {
         handleSubmit,
         control,
-        formState: { errors, isSubmitting },
+        formState: { isSubmitting },
     } = useForm<IcategoryFormData>({ defaultValues: { status: true } });
 
     const { createCategory } = useCreateCategory();

@@ -1,11 +1,10 @@
 import { Avatar, Button, Card, CardFooter, Divider, Image, Tooltip, useDisclosure } from '@nextui-org/react';
-import Link from 'next/link';
-import React, { FC } from 'react';
-import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from 'react-icons/ai';
-import CategoryDeleteModal from './CategoryDeleteModal';
+import React from 'react';
 import CategoryStatusChip from '../ui/chip/CategoryStatusChip';
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from 'react-icons/ai';
+import Link from 'next/link';
 
-export interface ICategory {
+export interface ISubCategory {
     _id: string;
     name: string;
     slug: string;
@@ -17,11 +16,11 @@ export interface ICategory {
 }
 
 interface Props {
-    category: ICategory;
+    category: ISubCategory;
     onDelete: (id: string) => void;
 }
 
-const CategoryCard: FC<Props> = ({ category: { _id, image, name, slug, status }, onDelete }) => {
+const SubCategoryCard = ({ category: { _id, image, name, slug, status }, onDelete }: Props) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     return (
@@ -48,12 +47,6 @@ const CategoryCard: FC<Props> = ({ category: { _id, image, name, slug, status },
 
                 <CardFooter className="p-8">
                     <div className="flex w-full items-center  justify-center gap-6">
-                        <Tooltip showArrow={true} radius="sm" content="View more" placement="top">
-                            <Button color="primary" variant="flat" radius="full" size="lg" className="text-base" isIconOnly as={Link} href={`/categories/${slug}`}>
-                                <AiOutlineEye className="min-w-min text-lg" />
-                            </Button>
-                        </Tooltip>
-
                         <Tooltip showArrow={true} radius="sm" content="Edit" placement="top">
                             <Button color="success" variant="flat" radius="full" size="lg" className="text-base" isIconOnly as={Link} href={`/categories/edit/${slug}`}>
                                 <AiOutlineEdit className="min-w-min text-lg" />
@@ -71,9 +64,9 @@ const CategoryCard: FC<Props> = ({ category: { _id, image, name, slug, status },
                 <CategoryStatusChip status={status} />
             </Card>
 
-            <CategoryDeleteModal isOpen={isOpen} onOpenChange={onOpenChange} id={_id} onDelete={onDelete} />
+            {/* <CategoryDeleteModal isOpen={isOpen} onOpenChange={onOpenChange} id={_id} onDelete={onDelete} /> */}
         </>
     );
 };
 
-export default CategoryCard;
+export default SubCategoryCard;

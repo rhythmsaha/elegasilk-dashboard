@@ -19,9 +19,10 @@ export interface ISubCategoryFormData {
 
 interface Props {
     categoryId: string;
+    categorySlug?: string;
 }
 
-const CreateSubCategorySection: FC<Props> = ({ categoryId }) => {
+const CreateSubCategorySection: FC<Props> = ({ categoryId, categorySlug }) => {
     const [image, setImage] = useState<ImageFileType>();
 
     const {
@@ -52,7 +53,7 @@ const CreateSubCategorySection: FC<Props> = ({ categoryId }) => {
                 else throw new Error('Failed to upload image!');
             }
 
-            createSubCategory(payload);
+            createSubCategory(payload, categorySlug);
         } catch (error: any) {
             return toast.error(error.message);
         }
