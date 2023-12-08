@@ -1,7 +1,7 @@
 import { ICategory } from '@/components/categories/CategoryCard';
 import API_URLS from '@/lib/ApiUrls';
 import axios from '@/utils/axios';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 type APICreateFunction = (id: string) => void;
 

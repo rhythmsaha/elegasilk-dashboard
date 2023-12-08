@@ -2,14 +2,14 @@ import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import Link from 'next/link';
 import React, { FC } from 'react';
 
-interface navLink {
+export interface INavLink {
     title: string;
     href: string;
 }
 
 interface Props {
     title: string;
-    breadcrumb: navLink[];
+    breadcrumb: INavLink[];
     Button?: React.ElementType;
 }
 
@@ -19,9 +19,7 @@ const PageName: FC<Props> = ({ title, breadcrumb, Button }) => {
     return (
         <section className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex-1">
-                <h2 className="text-xl font-semibold md:text-2xl md:font-bold">
-                    {title}
-                </h2>
+                <h2 className="text-xl font-semibold md:text-2xl md:font-bold">{title}</h2>
 
                 {breadcrumb && (
                     <div className="mt-2">

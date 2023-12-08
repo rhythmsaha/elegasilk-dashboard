@@ -4,9 +4,10 @@ import React, { FC } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import validator from 'validator';
 import { inputClassNames } from '../myaccount/generalSection/GeneralForm';
+import { ISubCategoryFormData } from '@/sections/subcategories/CreateSubCategorySection';
 
 interface Props {
-    control: Control<IcategoryFormData>;
+    control: Control<IcategoryFormData | ISubCategoryFormData | any>;
 }
 
 const CategoryForm: FC<Props> = ({ control }) => {
