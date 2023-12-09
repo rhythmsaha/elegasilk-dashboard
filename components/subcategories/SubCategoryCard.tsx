@@ -3,6 +3,7 @@ import React from 'react';
 import CategoryStatusChip from '../ui/chip/CategoryStatusChip';
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from 'react-icons/ai';
 import Link from 'next/link';
+import { ICategory } from '../categories/CategoryCard';
 
 export interface ISubCategory {
     _id: string;
@@ -13,6 +14,7 @@ export interface ISubCategory {
     image: string;
     createdAt: string;
     updatedAt: string;
+    category?: ICategory;
 }
 
 interface Props {
@@ -48,7 +50,7 @@ const SubCategoryCard = ({ category: { _id, image, name, slug, status }, onDelet
                 <CardFooter className="p-8">
                     <div className="flex w-full items-center  justify-center gap-6">
                         <Tooltip showArrow={true} radius="sm" content="Edit" placement="top">
-                            <Button color="success" variant="flat" radius="full" size="lg" className="text-base" isIconOnly as={Link} href={`/categories/edit/${slug}`}>
+                            <Button color="success" variant="flat" radius="full" size="lg" className="text-base" isIconOnly as={Link} href={`/subcategories/edit/${_id}`}>
                                 <AiOutlineEdit className="min-w-min text-lg" />
                             </Button>
                         </Tooltip>

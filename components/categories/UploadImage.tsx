@@ -42,7 +42,7 @@ const UploadImage: FC<IUploadImageProps> = ({ defaultImage, image, setImage }) =
                 >
                     {image?.preview && <Image src={image.preview} removeWrapper className="h-full w-full rounded-full object-cover" alt="" />}
 
-                    {defaultImage && !image?.preview && <Image src={defaultImage} className="relative h-full w-full rounded-full border object-cover" alt="" />}
+                    {defaultImage && !image?.preview && <Image src={defaultImage} className="relative h-full w-full rounded-full border object-cover object-top" removeWrapper alt="" />}
 
                     {!image?.preview && !defaultImage && <BiImageAdd className="h-full w-full rounded-full border p-10 text-gray-500" />}
 
