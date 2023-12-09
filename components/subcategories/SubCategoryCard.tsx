@@ -4,6 +4,7 @@ import CategoryStatusChip from '../ui/chip/CategoryStatusChip';
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from 'react-icons/ai';
 import Link from 'next/link';
 import { ICategory } from '../categories/CategoryCard';
+import SubCategoryDeleteModal from './SubCategoryDeleteModal';
 
 export interface ISubCategory {
     _id: string;
@@ -66,7 +67,7 @@ const SubCategoryCard = ({ category: { _id, image, name, slug, status }, onDelet
                 <CategoryStatusChip status={status} />
             </Card>
 
-            {/* <CategoryDeleteModal isOpen={isOpen} onOpenChange={onOpenChange} id={_id} onDelete={onDelete} /> */}
+            <SubCategoryDeleteModal isOpen={isOpen} onOpenChange={onOpenChange} id={_id} onDelete={onDelete} />
         </>
     );
 };

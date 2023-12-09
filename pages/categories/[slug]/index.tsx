@@ -48,7 +48,7 @@ const CategoryPage: NextPageWithLayout = () => {
             .finally(() => {
                 setIsLoading(false);
             });
-    }, []);
+    }, [router.query.slug]);
 
     const onDelete = (id: string) => {
         // filter subcategories
