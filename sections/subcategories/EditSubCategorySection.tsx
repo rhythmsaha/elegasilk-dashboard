@@ -8,6 +8,10 @@ import { Card } from '@nextui-org/react';
 import UploadImage from '@/components/categories/UploadImage';
 import CategoryStatus from '@/components/categories/CategoryStatus';
 import CategoryForm from '@/components/categories/CategoryForm';
+import toast from 'react-hot-toast';
+import uploadToCloudinary from '@/utils/uploadToCloudinary';
+import axios from '@/utils/axios';
+import API_URLS from '@/lib/ApiUrls';
 
 type Props = {
     subCategory: ISubCategory;
@@ -30,7 +34,38 @@ const EditSubCategorySection = ({ subCategory }: Props) => {
         },
     });
 
-    const onSubmit = async (data: ISubCategoryFormData) => {};
+    const onSubmit = async (data: ISubCategoryFormData) => {
+        if (!isDirty) return;
+        if (isSubmitting) return;
+        toast.dismiss();
+
+        const payload: any = { ...data };
+
+        try {
+            if (image) {
+                let imageUrl = await uploadToCloudinary(image);
+                if (imageUrl) payload.image = imageUrl;
+                else throw new Error('Failed to upload image!');
+            }
+
+            const response = await axios.put(API_URLS.updateSubCategory(subCategory._id), payload);
+
+            if (!response.data.success) throw new Error(response.data.message);
+
+            const newData = response.data.data;
+
+            reset((data) => ({
+                ...data,
+                status: newData.status,
+                name: newData.name,
+                description: newData.description,
+            }));
+
+            toast.success('Category updated successfully!');
+        } catch (error: any) {
+            toast.error('Failed to update category!');
+        }
+    };
 
     return (
         <div className="mt-10 lg:mt-20">

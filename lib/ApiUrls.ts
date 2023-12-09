@@ -24,6 +24,7 @@ const API_URLS = {
     // Sub Categories
     createSubCategory: '/subcategories/create-new',
     getSingleSubCategory: (subCategoryId: string) => `/subcategories/${subCategoryId}`,
+    updateSubCategory: (subCategoryId: string) => `/subcategories/${subCategoryId}`,
 
     // forgetPassword: "/auth/seller/forgetpassword",
     // resetPassword: "/auth/seller/resetpassword",
