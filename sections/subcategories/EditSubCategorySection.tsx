@@ -35,7 +35,7 @@ const EditSubCategorySection = ({ subCategory }: Props) => {
     });
 
     const onSubmit = async (data: ISubCategoryFormData) => {
-        if (!isDirty) return;
+        if (!isDirty && !image) return;
         if (isSubmitting) return;
         toast.dismiss();
 

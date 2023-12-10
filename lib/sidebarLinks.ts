@@ -1,4 +1,4 @@
-import { MdManageAccounts, MdSpeed } from 'react-icons/md';
+import { MdManageAccounts, MdOutlineCollectionsBookmark, MdSpeed } from 'react-icons/md';
 import { AiOutlineUser } from 'react-icons/ai';
 import { BiBell, BiCategory } from 'react-icons/bi';
 import { IoDocumentText } from 'react-icons/io5';
@@ -29,13 +29,22 @@ export const sidebarConfig: ISidebarConfig[] = [
     },
 
     {
+        id: 'inventoryMneu',
+        type: 'inventory',
+        menus: [
+            { id: 'categoriesmenu', title: 'Categories', icon: BiCategory, path: '/categories', roles: ['admin', 'superadmin', 'moderator'] },
+            { id: 'collectionsMenu', title: 'Collections', icon: MdOutlineCollectionsBookmark, path: '/collections', roles: ['admin', 'superadmin', 'moderator'] },
+            // { id: 'link3', title: 'Products', icon: BsFillCartFill, path: '/products' },
+        ],
+    },
+
+    {
         id: 'managementMenu',
         type: 'Management',
         menus: [
             { id: 'adminusersmenu', title: 'Users', icon: MdManageAccounts, path: '/users', roles: ['admin', 'superadmin'] },
-            // { id: 'customersmenu', title: 'Customers', icon: FaUserFriends, path: '/customers' },
-            { id: 'categoriesmenu', title: 'Categories', icon: BiCategory, path: '/categories', roles: ['admin', 'superadmin', 'moderator'] },
-            // { id: 'link3', title: 'Products', icon: BsFillCartFill, path: '/products' },
+            { id: 'customersmenu', title: 'Customers', icon: FaUserFriends, path: '/customers' },
+
             // { id: 'link4', title: 'Orders', icon: IoDocumentText, path: '/invoices' },
         ],
     },

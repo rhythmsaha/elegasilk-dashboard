@@ -1,15 +1,16 @@
-import { IcategoryFormData } from '@/sections/categories/NewCategorySection';
-import { Button, CardBody, Input, Textarea } from '@nextui-org/react';
+import { IColletionFormData } from '@/sections/collections/NewCollectionSection';
+import { CardBody, Input, Textarea } from '@nextui-org/react';
 import React, { FC } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { inputClassNames } from '../myaccount/generalSection/GeneralForm';
-import { ISubCategoryFormData } from '@/sections/subcategories/CreateSubCategorySection';
+import CategorySelect from './Input/CategorySelect';
+import useFetchCategory from '@/hooks/category/useFetchCategory';
 
 interface Props {
-    control: Control<IcategoryFormData | ISubCategoryFormData | any>;
+    control: Control<IColletionFormData>;
 }
 
-const CategoryForm: FC<Props> = ({ control }) => {
+const CollectionsForm: FC<Props> = ({ control }) => {
     return (
         <CardBody className="p-4 sm:p-6">
             <div className="space-y-4">
@@ -80,15 +81,11 @@ const CategoryForm: FC<Props> = ({ control }) => {
                         />
                     )}
                 />
-            </div>
 
-            <div className="mt-6">
-                <Button className="ml-auto block w-full  min-w-[120px] md:w-auto" variant="shadow" color="primary" type="submit" isDisabled={control._formState.isSubmitting}>
-                    {control._formState.isSubmitting ? 'Please Wait...' : 'Save Changes'}
-                </Button>
+                <CategorySelect />
             </div>
         </CardBody>
     );
 };
 
-export default CategoryForm;
+export default CollectionsForm;

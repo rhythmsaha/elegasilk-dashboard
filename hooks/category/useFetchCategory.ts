@@ -3,17 +3,24 @@ import API_URLS from '@/lib/ApiUrls';
 import axios from '@/utils/axios';
 import React, { useCallback, useState } from 'react';
 
-type APICreateFunction = () => void;
+type APICreateFunction = (populate?: boolean) => void;
 
 const useFetchCategory = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [categories, setCategories] = useState<ICategory[]>([]);
     const [error, setError] = useState<string | null>(null);
 
-    const getCategories: APICreateFunction = useCallback(async () => {
+    const getCategories: APICreateFunction = useCallback(async (populate = false) => {
         setIsLoading(true);
         try {
-            const response = await axios.get(API_URLS.getCategories);
+            let url = '';
+            if (populate) {
+                url = API_URLS.getCategories + '?populate=true';
+            } else {
+                url = API_URLS.getCategories;
+            }
+
+            const response = await axios.get(url);
             if (response.status !== 200) throw new Error('Something Went Wrong!');
             setCategories(response.data?.data);
             setIsLoading(false);
