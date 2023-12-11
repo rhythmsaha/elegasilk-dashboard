@@ -27,12 +27,9 @@ const API_URLS = {
     updateSubCategory: (subCategoryId: string) => `/subcategories/${subCategoryId}`,
     deleteSubCategory: (subCategoryId: string) => `/subcategories/${subCategoryId}`,
 
-    // forgetPassword: "/auth/seller/forgetpassword",
-    // resetPassword: "/auth/seller/resetpassword",
-    // updatePassword: "/auth/seller/changepassword",
-    // changeEmail: "/auth/seller/changeemail",
-    // verifyEmail: "/auth/seller/verifyemail",
-    // updateNotificationSettings: "/auth/seller/update_notification_settings",
+    // Collections
+    createCollection: '/collections/create-new',
+    getCollections: '/collections',
 };
 
 export default API_URLS;

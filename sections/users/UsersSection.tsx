@@ -8,7 +8,7 @@ import axios from '@/utils/axios';
 import paginate from '@/utils/paginate';
 import { Card, CardBody, Pagination, Selection, user } from '@nextui-org/react';
 import Fuse, { IFuseOptions } from 'fuse.js';
-import UsersFilter from '@/pages/users/UsersFilter';
+import UsersFilter from '@/components/users/UsersFilter';
 
 const fuseOptions: IFuseOptions<IUserTableData> = {
     isCaseSensitive: false,

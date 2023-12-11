@@ -5,6 +5,7 @@ import PageName from '@/components/ui/PageName';
 import CreateNewButton from '@/components/ui/buttons/CreateNewButton';
 import { BiPlus } from 'react-icons/bi';
 import Link from 'next/link';
+import CollectionsSection from '@/sections/collections/CollectionsSection';
 
 const CollectionPage: NextPageWithLayout = () => {
     return (
@@ -22,6 +23,8 @@ const CollectionPage: NextPageWithLayout = () => {
                     as: Link,
                 })}
             />
+
+            <CollectionsSection />
         </div>
     );
 };

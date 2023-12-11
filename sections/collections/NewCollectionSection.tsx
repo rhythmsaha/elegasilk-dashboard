@@ -3,9 +3,12 @@ import CategoryForm from '@/components/categories/CategoryForm';
 import CategoryStatus from '@/components/categories/CategoryStatus';
 import UploadImage from '@/components/categories/UploadImage';
 import CollectionsForm from '@/components/collections/CollectionsForm';
+import uploadToCloudinary from '@/utils/uploadToCloudinary';
 import { Card } from '@nextui-org/react';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import useCreateCollection from '@/hooks/collections/useCreateCollection.';
 
 export interface IColletionFormData {
     name: string;
@@ -22,11 +25,30 @@ const NewCollectionSection: React.FC = () => {
         handleSubmit,
         control,
         formState: { errors, isSubmitting },
-    } = useForm<IColletionFormData>({ defaultValues: { status: true, subcategory: '657348b78840612d2a0a8c6a' } });
+    } = useForm<IColletionFormData>({ defaultValues: { status: true } });
+
+    const { createCollection } = useCreateCollection();
 
     const submitHandler = async (data: IColletionFormData) => {
         if (isSubmitting) return;
-        console.log(data, image);
+
+        const payload: IColletionFormData = {
+            ...data,
+        };
+
+        try {
+            let imageUrl = null;
+
+            if (image) {
+                imageUrl = await uploadToCloudinary(image);
+                if (imageUrl) payload.image = imageUrl;
+                else throw new Error('Failed to upload image!');
+            }
+
+            createCollection(payload);
+        } catch (error: any) {
+            return toast.error(error.message);
+        }
     };
 
     return (
