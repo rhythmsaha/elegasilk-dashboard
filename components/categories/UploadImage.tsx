@@ -32,7 +32,7 @@ const UploadImage: FC<IUploadImageProps> = ({ defaultImage, image, setImage }) =
     };
 
     return (
-        <CardBody className="p-4 sm:p-6 ">
+        <CardBody className=" p-4 sm:p-6">
             <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed px-4 py-14 md:py-10">
                 <label
                     htmlFor="changeUserAvatar"

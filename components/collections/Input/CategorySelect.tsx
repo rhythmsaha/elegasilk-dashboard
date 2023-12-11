@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
-import { Select, SelectItem, SelectSection, Spinner } from '@nextui-org/react';
+import { Select, SelectItem, SelectProps, SelectSection, Spinner, forwardRef } from '@nextui-org/react';
 import useFetchCategory from '@/hooks/category/useFetchCategory';
+import { UseFormRegister } from 'react-hook-form';
+import { IColletionFormData } from '@/sections/collections/NewCollectionSection';
 
 const headingClasses = 'flex w-full z-20 py-3 px-2 bg-primary-50 text-primary-600 shadow-small rounded-small';
 
@@ -13,7 +15,12 @@ interface ICategorySelectData {
     subcategories?: [{ _id: string; name: string; slug: string }];
 }
 
-const CategorySelect = () => {
+type Props = Omit<SelectProps, 'children'> & {
+    register?: UseFormRegister<IColletionFormData>;
+    loading?: boolean;
+};
+
+const CategorySelect = forwardRef((props: Props, ref) => {
     const { categories, getCategories, isLoading, deleteCategory } = useFetchCategory();
 
     useEffect(() => {
@@ -21,14 +28,7 @@ const CategorySelect = () => {
     }, [getCategories]);
 
     return (
-        <Select
-            label="Select Category"
-            fullWidth
-            placeholder="Click here to choose"
-            scrollShadowProps={{
-                isEnabled: false,
-            }}
-        >
+        <Select {...props}>
             {isLoading ? (
                 <SelectItem key="loading" isDisabled>
                     <div className="flex items-center justify-center py-10">
@@ -60,6 +60,6 @@ const CategorySelect = () => {
             )}
         </Select>
     );
-};
+});
 
 export default CategorySelect;

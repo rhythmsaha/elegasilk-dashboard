@@ -22,7 +22,7 @@ const NewCollectionSection: React.FC = () => {
         handleSubmit,
         control,
         formState: { errors, isSubmitting },
-    } = useForm<IColletionFormData>({ defaultValues: { status: true } });
+    } = useForm<IColletionFormData>({ defaultValues: { status: true, subcategory: '657348b78840612d2a0a8c6a' } });
 
     const submitHandler = async (data: IColletionFormData) => {
         if (isSubmitting) return;
@@ -31,10 +31,13 @@ const NewCollectionSection: React.FC = () => {
 
     return (
         <div className="mt-10 lg:mt-20">
-            <form className="grid gap-5  lg:grid-cols-3" onSubmit={handleSubmit(submitHandler)}>
-                <Card shadow="sm" className="lg:col-span-1 ">
+            <form className="grid items-stretch gap-5 lg:grid-cols-3" onSubmit={handleSubmit(submitHandler)}>
+                <Card shadow="sm" className=" lg:col-span-1">
                     <UploadImage image={image} setImage={setImage} />
-                    <CategoryStatus control={control} />
+
+                    <div>
+                        <CategoryStatus control={control} />
+                    </div>
                 </Card>
 
                 <Card shadow="sm" className="lg:col-span-2">

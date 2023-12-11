@@ -1,5 +1,5 @@
 import { IColletionFormData } from '@/sections/collections/NewCollectionSection';
-import { CardBody, Input, Textarea } from '@nextui-org/react';
+import { Button, CardBody, Input, Textarea } from '@nextui-org/react';
 import React, { FC } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { inputClassNames } from '../myaccount/generalSection/GeneralForm';
@@ -82,7 +82,34 @@ const CollectionsForm: FC<Props> = ({ control }) => {
                     )}
                 />
 
-                <CategorySelect />
+                <Controller
+                    control={control}
+                    name="subcategory"
+                    render={({ field, formState, fieldState }) => (
+                        <CategorySelect
+                            {...field}
+                            defaultSelectedKeys={field.value ? [field.value] : []}
+                            label="Select Category"
+                            fullWidth
+                            placeholder="Click here to choose"
+                            scrollShadowProps={{
+                                isEnabled: false,
+                            }}
+                            variant="bordered"
+                            classNames={{ trigger: 'border-1 focus-within:border-2 focus-visible:border-2 focus:border-2 active:border-2' }}
+                            isDisabled={formState.isSubmitting}
+                            isInvalid={fieldState.invalid}
+                            className="md:order-6"
+                            mode="others"
+                        />
+                    )}
+                />
+            </div>
+
+            <div className="mt-8">
+                <Button className="ml-auto block w-full min-w-[120px] md:w-auto" variant="shadow" color="primary" type="submit">
+                    {control._formState.isSubmitting ? 'Please Wait...' : ' Save Changes'}
+                </Button>
             </div>
         </CardBody>
     );
