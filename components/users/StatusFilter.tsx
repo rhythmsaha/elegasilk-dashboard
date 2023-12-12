@@ -11,10 +11,7 @@ interface Props {
     setSelectedStatus: React.Dispatch<React.SetStateAction<Selection>>;
 }
 
-const StatusFilter: React.FC<Props> = ({
-    selectedStatus,
-    setSelectedStatus,
-}) => {
+const StatusFilter: React.FC<Props> = ({ selectedStatus, setSelectedStatus }) => {
     // Handle status selection change
     const handleStatusSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if (e.target.value === '') return setSelectedStatus(new Set());
@@ -22,15 +19,7 @@ const StatusFilter: React.FC<Props> = ({
     };
 
     return (
-        <Select
-            aria-label="Select Status"
-            placeholder="Status"
-            selectionMode="multiple"
-            className="w-48 flex-grow"
-            selectedKeys={selectedStatus}
-            onChange={handleStatusSelection}
-            label="Status"
-        >
+        <Select aria-label="Select Status" placeholder="Status" selectionMode="single" className="flex-grow" selectedKeys={selectedStatus} onChange={handleStatusSelection} label="Status">
             {statusOptions.map(({ name }) => (
                 <SelectItem key={name.toLowerCase()} value={name.toLowerCase()}>
                     {name}

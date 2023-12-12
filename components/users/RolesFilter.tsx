@@ -21,15 +21,7 @@ const RolesFilter: FC<Props> = ({ selectedRoles, setSelectedRoles }) => {
     };
 
     return (
-        <Select
-            aria-label="Select Roles"
-            placeholder="Select Roles"
-            label="Roles"
-            selectionMode="multiple"
-            className="w-48 flex-grow"
-            selectedKeys={selectedRoles}
-            onChange={handleRolesSelection}
-        >
+        <Select aria-label="Select Roles" placeholder="Select Roles" label="Roles" selectionMode="multiple" className="flex-grow" selectedKeys={selectedRoles} onChange={handleRolesSelection}>
             {rolesOptions.map(({ name, val }, index) => (
                 <SelectItem key={val.toLowerCase()} value={val.toLowerCase()}>
                     {name}

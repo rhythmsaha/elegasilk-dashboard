@@ -16,12 +16,12 @@ interface Props {
 
 const UsersFilter: React.FC<Props> = ({ onChange, searchState, selectedRoles, selectedStatus, setSelectedRoles, setSelectedStatus }) => {
     return (
-        <div className="flex w-full flex-col items-center justify-between gap-x-6 gap-y-2 md:flex-row">
-            <div className="w-full flex-grow md:w-auto">
+        <div className="grid w-full gap-x-4 gap-y-2 lg:grid-cols-12">
+            <div className="w-full flex-grow md:w-auto lg:col-span-8">
                 <TableSearch searchState={searchState} onChange={onChange} />
             </div>
 
-            <div className="flex w-full items-center justify-between gap-2 md:w-max">
+            <div className="grid w-full grid-cols-2 items-center justify-between gap-2 lg:col-span-4">
                 <StatusFilter selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} />
                 <RolesFilter selectedRoles={selectedRoles} setSelectedRoles={setSelectedRoles} />
             </div>
