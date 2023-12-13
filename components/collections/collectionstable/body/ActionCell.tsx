@@ -1,10 +1,9 @@
 import React from 'react';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, cn, useDisclosure } from '@nextui-org/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { useAuthStore } from '@/store/useAuthStore';
-import { PiProhibitBold } from 'react-icons/pi';
 import Link from 'next/link';
 import { DeleteDocumentIcon, EditDocumentIcon } from '@/components/users/usersTable/tableBody/ActionsCell';
+import CollectionDeleteModal from '../../CollectionDeleteModal';
 
 interface Props {
     collectionSlug: string;
@@ -14,7 +13,6 @@ interface Props {
 export const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0';
 
 const ActionsCell: React.FC<Props> = ({ collectionSlug, onDelete }) => {
-    const loggedInUserId = useAuthStore((state) => state.user?._id);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     return (
@@ -42,7 +40,7 @@ const ActionsCell: React.FC<Props> = ({ collectionSlug, onDelete }) => {
                 </DropdownMenu>
             </Dropdown>
 
-            {/* <UserDeleteModal isOpen={isOpen} onOpenChange={onOpenChange} userId={userId} onDelete={onDelete} /> */}
+            <CollectionDeleteModal isOpen={isOpen} onOpenChange={onOpenChange} id={collectionSlug} onDelete={onDelete} />
         </>
     );
 };

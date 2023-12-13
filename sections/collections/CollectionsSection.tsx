@@ -111,7 +111,11 @@ const CollectionsSection = () => {
         setIsLoading(false);
     }, [currentPage, debouncedSearchQuery, rowsPerPage, selectedSubCategory, sortBy, sortOrder, statusFilter]);
 
-    const deleteCollectionHandler = async (collectionId: string) => {};
+    const deleteCollectionHandler = async (collectionId: string) => {
+        const _collections = [...collections];
+        const _deletedcollections = _collections.filter((collection) => collection._id !== collectionId);
+        setCollections(_deletedcollections);
+    };
 
     const [, cancel] = useDebounce(() => setDebouncedSearchQuery(searchQuery), 500, [searchQuery]);
 

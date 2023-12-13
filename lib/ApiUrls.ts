@@ -31,6 +31,8 @@ const API_URLS = {
     createCollection: '/collections/create-new',
     getCollections: '/collections',
     getSingleCollection: (collectionId: string) => `/collections/${collectionId}`,
+    updateCollection: (collectionId: string) => `/collections/${collectionId}`,
+    deleteCollection: (collectionId: string) => `/collections/${collectionId}`,
 };
 
 export default API_URLS;
