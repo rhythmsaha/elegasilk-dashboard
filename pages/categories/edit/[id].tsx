@@ -20,7 +20,7 @@ const EditCategoryPage: NextPageWithLayout = () => {
 
     if (!category && isLoading) {
         return (
-            <div className="absolute inset-0 flex min-h-screen w-full items-center justify-center">
+            <div className="fullscreen-center">
                 <Spinner />
             </div>
         );
@@ -39,7 +39,7 @@ const EditCategoryPage: NextPageWithLayout = () => {
     }
 
     return (
-        <div className="mx-auto mt-2 w-11/12 max-w-screen-xl pb-20">
+        <div className="dashboard-xl">
             <PageName
                 title={`Edit Category - ${category.name}`}
                 breadcrumb={[

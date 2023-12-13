@@ -6,13 +6,14 @@ import { BsDash } from 'react-icons/bs';
 import StatusCell from '@/components/users/usersTable/tableBody/StatusCell';
 import formatTimestamp from '@/utils/formatTimestamp';
 import CollectionNameCell from './body/CollectionNameCell';
+import ActionsCell from './body/ActionCell';
 
 interface Props {
     collectionsData: ICollectionTableData[];
     sortBy: string;
     sortOrder: 'asc' | 'desc';
     changeSortHandler: (key: string) => void;
-    onDelete?: (collectionId: string) => void;
+    onDelete: (collectionId: string) => void;
 }
 
 const columns: IColumn[] = [
@@ -64,8 +65,7 @@ const CollectionsTable: FC<Props> = ({ changeSortHandler, collectionsData, sortB
                             <TableCell>{formatTimestamp(collection.updatedAt)}</TableCell>
 
                             <TableCell>
-                                {/* <ActionsCell userId={user._id} onDelete={onDelete} /> */}
-                                <span>1</span>
+                                <ActionsCell collectionSlug={collection._id} onDelete={onDelete} />
                             </TableCell>
                         </TableRow>
                     ))}

@@ -111,6 +111,8 @@ const CollectionsSection = () => {
         setIsLoading(false);
     }, [currentPage, debouncedSearchQuery, rowsPerPage, selectedSubCategory, sortBy, sortOrder, statusFilter]);
 
+    const deleteCollectionHandler = async (collectionId: string) => {};
+
     const [, cancel] = useDebounce(() => setDebouncedSearchQuery(searchQuery), 500, [searchQuery]);
 
     const onSeachChangeHandler = ({ currentTarget }: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,7 +138,9 @@ const CollectionsSection = () => {
 
                 {isLoading && <TableLoading rows={5} />}
 
-                {collections.length !== 0 && !isLoading && <CollectionsTable collectionsData={collections} changeSortHandler={changeSortHandler} sortBy={sortBy} sortOrder={sortOrder} />}
+                {collections.length !== 0 && !isLoading && (
+                    <CollectionsTable collectionsData={collections} changeSortHandler={changeSortHandler} sortBy={sortBy} sortOrder={sortOrder} onDelete={deleteCollectionHandler} />
+                )}
 
                 {collections.length === 0 && !isLoading && <EmptyState message="No Collections Found" />}
 

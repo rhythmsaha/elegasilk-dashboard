@@ -30,6 +30,7 @@ const API_URLS = {
     // Collections
     createCollection: '/collections/create-new',
     getCollections: '/collections',
+    getSingleCollection: (collectionId: string) => `/collections/${collectionId}`,
 };
 
 export default API_URLS;
