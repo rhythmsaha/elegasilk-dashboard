@@ -1,9 +1,8 @@
-import { MdManageAccounts, MdOutlineCollectionsBookmark, MdSpeed } from 'react-icons/md';
-import { AiOutlineUser } from 'react-icons/ai';
-import { BiBell, BiCategory } from 'react-icons/bi';
-import { IoDocumentText } from 'react-icons/io5';
-import { FaUserFriends } from 'react-icons/fa';
-import { BsFillCartFill } from 'react-icons/bs';
+import { MdAdminPanelSettings, MdInventory2, MdOutlineCollectionsBookmark, MdSpeed } from 'react-icons/md';
+import { BiCategory } from 'react-icons/bi';
+import { IoBagCheckOutline } from 'react-icons/io5';
+import { MdOutlineFormatColorFill } from 'react-icons/md';
+import { FaFileInvoice, FaUsers } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { IUserRoles } from '@/Typings';
 
@@ -34,7 +33,8 @@ export const sidebarConfig: ISidebarConfig[] = [
         menus: [
             { id: 'categoriesmenu', title: 'Categories', icon: BiCategory, path: '/categories', roles: ['admin', 'superadmin', 'moderator'] },
             { id: 'collectionsMenu', title: 'Collections', icon: MdOutlineCollectionsBookmark, path: '/collections', roles: ['admin', 'superadmin', 'moderator'] },
-            // { id: 'link3', title: 'Products', icon: BsFillCartFill, path: '/products' },
+            { id: 'colorsMenu', title: 'Colors', icon: MdOutlineFormatColorFill, path: '/colors', roles: ['admin', 'superadmin', 'moderator'] },
+            // { id: 'productsMenu', title: 'Products', icon: MdInventory2, path: '/products', roles: ['admin', 'superadmin', 'moderator'] },
         ],
     },
 
@@ -42,10 +42,10 @@ export const sidebarConfig: ISidebarConfig[] = [
         id: 'managementMenu',
         type: 'Management',
         menus: [
-            { id: 'adminusersmenu', title: 'Users', icon: MdManageAccounts, path: '/users', roles: ['admin', 'superadmin'] },
-            { id: 'customersmenu', title: 'Customers', icon: FaUserFriends, path: '/customers' },
-
-            // { id: 'link4', title: 'Orders', icon: IoDocumentText, path: '/invoices' },
+            { id: 'adminusersmenu', title: 'Users', icon: MdAdminPanelSettings, path: '/users', roles: ['admin', 'superadmin'] },
+            // { id: 'customersmenu', title: 'Customers', icon: FaUsers, path: '/customers' },
+            // { id: 'ordersMenu', title: 'Orders', icon: IoBagCheckOutline, path: '/orders' },
+            // { id: 'invoiceMenu', title: 'Invoices', icon: FaFileInvoice, path: '/invoices' },
         ],
     },
 ];
