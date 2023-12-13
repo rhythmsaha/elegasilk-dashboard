@@ -5,12 +5,13 @@ import { useCallback, useState } from 'react';
 type func = (id: string) => void;
 
 export interface ICollection {
+    _id: string;
     name: string;
     slug: string;
     description?: string;
     image?: string;
     status: boolean;
-    subcategory?: string;
+    subcategory: { name: string; slug: string; _id: string };
     createdAt: string;
     updatedAt: string;
 }

@@ -2,6 +2,7 @@ import DashboardLayout from '@/components/layouts/DashboardLayout';
 import PageName from '@/components/ui/PageName';
 import useCollection from '@/hooks/collections/useCollection';
 import { NextPageWithLayout } from '@/pages/_app';
+import EditCollectionsSection from '@/sections/collections/EditCollectionsSection';
 import { Spinner } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -46,6 +47,8 @@ const EditCollectionPage: NextPageWithLayout = () => {
                     { title: 'Edit Collection', href: router.asPath },
                 ]}
             />
+
+            <EditCollectionsSection collection={collection} />
         </div>
     );
 };
