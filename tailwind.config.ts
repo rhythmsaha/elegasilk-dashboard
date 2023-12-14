@@ -9,10 +9,15 @@ module.exports = {
         './app/**/*.{js,ts,jsx,tsx,mdx}',
         './pages/**/*.{js,ts,jsx,tsx,mdx}',
         './components/**/*.{js,ts,jsx,tsx,mdx}',
-        './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+        './sections/**/*.{js,ts,jsx,tsx,mdx}',
+        './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx,mdx}',
     ],
     theme: {
-        extend: {},
+        extend: {
+            gridTemplateColumns: {
+                '15': 'repeat(6, minmax(0, 1fr))',
+            },
+        },
     },
 
     plugins: [nextui()],

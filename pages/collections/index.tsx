@@ -9,7 +9,7 @@ import CollectionsSection from '@/sections/collections/CollectionsSection';
 
 const CollectionPage: NextPageWithLayout = () => {
     return (
-        <div className="mx-auto mt-2 w-11/12 max-w-screen-xl pb-20">
+        <div className="dashboard-xl">
             <PageName
                 title="Collections"
                 breadcrumb={[
