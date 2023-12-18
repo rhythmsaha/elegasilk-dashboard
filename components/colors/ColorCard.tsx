@@ -1,14 +1,15 @@
 import { Card, CardBody } from '@nextui-org/react';
 import React from 'react';
+import { Color } from 'react-color';
 
 type Props = {
-    hex: string;
+    hex: Color;
     name: string;
 };
 
 const ColorCard = ({ hex, name }: Props) => {
     const style: React.CSSProperties = {
-        backgroundColor: hex,
+        backgroundColor: hex as string,
     };
 
     return (

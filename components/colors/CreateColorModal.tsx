@@ -4,6 +4,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { ChromePicker, ChromePickerProps, Color, ColorChangeHandler, SketchPicker, SliderPicker } from 'react-color';
 import { PiPencil } from 'react-icons/pi';
 import { inputClassNames } from '../myaccount/generalSection/GeneralForm';
+import { IColor, useColorsStore } from '@/store/colors/useColors';
+import toast from 'react-hot-toast';
+import axios from '@/utils/axios';
+import API_URLS from '@/lib/ApiUrls';
 
 interface Props {
     isOpen: boolean;
@@ -19,6 +23,7 @@ interface IColorFromData {
 
 const CreateColorModal: FC<Props> = ({ id, isOpen, onCreate, onOpenChange }) => {
     const [color, setColor] = useState<Color>();
+    const dispatchColor = useColorsStore((state) => state.addColor);
 
     const colorChange: ColorChangeHandler = (color) => {
         setColor(color.hex);
@@ -27,10 +32,12 @@ const CreateColorModal: FC<Props> = ({ id, isOpen, onCreate, onOpenChange }) => 
     const {
         handleSubmit,
         control,
+
         formState: { isSubmitting },
     } = useForm<IColorFromData>();
 
     const submitHandler = async (data: IColorFromData) => {
+        toast.dismiss();
         if (isSubmitting) return;
 
         const payload: IColorFromData = {
@@ -40,16 +47,22 @@ const CreateColorModal: FC<Props> = ({ id, isOpen, onCreate, onOpenChange }) => 
         try {
             if (!color) throw new Error('Color is required!');
             payload.hex = color;
-
             console.log(payload);
-        } catch (error) {}
+            const response = await axios.post(API_URLS.createColor, payload);
+            if (response.status !== 201) throw new Error('Something Went Wrong!');
+            dispatchColor(response.data.data);
+            onOpenChange();
+            toast.success('Color Created Successfully!');
+        } catch (error: any) {
+            toast.error(error.message || 'Something went wrong!');
+        }
     };
 
     return (
         <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} hideCloseButton size="full">
             <ModalContent className="md:h-auto md:max-w-xl md:!rounded-2xl md:shadow-lg">
                 {(onClose) => (
-                    <form onSubmit={handleSubmit(submitHandler)}>
+                    <form onSubmit={handleSubmit(submitHandler)} className="h-full">
                         <ModalBody className="py-8">
                             <div className="flex flex-col items-center  gap-4 md:flex-row md:items-start">
                                 <div className="rounded-full bg-success-100 p-2.5">

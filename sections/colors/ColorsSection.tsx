@@ -1,22 +1,21 @@
 import ColorCard from '@/components/colors/ColorCard';
+import { useColorsStore } from '@/store/colors/useColors';
 import { faker } from '@faker-js/faker';
-import React from 'react';
-
-const createFakeColors = () => {
-    return Array.from({ length: 50 }).map(() => ({
-        hex: faker.internet.color(),
-        name: faker.internet.color(),
-    }));
-};
+import React, { useEffect } from 'react';
 
 type Props = {};
 
 const ColorsSection = (props: Props) => {
-    const _Colors = createFakeColors();
+    const { colors, error, isLoading, addColor, deleteColor, editColor, fetchColors } = useColorsStore((state) => state);
+
+    useEffect(() => {
+        fetchColors();
+    }, [fetchColors]);
+
     return (
         <div className="mt-8 ">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                {_Colors.map((_, i) => (
+                {colors.map((_, i) => (
                     <span key={i}>
                         <ColorCard hex={_.hex} name={_.name} />
                     </span>

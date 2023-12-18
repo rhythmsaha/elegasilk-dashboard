@@ -33,6 +33,10 @@ const API_URLS = {
     getSingleCollection: (collectionId: string) => `/collections/${collectionId}`,
     updateCollection: (collectionId: string) => `/collections/${collectionId}`,
     deleteCollection: (collectionId: string) => `/collections/${collectionId}`,
+
+    // Colors
+    createColor: '/colors/create-new',
+    getColors: '/colors',
 };
 
 export default API_URLS;
