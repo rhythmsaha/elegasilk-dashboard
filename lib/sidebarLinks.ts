@@ -1,10 +1,12 @@
-import { MdAdminPanelSettings, MdInventory2, MdOutlineCollectionsBookmark, MdSpeed } from 'react-icons/md';
+import { MdAdminPanelSettings, MdInventory2, MdOutlineAdminPanelSettings, MdOutlineCollectionsBookmark, MdOutlineShoppingCartCheckout, MdSpeed } from 'react-icons/md';
 import { BiCategory } from 'react-icons/bi';
 import { IoBagCheckOutline } from 'react-icons/io5';
 import { MdOutlineFormatColorFill } from 'react-icons/md';
 import { FaFileInvoice, FaUsers } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { IUserRoles } from '@/Typings';
+import { TbFileInvoice, TbHanger2 } from 'react-icons/tb';
+import { LiaUsersCogSolid } from 'react-icons/lia';
 
 export interface ISidebarLink {
     id: string;
@@ -34,7 +36,7 @@ export const sidebarConfig: ISidebarConfig[] = [
             { id: 'categoriesmenu', title: 'Categories', icon: BiCategory, path: '/categories', roles: ['admin', 'superadmin', 'moderator'] },
             { id: 'collectionsMenu', title: 'Collections', icon: MdOutlineCollectionsBookmark, path: '/collections', roles: ['admin', 'superadmin', 'moderator'] },
             { id: 'colorsMenu', title: 'Colors', icon: MdOutlineFormatColorFill, path: '/colors', roles: ['admin', 'superadmin', 'moderator'] },
-            // { id: 'productsMenu', title: 'Products', icon: MdInventory2, path: '/products', roles: ['admin', 'superadmin', 'moderator'] },
+            { id: 'productsMenu', title: 'Products', icon: TbHanger2, path: '/products', roles: ['admin', 'superadmin', 'moderator'] },
         ],
     },
 
@@ -42,10 +44,10 @@ export const sidebarConfig: ISidebarConfig[] = [
         id: 'managementMenu',
         type: 'Management',
         menus: [
-            { id: 'adminusersmenu', title: 'Users', icon: MdAdminPanelSettings, path: '/users', roles: ['admin', 'superadmin'] },
-            // { id: 'customersmenu', title: 'Customers', icon: FaUsers, path: '/customers' },
-            // { id: 'ordersMenu', title: 'Orders', icon: IoBagCheckOutline, path: '/orders' },
-            // { id: 'invoiceMenu', title: 'Invoices', icon: FaFileInvoice, path: '/invoices' },
+            { id: 'adminusersmenu', title: 'Users', icon: MdOutlineAdminPanelSettings, path: '/users', roles: ['admin', 'superadmin'] },
+            { id: 'customersmenu', title: 'Customers', icon: LiaUsersCogSolid, path: '/customers' },
+            { id: 'ordersMenu', title: 'Orders', icon: MdOutlineShoppingCartCheckout, path: '/orders' },
+            { id: 'invoiceMenu', title: 'Invoices', icon: TbFileInvoice, path: '/invoices' },
         ],
     },
 ];
