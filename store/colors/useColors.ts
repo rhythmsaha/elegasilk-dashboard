@@ -43,7 +43,7 @@ export const useColorsStore = create<IColorsStore>(
                     const response = await axios.get(API_URLS.getColors);
                     if (response.status !== 200) throw new Error('Error while fetching colors');
                     const { data } = response.data;
-                    const _colors = createFakeColors();
+
                     set(() => ({ colors: data }), false, 'Colors/fetchColors');
                 } catch (error) {
                     toast.error('Error while fetching colors');

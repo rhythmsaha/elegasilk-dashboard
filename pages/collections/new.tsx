@@ -6,7 +6,7 @@ import NewCollectionSection from '@/sections/collections/NewCollectionSection';
 
 const NewCollectionPage: NextPageWithLayout = () => {
     return (
-        <div className="mx-auto mt-2 w-11/12 max-w-screen-xl pb-20">
+        <>
             <PageName
                 title="New Collection"
                 breadcrumb={[
@@ -17,12 +17,16 @@ const NewCollectionPage: NextPageWithLayout = () => {
             />
 
             <NewCollectionSection />
-        </div>
+        </>
     );
 };
 
 NewCollectionPage.getLayout = function getLayout(page: any) {
-    return <DashboardLayout>{page}</DashboardLayout>;
+    return (
+        <DashboardLayout>
+            <div className="dashboard-xl">{page}</div>
+        </DashboardLayout>
+    );
 };
 
 export default NewCollectionPage;
