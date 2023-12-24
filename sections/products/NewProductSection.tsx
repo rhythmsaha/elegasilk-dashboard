@@ -13,6 +13,7 @@ export interface IProductFormData {
     description: string;
     content?: string;
     images?: string[];
+    sku?: string;
     MRP: number;
     price: number;
     published: boolean;

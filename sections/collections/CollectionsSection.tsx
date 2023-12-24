@@ -26,31 +26,6 @@ export interface ICollectionTableData {
     updatedAt: string;
 }
 
-const createFakeCollection = (): ICollectionTableData => {
-    return {
-        _id: faker.database.mongodbObjectId(),
-        name: faker.commerce.department(),
-        slug: faker.lorem.slug(),
-        image: faker.image.imageUrl(),
-        status: faker.datatype.boolean(),
-        subcategory: {
-            _id: faker.database.mongodbObjectId(),
-            name: faker.commerce.department(),
-            slug: faker.lorem.slug(),
-        },
-        createdAt: faker.date.past().toISOString(),
-        updatedAt: faker.date.past().toISOString(),
-    };
-};
-
-const createFakeCollections = (count: number): ICollectionTableData[] => {
-    const collections: ICollectionTableData[] = [];
-    for (let i = 0; i < count; i++) {
-        collections.push(createFakeCollection());
-    }
-    return collections;
-};
-
 const CollectionsSection = () => {
     const [selectedSubCategory, setSelectedSubCategory] = useState<Selection>(new Set([])); // State for subcategory selection filter
     const [searchQuery, setSearchQuery] = useState<string>(''); // State for search query filter

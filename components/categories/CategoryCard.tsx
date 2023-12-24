@@ -4,6 +4,7 @@ import React, { FC } from 'react';
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from 'react-icons/ai';
 import CategoryDeleteModal from './CategoryDeleteModal';
 import CategoryStatusChip from '../ui/chip/CategoryStatusChip';
+import { ISubCategory } from '../subcategories/SubCategoryCard';
 
 export interface ICategory {
     _id: string;
@@ -14,6 +15,7 @@ export interface ICategory {
     image: string;
     createdAt: string;
     updatedAt: string;
+    subcategories?: ISubCategory[];
 }
 
 interface Props {

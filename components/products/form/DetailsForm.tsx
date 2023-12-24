@@ -26,82 +26,78 @@ interface Props {
 const DetailsForm: FC<Props> = ({ control, images, setImages }) => {
     const [value, setValue] = useState('');
 
-    console.log(value);
-
     return (
-        <div>
-            <Card>
-                <CardBody className="p-4 lg:p-5">
-                    <div className="space-y-4 lg:space-y-6">
-                        <ProductFormSectionHeader title="Details" description="Title, short description, image..." />
-                        <Controller
-                            name="name"
-                            rules={{
-                                required: 'Product Title is required!',
-                                minLength: {
-                                    value: 10,
-                                    message: 'Product Title must be at least 10 characters',
-                                },
-                            }}
-                            control={control}
-                            render={({ field: { name, onBlur, onChange, value }, formState, fieldState: { invalid, error } }) => (
-                                <Input
-                                    name={name}
-                                    onValueChange={onChange}
-                                    defaultValue={value}
-                                    onBlur={onBlur}
-                                    type="text"
-                                    label="Product Title"
-                                    variant="bordered"
-                                    classNames={inputClassNames}
-                                    disabled={formState.isSubmitting}
-                                    isInvalid={invalid}
-                                    errorMessage={error?.message}
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="description"
-                            rules={{
-                                required: false,
-                                minLength: {
-                                    value: 30,
-                                    message: 'Description must be at least 30 characters long',
-                                },
+        <Card>
+            <CardBody className="p-4 lg:p-5">
+                <div className="space-y-4 lg:space-y-6">
+                    <ProductFormSectionHeader title="Details" description="Title, short description, image..." />
+                    <Controller
+                        name="name"
+                        rules={{
+                            required: 'Product Title is required!',
+                            minLength: {
+                                value: 10,
+                                message: 'Product Title must be at least 10 characters',
+                            },
+                        }}
+                        control={control}
+                        render={({ field: { name, onBlur, onChange, value }, formState, fieldState: { invalid, error } }) => (
+                            <Input
+                                name={name}
+                                onValueChange={onChange}
+                                defaultValue={value}
+                                onBlur={onBlur}
+                                type="text"
+                                label="Product Title"
+                                variant="bordered"
+                                classNames={inputClassNames}
+                                disabled={formState.isSubmitting}
+                                isInvalid={invalid}
+                                errorMessage={error?.message}
+                            />
+                        )}
+                    />
+                    <Controller
+                        name="description"
+                        rules={{
+                            required: false,
+                            minLength: {
+                                value: 30,
+                                message: 'Description must be at least 30 characters long',
+                            },
 
-                                maxLength: {
-                                    value: 300,
-                                    message: 'Description must not exceed 300 characters',
-                                },
-                            }}
-                            control={control}
-                            render={({ field: { name, onBlur, onChange, value }, formState, fieldState: { invalid, error } }) => (
-                                <Textarea
-                                    name={name}
-                                    onValueChange={onChange}
-                                    defaultValue={value}
-                                    onBlur={onBlur}
-                                    type="text"
-                                    label="Short Description"
-                                    variant="bordered"
-                                    classNames={{
-                                        ...inputClassNames,
-                                        input: 'min-h-auto md:min-h-[5rem]',
-                                    }}
-                                    disabled={formState.isSubmitting}
-                                    isInvalid={invalid}
-                                    errorMessage={error?.message}
-                                />
-                            )}
-                        />
+                            maxLength: {
+                                value: 300,
+                                message: 'Description must not exceed 300 characters',
+                            },
+                        }}
+                        control={control}
+                        render={({ field: { name, onBlur, onChange, value }, formState, fieldState: { invalid, error } }) => (
+                            <Textarea
+                                name={name}
+                                onValueChange={onChange}
+                                defaultValue={value}
+                                onBlur={onBlur}
+                                type="text"
+                                label="Short Description"
+                                variant="bordered"
+                                classNames={{
+                                    ...inputClassNames,
+                                    input: 'min-h-auto md:min-h-[5rem]',
+                                }}
+                                disabled={formState.isSubmitting}
+                                isInvalid={invalid}
+                                errorMessage={error?.message}
+                            />
+                        )}
+                    />
 
-                        <ReactQuill placeholder="Content" theme="bubble" value={value} onChange={setValue} className="z-10 h-44 rounded-xl border" />
+                    <ReactQuill placeholder="Content" theme="bubble" value={value} onChange={setValue} className="z-10 h-44 rounded-xl border" />
 
-                        <ImageForm images={images} setImages={setImages} />
-                    </div>
-                </CardBody>
-            </Card>
-        </div>
+                    <ImageForm images={images} setImages={setImages} />
+                </div>
+            </CardBody>
+        </Card>
     );
 };
 
