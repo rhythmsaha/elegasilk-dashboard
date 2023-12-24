@@ -49,7 +49,7 @@ const NewProductSection = (props: Props) => {
     return (
         <section className="mt-10">
             <form>
-                <ProductForm control={control} />
+                <ProductForm control={control} images={images} setImages={setImages} />
             </form>
         </section>
     );

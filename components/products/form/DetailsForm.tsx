@@ -14,13 +14,20 @@ import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.core.css';
 import 'react-quill/dist/quill.bubble.css';
 import dynamic from 'next/dynamic';
+import ImageForm from './ImageForm';
+import { ImageFileType } from '@/Typings';
 
 interface Props {
     control: Control<IProductFormData>;
+    images: ImageFileType[];
+    setImages: React.Dispatch<React.SetStateAction<ImageFileType[]>>;
 }
 
-const DetailsForm: FC<Props> = ({ control }) => {
+const DetailsForm: FC<Props> = ({ control, images, setImages }) => {
     const [value, setValue] = useState('');
+
+    console.log(value);
+
     return (
         <div>
             <Card>
@@ -90,15 +97,7 @@ const DetailsForm: FC<Props> = ({ control }) => {
 
                         <ReactQuill placeholder="Content" theme="bubble" value={value} onChange={setValue} className="z-10 h-44 rounded-xl border" />
 
-                        {/* Images */}
-                        {/* Stock */}
-                        {/* Category, SubCategory */}
-                        {/* Collection */}
-                        {/* Colors */}
-                        {/* MRP */}
-                        {/* Price */}
-                        {/* Published */}
-                        {/* Button */}
+                        <ImageForm images={images} setImages={setImages} />
                     </div>
                 </CardBody>
             </Card>
