@@ -35,7 +35,15 @@ const NewProductSection = (props: Props) => {
         handleSubmit,
         control,
         formState: { errors, isSubmitting },
-    } = useForm<IProductFormData>({ defaultValues: { published: true } });
+    } = useForm<IProductFormData>({
+        defaultValues: {
+            published: true,
+            attributes: Array.from({ length: 1 }, (_, index) => ({
+                category: ``,
+                subcategory: ``,
+            })) as never,
+        },
+    });
 
     const submitHandler = async (data: IProductFormData) => {
         if (isSubmitting) return;

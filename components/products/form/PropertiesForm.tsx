@@ -1,5 +1,5 @@
 import { IProductFormData } from '@/sections/products/NewProductSection';
-import { Card, CardBody, Input, Select, SelectItem } from '@nextui-org/react';
+import { Button, Card, CardBody, Input, Select, SelectItem } from '@nextui-org/react';
 import React, { FC, useEffect, useState } from 'react';
 import { Control, Controller, useFieldArray } from 'react-hook-form';
 import ProductFormSectionHeader from '../ProductFormSectionHeader';
@@ -28,6 +28,14 @@ const PropertiesForm: FC<Props> = ({ control }) => {
     useEffect(() => {
         getCategories(true);
     }, [getCategories]);
+
+    // useEffect(() => {
+    //     const defaultLength = 2; // Set your desired default length here
+
+    //     for (let i = 0; i < defaultLength; i++) {
+    //         append({ category: '', subcategory: '' }); // Append empty objects to match the default length
+    //     }
+    // }, [append]);
 
     return (
         <Card>
@@ -95,17 +103,50 @@ const PropertiesForm: FC<Props> = ({ control }) => {
                         <AttributesForm key={index} categories={categories} />
                     ))}
 
-                    <button
+                    <Button
                         type="button"
+                        variant="flat"
+                        color="primary"
+                        className="ml-auto block"
                         onClick={() => {
                             append({ category: '', subcategory: '' });
                         }}
                     >
-                        Add
-                    </button>
+                        Add More Attributes
+                    </Button>
 
-                    {/* Collection */}
-                    {/* Colors */}
+                    <div className="grid gap-x-2 gap-y-4 lg:grid-cols-2">
+                        <Select
+                            aria-label="Select Status"
+                            placeholder="Status"
+                            selectionMode="multiple"
+                            className="flex-grow"
+                            variant="bordered"
+                            classNames={inputClassNames}
+                            // selectedKeys={selectedStatus}
+                            // onChange={handleStatusSelection}
+                            label="Sub Category"
+                        >
+                            <SelectItem key={'_id'} value={'_id'}>
+                                {'name'}
+                            </SelectItem>
+                        </Select>
+                        <Select
+                            aria-label="Select Status"
+                            placeholder="Status"
+                            selectionMode="multiple"
+                            className="flex-grow"
+                            variant="bordered"
+                            classNames={inputClassNames}
+                            // selectedKeys={selectedStatus}
+                            // onChange={handleStatusSelection}
+                            label="Sub Category"
+                        >
+                            <SelectItem key={'_id'} value={'_id'}>
+                                {'name'}
+                            </SelectItem>
+                        </Select>
+                    </div>
                 </div>
             </CardBody>
         </Card>
