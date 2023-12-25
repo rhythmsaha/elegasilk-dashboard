@@ -1,8 +1,9 @@
 import { ImageFileType } from '@/Typings';
 import ProductForm from '@/components/products/ProductForm';
 import ProductFormSectionHeader from '@/components/products/ProductFormSectionHeader';
+import useFetchCategory from '@/hooks/category/useFetchCategory';
 import { Card, CardBody, CardHeader } from '@nextui-org/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 type Props = {};
@@ -22,6 +23,7 @@ export interface IProductFormData {
     stock?: number;
     attributes: [
         {
+            _id?: string;
             category: string;
             subcategory: string;
         },
@@ -38,10 +40,6 @@ const NewProductSection = (props: Props) => {
     } = useForm<IProductFormData>({
         defaultValues: {
             published: true,
-            attributes: Array.from({ length: 1 }, (_, index) => ({
-                category: ``,
-                subcategory: ``,
-            })) as never,
         },
     });
 

@@ -24,8 +24,6 @@ const ImageForm: FC<Props> = ({ images, setImages }) => {
         setImages((prev) => [...prev, ..._fileArray]);
     };
 
-    console.log(images);
-
     return (
         <div>
             <h3 className="mb-2 ml-1 text-lg font-semibold">Images</h3>

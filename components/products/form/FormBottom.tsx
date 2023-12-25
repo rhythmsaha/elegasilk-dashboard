@@ -11,7 +11,7 @@ const FormBottom = (props: Props) => {
     return (
         <Card>
             <CardBody className="p-4 lg:p-5">
-                <div className="flex flex-col justify-between lg:flex-row lg:items-center">
+                <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
                     <Switch defaultSelected aria-label="Automatic updates" size="sm">
                         Publish
                     </Switch>

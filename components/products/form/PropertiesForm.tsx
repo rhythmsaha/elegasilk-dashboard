@@ -19,10 +19,10 @@ interface Props {
 const PropertiesForm: FC<Props> = ({ control }) => {
     const [collections, setCollections] = useState<ICollection[]>([]);
 
-    const { getCategories, categories } = useFetchCategory();
+    const { getCategories, categories, isLoading: categoryLoading } = useFetchCategory();
     const { colors, fetchColors } = useColorsStore((state) => state);
 
-    const { fields, append, remove } = useFieldArray({
+    const { fields } = useFieldArray({
         control,
         name: 'attributes',
     });
@@ -30,6 +30,7 @@ const PropertiesForm: FC<Props> = ({ control }) => {
     const fetchCollections = useCallback(async () => {
         const queries = [];
         queries.push(`stopPagination=true`);
+        queries.push(`populateSubCategory=true`);
         const response = await axios.get(API_URLS.getCollections + `?${queries.join('&')}`);
         setCollections(response.data.data);
     }, []);
@@ -39,6 +40,18 @@ const PropertiesForm: FC<Props> = ({ control }) => {
         fetchCollections();
         fetchColors();
     }, [getCategories, fetchCollections, fetchColors]);
+
+    useEffect(() => {
+        control._reset({
+            attributes: categories.map((category) => ({
+                _id: category._id,
+                category: category.name,
+                subcategory: ``,
+            })) as [],
+        }) as any;
+    }, [categories, control]);
+
+    // Group the data by subcategory
 
     return (
         <Card>
@@ -102,27 +115,13 @@ const PropertiesForm: FC<Props> = ({ control }) => {
                         />
                     </div>
 
-                    {fields.map((field, index) => (
-                        <div className="flex items-center gap-2" key={index}>
-                            <AttributesForm categories={categories} />
+                    <div className="grid gap-x-2 gap-y-4 lg:grid-cols-2">
+                        {categoryLoading && <p>Loading...</p>}
 
-                            <Button isIconOnly radius="full" color="danger" onPress={() => remove(index)}>
-                                <MdDelete />
-                            </Button>
-                        </div>
-                    ))}
-
-                    <Button
-                        type="button"
-                        variant="flat"
-                        color="primary"
-                        className="ml-auto block"
-                        onClick={() => {
-                            append({ category: '', subcategory: '' });
-                        }}
-                    >
-                        Add More Attributes
-                    </Button>
+                        {fields.map((field, index) => (
+                            <AttributesForm key={index} categories={categories} field={field} />
+                        ))}
+                    </div>
 
                     <div className="grid gap-x-2 gap-y-4 lg:grid-cols-2">
                         <Select
