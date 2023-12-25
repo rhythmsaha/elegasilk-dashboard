@@ -18,7 +18,7 @@ const AttributesForm: FC<Props> = ({ categories }) => {
     };
 
     return (
-        <div className="grid gap-x-2 gap-y-4 lg:grid-cols-2">
+        <div className="grid flex-1 gap-x-2 gap-y-4 lg:grid-cols-2">
             <Autocomplete variant="bordered" defaultItems={categories} label="Category" name="cat1" placeholder="Search a Category" onSelectionChange={selectHandler}>
                 {(category) => <AutocompleteItem key={category._id}>{category.name}</AutocompleteItem>}
             </Autocomplete>

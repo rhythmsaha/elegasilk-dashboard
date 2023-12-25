@@ -78,7 +78,6 @@ const CollectionsSection = () => {
         if (sortOrder) queries.push(`sortorder=${sortOrder}`);
 
         const response = await axios.get(API_URLS.getCollections + `?${queries.join('&')}`);
-        console.log(response.data);
         setCollections(response.data.data);
         setmMaxPage(response.data.maxPage);
         setCurrentPage(response.data.currentPage);

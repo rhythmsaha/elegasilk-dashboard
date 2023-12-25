@@ -1,41 +1,44 @@
 import { IProductFormData } from '@/sections/products/NewProductSection';
 import { Button, Card, CardBody, Input, Select, SelectItem } from '@nextui-org/react';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Control, Controller, useFieldArray } from 'react-hook-form';
 import ProductFormSectionHeader from '../ProductFormSectionHeader';
 import { inputClassNames } from '@/components/myaccount/generalSection/GeneralForm';
-import { Autocomplete, AutocompleteItem } from '@nextui-org/react';
-import useCategory from '@/hooks/category/useCategory';
 import useFetchCategory from '@/hooks/category/useFetchCategory';
-import { ICategory } from '@/components/categories/CategoryCard';
-import { ISubCategory } from '@/components/subcategories/SubCategoryCard';
 import AttributesForm from './AttributesForm';
+import axios from '@/utils/axios';
+import API_URLS from '@/lib/ApiUrls';
+import { ICollection } from '@/hooks/collections/useCollection';
+import { MdDelete } from 'react-icons/md';
+import { useColorsStore } from '@/store/colors/useColors';
 
 interface Props {
     control: Control<IProductFormData>;
 }
 
 const PropertiesForm: FC<Props> = ({ control }) => {
-    const [selectedCategory, setselectedCategory] = useState<ISubCategory[]>([]);
+    const [collections, setCollections] = useState<ICollection[]>([]);
 
     const { getCategories, categories } = useFetchCategory();
+    const { colors, fetchColors } = useColorsStore((state) => state);
 
     const { fields, append, remove } = useFieldArray({
         control,
         name: 'attributes',
     });
 
+    const fetchCollections = useCallback(async () => {
+        const queries = [];
+        queries.push(`stopPagination=true`);
+        const response = await axios.get(API_URLS.getCollections + `?${queries.join('&')}`);
+        setCollections(response.data.data);
+    }, []);
+
     useEffect(() => {
         getCategories(true);
-    }, [getCategories]);
-
-    // useEffect(() => {
-    //     const defaultLength = 2; // Set your desired default length here
-
-    //     for (let i = 0; i < defaultLength; i++) {
-    //         append({ category: '', subcategory: '' }); // Append empty objects to match the default length
-    //     }
-    // }, [append]);
+        fetchCollections();
+        fetchColors();
+    }, [getCategories, fetchCollections, fetchColors]);
 
     return (
         <Card>
@@ -100,7 +103,13 @@ const PropertiesForm: FC<Props> = ({ control }) => {
                     </div>
 
                     {fields.map((field, index) => (
-                        <AttributesForm key={index} categories={categories} />
+                        <div className="flex items-center gap-2" key={index}>
+                            <AttributesForm categories={categories} />
+
+                            <Button isIconOnly radius="full" color="danger" onPress={() => remove(index)}>
+                                <MdDelete />
+                            </Button>
+                        </div>
                     ))}
 
                     <Button
@@ -117,34 +126,40 @@ const PropertiesForm: FC<Props> = ({ control }) => {
 
                     <div className="grid gap-x-2 gap-y-4 lg:grid-cols-2">
                         <Select
-                            aria-label="Select Status"
-                            placeholder="Status"
+                            aria-label="Choose Collections"
+                            placeholder="Choose Here"
                             selectionMode="multiple"
                             className="flex-grow"
                             variant="bordered"
                             classNames={inputClassNames}
                             // selectedKeys={selectedStatus}
                             // onChange={handleStatusSelection}
-                            label="Sub Category"
+                            label="Collections"
                         >
-                            <SelectItem key={'_id'} value={'_id'}>
-                                {'name'}
-                            </SelectItem>
+                            {collections &&
+                                collections.map((collection) => (
+                                    <SelectItem key={collection._id} value={collection._id}>
+                                        {collection.name}
+                                    </SelectItem>
+                                ))}
                         </Select>
+
                         <Select
-                            aria-label="Select Status"
-                            placeholder="Status"
+                            aria-label="Select Colors"
+                            placeholder="choose here"
                             selectionMode="multiple"
                             className="flex-grow"
                             variant="bordered"
                             classNames={inputClassNames}
                             // selectedKeys={selectedStatus}
                             // onChange={handleStatusSelection}
-                            label="Sub Category"
+                            label="Select Colors"
                         >
-                            <SelectItem key={'_id'} value={'_id'}>
-                                {'name'}
-                            </SelectItem>
+                            {colors.map((color) => (
+                                <SelectItem key={color._id} value={color._id}>
+                                    {color.name}
+                                </SelectItem>
+                            ))}
                         </Select>
                     </div>
                 </div>

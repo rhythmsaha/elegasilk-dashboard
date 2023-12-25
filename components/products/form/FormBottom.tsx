@@ -1,4 +1,5 @@
 import { IProductFormData } from '@/sections/products/NewProductSection';
+import { Button, Card, CardBody, Switch, cn } from '@nextui-org/react';
 import React from 'react';
 import { Control } from 'react-hook-form';
 
@@ -8,11 +9,19 @@ interface Props {
 
 const FormBottom = (props: Props) => {
     return (
-        <div>
-            FormBottom
-            {/* Published */}
-            {/* Button */}
-        </div>
+        <Card>
+            <CardBody className="p-4 lg:p-5">
+                <div className="flex flex-col justify-between lg:flex-row lg:items-center">
+                    <Switch defaultSelected aria-label="Automatic updates" size="sm">
+                        Publish
+                    </Switch>
+
+                    <Button variant="shadow" color="primary">
+                        Create Product
+                    </Button>
+                </div>
+            </CardBody>
+        </Card>
     );
 };
 
