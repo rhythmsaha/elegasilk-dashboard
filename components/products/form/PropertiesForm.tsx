@@ -1,25 +1,23 @@
 import { IProductFormData } from '@/sections/products/NewProductSection';
-import { Button, Card, CardBody, Input, Select, SelectItem } from '@nextui-org/react';
+import { Card, CardBody, Input, Select, SelectItem } from '@nextui-org/react';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Control, Controller, useFieldArray } from 'react-hook-form';
 import ProductFormSectionHeader from '../ProductFormSectionHeader';
 import { inputClassNames } from '@/components/myaccount/generalSection/GeneralForm';
-import useFetchCategory from '@/hooks/category/useFetchCategory';
 import AttributesForm from './AttributesForm';
 import axios from '@/utils/axios';
 import API_URLS from '@/lib/ApiUrls';
 import { ICollection } from '@/hooks/collections/useCollection';
-import { MdDelete } from 'react-icons/md';
 import { useColorsStore } from '@/store/colors/useColors';
+import { ICategory } from '@/components/categories/CategoryCard';
 
 interface Props {
     control: Control<IProductFormData>;
+    categories: ICategory[];
 }
 
-const PropertiesForm: FC<Props> = ({ control }) => {
+const PropertiesForm: FC<Props> = ({ control, categories }) => {
     const [collections, setCollections] = useState<ICollection[]>([]);
-
-    const { getCategories, categories, isLoading: categoryLoading } = useFetchCategory();
     const { colors, fetchColors } = useColorsStore((state) => state);
 
     const { fields } = useFieldArray({
@@ -36,22 +34,9 @@ const PropertiesForm: FC<Props> = ({ control }) => {
     }, []);
 
     useEffect(() => {
-        getCategories(true);
         fetchCollections();
         fetchColors();
-    }, [getCategories, fetchCollections, fetchColors]);
-
-    useEffect(() => {
-        control._reset({
-            attributes: categories.map((category) => ({
-                _id: category._id,
-                category: category.name,
-                subcategory: ``,
-            })) as [],
-        }) as any;
-    }, [categories, control]);
-
-    // Group the data by subcategory
+    }, [fetchCollections, fetchColors]);
 
     return (
         <Card>
@@ -63,7 +48,7 @@ const PropertiesForm: FC<Props> = ({ control }) => {
                         <Controller
                             name="sku"
                             rules={{
-                                required: 'SKU is required!',
+                                // required: 'SKU is required!',
                                 minLength: {
                                     value: 5,
                                     message: 'SKU must be at least 5 characters',
@@ -90,7 +75,7 @@ const PropertiesForm: FC<Props> = ({ control }) => {
                         <Controller
                             name="stock"
                             rules={{
-                                required: 'stock is required!',
+                                // required: 'stock is required!',
                                 minLength: {
                                     value: 5,
                                     message: 'SKU must be at least 5 characters',
@@ -116,10 +101,8 @@ const PropertiesForm: FC<Props> = ({ control }) => {
                     </div>
 
                     <div className="grid gap-x-2 gap-y-4 lg:grid-cols-2">
-                        {categoryLoading && <p>Loading...</p>}
-
                         {fields.map((field, index) => (
-                            <AttributesForm key={index} categories={categories} field={field} />
+                            <AttributesForm key={index} index={index} categories={categories} field={field} control={control} />
                         ))}
                     </div>
 
