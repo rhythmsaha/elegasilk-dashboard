@@ -55,8 +55,9 @@ const NewProductSection: FC = () => {
     const submitHandler = async (data: IProductFormData) => {
         if (isSubmitting) return;
 
-        const payload: IProductFormData = {
+        const payload: any = {
             ...data,
+            images: images.map((img) => img.publicUrl),
         };
 
         // console.log(payload.attributes[0].subcategory.split(','));

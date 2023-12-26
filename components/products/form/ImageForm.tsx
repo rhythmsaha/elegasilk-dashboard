@@ -6,6 +6,7 @@ import { FileUploader } from 'react-drag-drop-files';
 import { MdAddPhotoAlternate } from 'react-icons/md';
 import { PiXCircleDuotone } from 'react-icons/pi';
 import ImageFormImagesGrid from './ImageFormImagesGrid';
+import uploadToCloudinary from '@/utils/uploadToCloudinary';
 
 interface Props {
     images: ImageFileType[];
@@ -15,14 +16,28 @@ interface Props {
 const fileTypes = ['JPG', 'PNG', 'GIF'];
 
 const ImageForm: FC<Props> = ({ images, setImages }) => {
-    const handleChange = (_file: object) => {
+    const handleChange = async (_file: object) => {
         const _fileArray = Object.values(_file) as ImageFileType[];
 
         _fileArray.map((file: File) => {
             createImageBlob(file, 10240000000000);
         });
 
+        let _previmages = [...images];
+
         setImages((prev) => [...prev, ..._fileArray]);
+
+        const _images = await Promise.all(
+            _fileArray.map(async (file) => {
+                const _image = await uploadToCloudinary(file);
+                return {
+                    ...file,
+                    publicUrl: _image,
+                };
+            })
+        );
+
+        setImages([..._previmages, ..._images]);
     };
 
     const deleteImageHandler = (id: string) => {
