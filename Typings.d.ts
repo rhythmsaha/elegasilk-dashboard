@@ -14,5 +14,6 @@ export interface IUserAccount {
 }
 
 type ImageFileType = File & {
+    id: string;
     preview: string;
 };

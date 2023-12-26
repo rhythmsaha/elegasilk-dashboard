@@ -9,6 +9,7 @@ const createImageBlob: (file: File, maxSize: number) => ImageFileType = (file, m
 
         const imageBlob = Object.assign(file, {
             preview: URL.createObjectURL(file),
+            id: Math.random().toString(36).substr(2, 9),
         });
 
         if (!imageBlob) throw new Error('Error creating image blob');

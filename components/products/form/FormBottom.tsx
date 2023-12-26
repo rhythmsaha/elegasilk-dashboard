@@ -16,7 +16,7 @@ const FormBottom = (props: Props) => {
                         Publish
                     </Switch>
 
-                    <Button variant="shadow" color="primary">
+                    <Button variant="shadow" color="primary" type="submit">
                         Create Product
                     </Button>
                 </div>

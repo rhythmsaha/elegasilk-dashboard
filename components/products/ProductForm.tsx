@@ -17,8 +17,8 @@ const ProductForm: FC<Props> = ({ control, images, setImages }) => {
     return (
         <div className="space-y-6">
             <DetailsForm control={control} images={images} setImages={setImages} />
-            <PropertiesForm control={control} />
-            <PricingForm control={control} />
+            {/* <PropertiesForm control={control} /> */}
+            {/* <PricingForm control={control} /> */}
             <FormBottom control={control} />
         </div>
     );

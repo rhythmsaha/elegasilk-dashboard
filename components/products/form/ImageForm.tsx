@@ -5,6 +5,7 @@ import { FC } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 import { MdAddPhotoAlternate } from 'react-icons/md';
 import { PiXCircleDuotone } from 'react-icons/pi';
+import ImageFormImagesGrid from './ImageFormImagesGrid';
 
 interface Props {
     images: ImageFileType[];
@@ -24,10 +25,15 @@ const ImageForm: FC<Props> = ({ images, setImages }) => {
         setImages((prev) => [...prev, ..._fileArray]);
     };
 
+    const deleteImageHandler = (id: string) => {
+        setImages((prev) => prev.filter((img) => img.id !== id));
+    };
+
     return (
-        <div>
+        <section>
             <h3 className="mb-2 ml-1 text-lg font-semibold">Images</h3>
-            <div className="overflow-hidden rounded-xl border-2 border-dashed">
+
+            <div className="overflow-hidden rounded-xl border-2 border-dashed transition duration-250 ease-in hover:border-primary-200">
                 <FileUploader handleChange={handleChange} name="file" types={fileTypes} multiple>
                     <div className="flex cursor-pointer flex-col items-center justify-center rounded-xl bg-gray-50 p-8 transition duration-250 hover:bg-gray-100">
                         <MdAddPhotoAlternate className="text-9xl text-gray-400" />
@@ -39,21 +45,8 @@ const ImageForm: FC<Props> = ({ images, setImages }) => {
                 </FileUploader>
             </div>
 
-            <div className="mt-4">
-                <div className="grid grid-cols-4 gap-2 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 ">
-                    {images.length > 0 &&
-                        images.map((f) => (
-                            <div key={f.name + f.lastModified.toLocaleString()} className="relative">
-                                <Image removeWrapper src={f.preview} alt="" className="m-0 aspect-square h-full w-full border-2 border-default-200 object-cover p-0" />
-
-                                <button className="absolute left-1 top-1 z-10" type="button">
-                                    <PiXCircleDuotone className="absolute text-xl text-default-500" />
-                                </button>
-                            </div>
-                        ))}
-                </div>
-            </div>
-        </div>
+            <ImageFormImagesGrid images={images} onDelete={deleteImageHandler} />
+        </section>
     );
 };
 

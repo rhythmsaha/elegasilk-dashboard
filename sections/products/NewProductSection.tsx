@@ -39,6 +39,9 @@ const NewProductSection = (props: Props) => {
         formState: { errors, isSubmitting },
     } = useForm<IProductFormData>({
         defaultValues: {
+            content: '<p><strong>sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd</strong></p><h2>sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd</h2>',
+            description: 'sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd',
+            name: 'dsadsdsadsads',
             published: true,
         },
     });
@@ -55,7 +58,7 @@ const NewProductSection = (props: Props) => {
 
     return (
         <section className="mt-10">
-            <form>
+            <form onSubmit={handleSubmit(submitHandler)}>
                 <ProductForm control={control} images={images} setImages={setImages} />
             </form>
         </section>
