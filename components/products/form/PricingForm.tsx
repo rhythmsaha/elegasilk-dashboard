@@ -30,7 +30,7 @@ const PricingForm = ({ control }: Props) => {
                             <Input
                                 name={name}
                                 onValueChange={onChange}
-                                // defaultValue={value}
+                                defaultValue={value?.toString()}
                                 onBlur={onBlur}
                                 type="number"
                                 min={0}
@@ -59,7 +59,7 @@ const PricingForm = ({ control }: Props) => {
                             <Input
                                 name={name}
                                 onValueChange={onChange}
-                                // defaultValue={value}
+                                defaultValue={value?.toString()}
                                 onBlur={onBlur}
                                 type="number"
                                 min={0}

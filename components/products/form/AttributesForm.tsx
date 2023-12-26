@@ -18,15 +18,6 @@ const AttributesForm: FC<Props> = ({ categories, field, control, index }) => {
     const _selectedCategory = categories.find((category) => category._id === field._id);
     const subCategories = _selectedCategory?.subcategories || [];
 
-    // // console.log(field);
-
-    // useEffect(() => {
-    //     if (!field._id) return;
-    //     const _selectedCategory = categories.find((category) => category._id === field._id);
-
-    //     _selectedCategory.subcategories.length > 0 && setSubCategories(_selectedCategory!.subcategories!);
-    // }, [field._id, categories]);
-
     return (
         <div className="w-full">
             <Controller

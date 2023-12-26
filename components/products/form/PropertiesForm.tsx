@@ -1,5 +1,5 @@
 import { IProductFormData } from '@/sections/products/NewProductSection';
-import { Card, CardBody, Input, Select, SelectItem } from '@nextui-org/react';
+import { Card, CardBody, Input, Select, SelectItem, Selection } from '@nextui-org/react';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Control, Controller, useFieldArray } from 'react-hook-form';
 import ProductFormSectionHeader from '../ProductFormSectionHeader';
@@ -98,51 +98,66 @@ const PropertiesForm: FC<Props> = ({ control, categories }) => {
                                 />
                             )}
                         />
-                    </div>
 
-                    <div className="grid gap-x-2 gap-y-4 lg:grid-cols-2">
                         {fields.map((field, index) => (
                             <AttributesForm key={index} index={index} categories={categories} field={field} control={control} />
                         ))}
-                    </div>
 
-                    <div className="grid gap-x-2 gap-y-4 lg:grid-cols-2">
-                        <Select
-                            aria-label="Choose Collections"
-                            placeholder="Choose Here"
-                            selectionMode="multiple"
-                            className="flex-grow"
-                            variant="bordered"
-                            classNames={inputClassNames}
-                            // selectedKeys={selectedStatus}
-                            // onChange={handleStatusSelection}
-                            label="Collections"
-                        >
-                            {collections &&
-                                collections.map((collection) => (
-                                    <SelectItem key={collection._id} value={collection._id}>
-                                        {collection.name}
-                                    </SelectItem>
-                                ))}
-                        </Select>
+                        <Controller
+                            name="collections"
+                            control={control}
+                            render={({ field: _field, formState, fieldState }) => {
+                                const values: Selection = new Set(_field?.value?.split(','));
 
-                        <Select
-                            aria-label="Select Colors"
-                            placeholder="choose here"
-                            selectionMode="multiple"
-                            className="flex-grow"
-                            variant="bordered"
-                            classNames={inputClassNames}
-                            // selectedKeys={selectedStatus}
-                            // onChange={handleStatusSelection}
-                            label="Select Colors"
-                        >
-                            {colors.map((color) => (
-                                <SelectItem key={color._id} value={color._id}>
-                                    {color.name}
-                                </SelectItem>
-                            ))}
-                        </Select>
+                                return (
+                                    <Select
+                                        {..._field}
+                                        selectedKeys={values}
+                                        label="Collections"
+                                        aria-label="Collections"
+                                        selectionMode="multiple"
+                                        variant="bordered"
+                                        classNames={inputClassNames}
+                                        fullWidth
+                                    >
+                                        {collections &&
+                                            collections.map((collection) => (
+                                                <SelectItem key={collection._id} value={collection._id}>
+                                                    {collection.name}
+                                                </SelectItem>
+                                            ))}
+                                    </Select>
+                                );
+                            }}
+                        />
+
+                        <Controller
+                            name="collections"
+                            control={control}
+                            render={({ field: _field, formState, fieldState }) => {
+                                const values: Selection = new Set(_field?.value?.split(','));
+
+                                return (
+                                    <Select
+                                        {..._field}
+                                        selectedKeys={values}
+                                        aria-label="Select Colors"
+                                        label="Select Colors"
+                                        selectionMode="multiple"
+                                        className="flex-grow"
+                                        variant="bordered"
+                                        classNames={inputClassNames}
+                                        fullWidth
+                                    >
+                                        {colors.map((color) => (
+                                            <SelectItem key={color._id} value={color._id}>
+                                                {color.name}
+                                            </SelectItem>
+                                        ))}
+                                    </Select>
+                                );
+                            }}
+                        />
                     </div>
                 </div>
             </CardBody>

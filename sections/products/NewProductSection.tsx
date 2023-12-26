@@ -15,7 +15,7 @@ export interface IProductFormData {
     price: number;
     published: boolean;
     colors: string[];
-    collections?: string[];
+    collections?: string;
     stock?: number;
     attributes: {
         _id?: string;
