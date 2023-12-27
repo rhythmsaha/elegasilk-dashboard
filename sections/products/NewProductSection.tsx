@@ -16,7 +16,7 @@ export interface IProductFormData {
     MRP: number;
     price: number;
     published: boolean;
-    colors: string[];
+    colors: string;
     collections?: string;
     stock?: number;
     attributes: {
@@ -58,11 +58,28 @@ const NewProductSection: FC = () => {
         if (isSubmitting) return;
 
         const payload: any = {
-            ...data,
             images: images.map((img) => img.publicUrl),
         };
 
-        console.log(payload.attributes);
+        if (data.name) payload.name = data.name;
+        if (data.slug) payload.slug = data.slug;
+        if (data.description) payload.description = data.description;
+        if (data.content) payload.content = data.content;
+        if (data.sku) payload.sku = data.sku;
+        if (data.stock) payload.stock = data.stock;
+        if (data.MRP) payload.MRP = data.MRP;
+        if (data.price) payload.price = data.price;
+        if (data.published) payload.published = data.published;
+        if (data.attributes) payload.attributes = data.attributes;
+
+        if (data.collections) {
+            const _collections = data.collections.split(',');
+            payload.collections = _collections;
+        }
+        if (data.colors) {
+            const _colors = data.colors.split(',');
+            payload.colors = _colors;
+        }
 
         try {
             const response = await axios.post(API_URLS.createProduct, payload);

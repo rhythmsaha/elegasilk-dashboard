@@ -112,7 +112,7 @@ const PropertiesForm: FC<Props> = ({ control, categories }) => {
                                 return (
                                     <Select
                                         {..._field}
-                                        selectedKeys={values}
+                                        // selectedKeys={values}
                                         label="Collections"
                                         aria-label="Collections"
                                         selectionMode="multiple"
@@ -131,7 +131,7 @@ const PropertiesForm: FC<Props> = ({ control, categories }) => {
                         />
 
                         <Controller
-                            name="collections"
+                            name="colors"
                             control={control}
                             render={({ field: _field, formState, fieldState }) => {
                                 const values: Selection = new Set(_field?.value?.split(','));
@@ -139,7 +139,7 @@ const PropertiesForm: FC<Props> = ({ control, categories }) => {
                                 return (
                                     <Select
                                         {..._field}
-                                        selectedKeys={values}
+                                        // selectedKeys={values}
                                         aria-label="Select Colors"
                                         label="Select Colors"
                                         selectionMode="multiple"
