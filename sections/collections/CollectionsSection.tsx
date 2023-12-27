@@ -93,8 +93,8 @@ const CollectionsSection = () => {
 
     const [, cancel] = useDebounce(() => setDebouncedSearchQuery(searchQuery), 500, [searchQuery]);
 
-    const onSeachChangeHandler = ({ currentTarget }: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(currentTarget.value);
+    const onSeachChangeHandler = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(target.value);
     };
 
     useEffect(() => {
@@ -123,7 +123,7 @@ const CollectionsSection = () => {
                 {collections.length === 0 && !isLoading && <EmptyState message="No Collections Found" />}
 
                 {!isLoading && collections.length !== 0 && (
-                    <div className="flex flex-col items-center justify-between gap-4 px-4 pt-4 sm:flex-row">
+                    <div className="table-pagination-container">
                         <Pagination
                             total={maxPage}
                             initialPage={1}

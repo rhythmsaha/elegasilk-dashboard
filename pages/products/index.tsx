@@ -5,6 +5,7 @@ import PageName from '@/components/ui/PageName';
 import { BiPlus } from 'react-icons/bi';
 import Link from 'next/link';
 import CreateNewButton from '@/components/ui/buttons/CreateNewButton';
+import ProductsSection from '@/sections/products/ProductsSection';
 
 type Props = {};
 
@@ -24,6 +25,8 @@ const ProductsPage: NextPageWithLayout = (props: Props) => {
                     as: Link,
                 })}
             />
+
+            <ProductsSection />
         </>
     );
 };

@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import TableHeaderCol, { IColumn } from '@/components/users/usersTable/TableHeaderCol';
 import { ICollectionTableData } from '@/sections/collections/CollectionsSection';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
-import { BsDash } from 'react-icons/bs';
 import StatusCell from '@/components/users/usersTable/tableBody/StatusCell';
 import formatTimestamp from '@/utils/formatTimestamp';
 import CollectionNameCell from './body/CollectionNameCell';
