@@ -1,6 +1,8 @@
 import { ImageFileType } from '@/Typings';
 import ProductForm from '@/components/products/ProductForm';
 import useFetchCategory from '@/hooks/category/useFetchCategory';
+import API_URLS from '@/lib/ApiUrls';
+import axios from '@/utils/axios';
 import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -60,15 +62,19 @@ const NewProductSection: FC = () => {
             images: images.map((img) => img.publicUrl),
         };
 
-        // console.log(payload.attributes[0].subcategory.split(','));
-        console.log(payload);
+        console.log(payload.attributes);
+
+        try {
+            const response = await axios.post(API_URLS.createProduct, payload);
+            console.log(response.data);
+        } catch (error: any) {
+            console.log(error.message);
+        }
     };
 
     return (
         <section className="mt-10">
-            <form onSubmit={handleSubmit(submitHandler)}>
-                <ProductForm control={control} images={images} setImages={setImages} categories={categories} />
-            </form>
+            <ProductForm control={control} images={images} setImages={setImages} categories={categories} onSubmit={handleSubmit(submitHandler)} />
         </section>
     );
 };

@@ -37,6 +37,9 @@ const API_URLS = {
     // Colors
     createColor: '/colors/create-new',
     getColors: '/colors',
+
+    // Products
+    createProduct: '/products/create-new',
 };
 
 export default API_URLS;

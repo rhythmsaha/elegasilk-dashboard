@@ -64,11 +64,6 @@ const DetailsForm: FC<Props> = ({ control, images, setImages }) => {
                             value: 30,
                             message: 'Description must be at least 30 characters long',
                         },
-
-                        maxLength: {
-                            value: 300,
-                            message: 'Description must not exceed 300 characters',
-                        },
                     }}
                     control={control}
                     render={({ field: { name, onBlur, onChange, value }, formState, fieldState: { invalid, error } }) => (

@@ -77,8 +77,8 @@ const PropertiesForm: FC<Props> = ({ control, categories }) => {
                             rules={{
                                 // required: 'stock is required!',
                                 minLength: {
-                                    value: 5,
-                                    message: 'SKU must be at least 5 characters',
+                                    value: 0,
+                                    message: 'Stock must be Positive Number',
                                 },
                             }}
                             control={control}
@@ -87,7 +87,7 @@ const PropertiesForm: FC<Props> = ({ control, categories }) => {
                                     name={name}
                                     onValueChange={onChange}
                                     defaultValue={value?.toString()}
-                                    type="tel"
+                                    type="number"
                                     onBlur={onBlur}
                                     label="Product Quantity (Stock)"
                                     variant="bordered"
@@ -120,12 +120,11 @@ const PropertiesForm: FC<Props> = ({ control, categories }) => {
                                         classNames={inputClassNames}
                                         fullWidth
                                     >
-                                        {collections &&
-                                            collections.map((collection) => (
-                                                <SelectItem key={collection._id} value={collection._id}>
-                                                    {collection.name}
-                                                </SelectItem>
-                                            ))}
+                                        {collections.map((collection) => (
+                                            <SelectItem key={collection._id} value={collection._id}>
+                                                {collection.name}
+                                            </SelectItem>
+                                        ))}
                                     </Select>
                                 );
                             }}
