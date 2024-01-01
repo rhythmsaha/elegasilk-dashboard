@@ -3,8 +3,6 @@ import { Button, CardBody, Input, Textarea } from '@nextui-org/react';
 import React, { FC } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { inputClassNames } from '../myaccount/generalSection/GeneralForm';
-import CategorySelect from './Input/CategorySelect';
-import useFetchCategory from '@/hooks/category/useFetchCategory';
 
 interface Props {
     control: Control<IColletionFormData>;
@@ -78,29 +76,6 @@ const CollectionsForm: FC<Props> = ({ control }) => {
                             disabled={formState.isSubmitting}
                             isInvalid={invalid}
                             errorMessage={error?.message}
-                        />
-                    )}
-                />
-
-                <Controller
-                    control={control}
-                    name="subcategory"
-                    render={({ field, formState, fieldState }) => (
-                        <CategorySelect
-                            {...field}
-                            defaultSelectedKeys={field.value ? [field.value] : []}
-                            label="Select Category"
-                            fullWidth
-                            placeholder="Click here to choose"
-                            scrollShadowProps={{
-                                isEnabled: false,
-                            }}
-                            variant="bordered"
-                            classNames={{ trigger: 'border-1 focus-within:border-2 focus-visible:border-2 focus:border-2 active:border-2' }}
-                            isDisabled={formState.isSubmitting}
-                            isInvalid={fieldState.invalid}
-                            className="md:order-6"
-                            mode="others"
                         />
                     )}
                 />

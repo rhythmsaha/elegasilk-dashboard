@@ -29,11 +29,12 @@ const CategoryPage: NextPageWithLayout = () => {
     useEffect(() => {
         setIsLoading(true);
         axios
-            .get(API_URLS.getSingleCategory(router.query.slug as string) + '?subcategories=true', {})
+            .get(API_URLS.getSubCategories + `?category=${router.query.slug}`)
             .then((response) => {
-                setSubcategories(response.data.data.subcategories);
-                const categoryObj = { ...response.data.data };
-                delete categoryObj.subcategories;
+                console.log(response.data);
+
+                setSubcategories(response.data.data);
+                const categoryObj = { ...response.data.category };
 
                 setCategory(categoryObj);
                 setBreadCumbs([

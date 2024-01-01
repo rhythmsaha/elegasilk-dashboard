@@ -11,7 +11,6 @@ export interface IProductFormData {
     name: string;
     slug?: string;
     description: string;
-    content?: string;
     images?: string[];
     sku?: string;
     MRP: number;
@@ -24,6 +23,10 @@ export interface IProductFormData {
         _id?: string;
         category: string;
         subcategory?: string;
+    }[];
+    specs: {
+        name: string;
+        value: string;
     }[];
 }
 
@@ -40,6 +43,7 @@ const NewProductSection: FC = () => {
     } = useForm<IProductFormData>({
         defaultValues: {
             published: true,
+            specs: [{ name: 'Product Category', value: 'Saree' }],
         },
     });
 
@@ -66,14 +70,12 @@ const NewProductSection: FC = () => {
 
         const productPayload = createProductPayload(data, images);
 
-        // try {
-        //     const response = await axios.post(API_URLS.createProduct, payload);
-        //     console.log(response.data);
-        // } catch (error: any) {
-        //     console.log(error.message);
-        // }
-
-        console.log(productPayload);
+        try {
+            const response = await axios.post(API_URLS.createProduct, productPayload);
+            console.log(response.data);
+        } catch (error: any) {
+            console.log(error.message);
+        }
     };
 
     return (

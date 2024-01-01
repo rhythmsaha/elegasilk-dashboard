@@ -23,6 +23,7 @@ const API_URLS = {
 
     // Sub Categories
     createSubCategory: '/subcategories/create-new',
+    getSubCategories: '/subcategories',
     getSingleSubCategory: (subCategoryId: string) => `/subcategories/${subCategoryId}`,
     updateSubCategory: (subCategoryId: string) => `/subcategories/${subCategoryId}`,
     deleteSubCategory: (subCategoryId: string) => `/subcategories/${subCategoryId}`,

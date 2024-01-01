@@ -18,7 +18,6 @@ interface Props {
 const columns: IColumn[] = [
     { label: 'Name', key: 'name', sortable: true },
     { label: 'Slug', key: 'slug', sortable: false },
-    { label: 'Sub Category', key: 'subcategory', sortable: false },
     { label: 'Status', key: 'status', sortable: true },
     { label: 'Created', key: 'createdAt', sortable: true },
     { label: 'Updated', key: 'updatedAt', sortable: true },
@@ -53,8 +52,6 @@ const CollectionsTable: FC<Props> = ({ changeSortHandler, collectionsData, sortB
                             </TableCell>
 
                             <TableCell>{collection.slug}</TableCell>
-
-                            <TableCell>{collection?.subcategory?.name}</TableCell>
 
                             <TableCell>
                                 <StatusCell status={collection.status} />

@@ -7,6 +7,7 @@ import PropertiesForm from './form/PropertiesForm';
 import PricingForm from './form/PricingForm';
 import FormBottom from './form/FormBottom';
 import { ICategory } from '../categories/CategoryCard';
+import SpecsForm from './form/SpecsForm';
 
 interface Props {
     control: Control<IProductFormData>;
@@ -19,9 +20,10 @@ interface Props {
 const ProductForm: FC<Props> = ({ control, images, setImages, categories, onSubmit }) => {
     return (
         <form className="space-y-6" onSubmit={onSubmit}>
-            {/* <DetailsForm control={control} images={images} setImages={setImages} /> */}
+            <DetailsForm control={control} images={images} setImages={setImages} />
             <PropertiesForm control={control} categories={categories} />
-            {/* <PricingForm control={control} /> */}
+            <SpecsForm control={control} />
+            <PricingForm control={control} />
             <FormBottom control={control} />
         </form>
     );

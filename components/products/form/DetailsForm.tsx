@@ -86,22 +86,6 @@ const DetailsForm: FC<Props> = ({ control, images, setImages }) => {
                     )}
                 />
 
-                <Controller
-                    control={control}
-                    name="content"
-                    render={({ field: { name, onBlur, onChange, value }, formState }) => (
-                        <ReactQuill
-                            onChange={onChange}
-                            defaultValue={value}
-                            placeholder="Content"
-                            theme="bubble"
-                            onBlur={onBlur}
-                            readOnly={formState.isSubmitting}
-                            className="z-10 h-44 rounded-xl border"
-                        />
-                    )}
-                />
-
                 <ImageForm images={images} setImages={setImages} />
             </CardBody>
         </Card>
