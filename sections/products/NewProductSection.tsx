@@ -3,6 +3,7 @@ import ProductForm from '@/components/products/ProductForm';
 import useFetchCategory from '@/hooks/category/useFetchCategory';
 import API_URLS from '@/lib/ApiUrls';
 import axios from '@/utils/axios';
+import createProductPayload from '@/utils/products/createProductPayload';
 import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -34,6 +35,7 @@ const NewProductSection: FC = () => {
         handleSubmit,
         control,
         setValue,
+        getValues,
         formState: { errors, isSubmitting },
     } = useForm<IProductFormData>({
         defaultValues: {
@@ -46,47 +48,32 @@ const NewProductSection: FC = () => {
     }, [getCategories, setValue]);
 
     useEffect(() => {
-        const _cat = categories.map((c) => ({
-            _id: c._id,
-            category: c.name,
-        }));
+        const _cat = categories.map((c, i) => {
+            const _field = getValues('attributes')[i];
+            if (_field?.subcategory) return _field;
+
+            return {
+                _id: c._id,
+                category: c.name,
+            };
+        });
 
         setValue('attributes', _cat);
-    }, [categories, setValue]);
+    }, [categories, setValue, getValues]);
 
     const submitHandler = async (data: IProductFormData) => {
         if (isSubmitting) return;
 
-        const payload: any = {
-            images: images.map((img) => img.publicUrl),
-        };
+        const productPayload = createProductPayload(data, images);
 
-        if (data.name) payload.name = data.name;
-        if (data.slug) payload.slug = data.slug;
-        if (data.description) payload.description = data.description;
-        if (data.content) payload.content = data.content;
-        if (data.sku) payload.sku = data.sku;
-        if (data.stock) payload.stock = data.stock;
-        if (data.MRP) payload.MRP = data.MRP;
-        if (data.price) payload.price = data.price;
-        if (data.published) payload.published = data.published;
-        if (data.attributes) payload.attributes = data.attributes;
+        // try {
+        //     const response = await axios.post(API_URLS.createProduct, payload);
+        //     console.log(response.data);
+        // } catch (error: any) {
+        //     console.log(error.message);
+        // }
 
-        if (data.collections) {
-            const _collections = data.collections.split(',');
-            payload.collections = _collections;
-        }
-        if (data.colors) {
-            const _colors = data.colors.split(',');
-            payload.colors = _colors;
-        }
-
-        try {
-            const response = await axios.post(API_URLS.createProduct, payload);
-            console.log(response.data);
-        } catch (error: any) {
-            console.log(error.message);
-        }
+        console.log(productPayload);
     };
 
     return (

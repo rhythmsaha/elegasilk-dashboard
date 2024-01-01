@@ -19,9 +19,9 @@ interface Props {
 const ProductForm: FC<Props> = ({ control, images, setImages, categories, onSubmit }) => {
     return (
         <form className="space-y-6" onSubmit={onSubmit}>
-            <DetailsForm control={control} images={images} setImages={setImages} />
+            {/* <DetailsForm control={control} images={images} setImages={setImages} /> */}
             <PropertiesForm control={control} categories={categories} />
-            <PricingForm control={control} />
+            {/* <PricingForm control={control} /> */}
             <FormBottom control={control} />
         </form>
     );

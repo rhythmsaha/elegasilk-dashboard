@@ -16,40 +16,42 @@ interface Props {
 
 const AttributesForm: FC<Props> = ({ categories, field, control, index }) => {
     const _selectedCategory = categories.find((category) => category._id === field._id);
-    const subCategories = _selectedCategory?.subcategories || [];
+    const subCategories = _selectedCategory?.subcategories;
 
     return (
         <div className="w-full">
-            <Controller
-                name={`attributes.${index}.subcategory`}
-                control={control}
-                render={({ field: _field, formState, fieldState }) => {
-                    const values: Selection = new Set(_field?.value?.split(','));
+            {subCategories && subCategories.length > 0 && (
+                <Controller
+                    name={`attributes.${index}.subcategory`}
+                    control={control}
+                    render={({ field: _field, formState, fieldState }) => {
+                        const values: Selection = new Set(_field?.value?.split(','));
 
-                    return (
-                        <Select
-                            {..._field}
-                            defaultSelectedKeys={values || []}
-                            label={field.category}
-                            fullWidth
-                            scrollShadowProps={{
-                                isEnabled: false,
-                            }}
-                            variant="bordered"
-                            classNames={inputClassNames}
-                            isDisabled={subCategories.length === 0 || formState.isSubmitting}
-                            isInvalid={fieldState.invalid}
-                            selectionMode="multiple"
-                        >
-                            {subCategories.map(({ name, _id }) => (
-                                <SelectItem key={_id} value={_id}>
-                                    {name}
-                                </SelectItem>
-                            ))}
-                        </Select>
-                    );
-                }}
-            />
+                        return (
+                            <Select
+                                {..._field}
+                                defaultSelectedKeys={values}
+                                label={field.category}
+                                fullWidth
+                                scrollShadowProps={{
+                                    isEnabled: false,
+                                }}
+                                variant="bordered"
+                                classNames={inputClassNames}
+                                isDisabled={formState.isSubmitting}
+                                isInvalid={fieldState.invalid}
+                                selectionMode="multiple"
+                            >
+                                {subCategories.map(({ name, _id }) => (
+                                    <SelectItem key={_id} value={_id}>
+                                        {name}
+                                    </SelectItem>
+                                ))}
+                            </Select>
+                        );
+                    }}
+                />
+            )}
         </div>
     );
 };

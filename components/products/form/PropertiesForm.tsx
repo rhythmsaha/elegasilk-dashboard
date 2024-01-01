@@ -1,5 +1,5 @@
 import { IProductFormData } from '@/sections/products/NewProductSection';
-import { Card, CardBody, Input, Select, SelectItem, Selection } from '@nextui-org/react';
+import { Card, CardBody, Input, Select, SelectItem, Selection, Skeleton } from '@nextui-org/react';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Control, Controller, useFieldArray } from 'react-hook-form';
 import ProductFormSectionHeader from '../ProductFormSectionHeader';
@@ -99,64 +99,85 @@ const PropertiesForm: FC<Props> = ({ control, categories }) => {
                             )}
                         />
 
+                        {categories.length === 0 && (
+                            <>
+                                <Skeleton className="flex h-12 rounded-xl" />
+                                <Skeleton className="flex h-12 rounded-xl" />
+                                <Skeleton className="flex h-12 rounded-xl" />
+                                <Skeleton className="flex h-12 rounded-xl" />
+                            </>
+                        )}
+
                         {fields.map((field, index) => (
                             <AttributesForm key={index} index={index} categories={categories} field={field} control={control} />
                         ))}
 
-                        <Controller
-                            name="collections"
-                            control={control}
-                            render={({ field: _field, formState, fieldState }) => {
-                                const values: Selection = new Set(_field?.value?.split(','));
+                        {collections.length > 0 ? (
+                            <Controller
+                                name="collections"
+                                control={control}
+                                render={({ field: _field, formState, fieldState }) => {
+                                    const values: Selection = new Set(_field?.value?.split(','));
 
-                                return (
-                                    <Select
-                                        {..._field}
-                                        // selectedKeys={values}
-                                        label="Collections"
-                                        aria-label="Collections"
-                                        selectionMode="multiple"
-                                        variant="bordered"
-                                        classNames={inputClassNames}
-                                        fullWidth
-                                    >
-                                        {collections.map((collection) => (
-                                            <SelectItem key={collection._id} value={collection._id}>
-                                                {collection.name}
-                                            </SelectItem>
-                                        ))}
-                                    </Select>
-                                );
-                            }}
-                        />
+                                    return (
+                                        <Select
+                                            {..._field}
+                                            defaultSelectedKeys={values}
+                                            label="Collections"
+                                            aria-label="Collections"
+                                            selectionMode="multiple"
+                                            variant="bordered"
+                                            classNames={inputClassNames}
+                                            isDisabled={formState.isSubmitting}
+                                            isInvalid={fieldState.invalid}
+                                            fullWidth
+                                        >
+                                            {collections.map((collection) => (
+                                                <SelectItem key={collection._id} value={collection._id}>
+                                                    {collection.name}
+                                                </SelectItem>
+                                            ))}
+                                        </Select>
+                                    );
+                                }}
+                            />
+                        ) : (
+                            <Skeleton className="flex h-12 rounded-xl" />
+                        )}
 
-                        <Controller
-                            name="colors"
-                            control={control}
-                            render={({ field: _field, formState, fieldState }) => {
-                                const values: Selection = new Set(_field?.value?.split(','));
+                        {colors.length > 0 ? (
+                            <Controller
+                                name="colors"
+                                control={control}
+                                render={({ field: _field, formState, fieldState }) => {
+                                    const values: Selection = new Set(_field?.value?.split(','));
 
-                                return (
-                                    <Select
-                                        {..._field}
-                                        // selectedKeys={values}
-                                        aria-label="Select Colors"
-                                        label="Select Colors"
-                                        selectionMode="multiple"
-                                        className="flex-grow"
-                                        variant="bordered"
-                                        classNames={inputClassNames}
-                                        fullWidth
-                                    >
-                                        {colors.map((color) => (
-                                            <SelectItem key={color._id} value={color._id}>
-                                                {color.name}
-                                            </SelectItem>
-                                        ))}
-                                    </Select>
-                                );
-                            }}
-                        />
+                                    return (
+                                        <Select
+                                            {..._field}
+                                            defaultSelectedKeys={values}
+                                            aria-label="Select Colors"
+                                            label="Select Colors"
+                                            selectionMode="multiple"
+                                            className="flex-grow"
+                                            variant="bordered"
+                                            classNames={inputClassNames}
+                                            fullWidth
+                                            isDisabled={formState.isSubmitting}
+                                            isInvalid={fieldState.invalid}
+                                        >
+                                            {colors.map((color) => (
+                                                <SelectItem key={color._id} value={color._id}>
+                                                    {color.name}
+                                                </SelectItem>
+                                            ))}
+                                        </Select>
+                                    );
+                                }}
+                            />
+                        ) : (
+                            <Skeleton className="flex h-12 rounded-xl" />
+                        )}
                     </div>
                 </div>
             </CardBody>
