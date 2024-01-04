@@ -69,6 +69,7 @@ const NewProductSection: FC = () => {
         if (isSubmitting) return;
 
         const productPayload = createProductPayload(data, images);
+        console.log(productPayload);
 
         try {
             const response = await axios.post(API_URLS.createProduct, productPayload);

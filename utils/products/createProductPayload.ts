@@ -8,7 +8,6 @@ const createProductPayload = (data: IProductFormData, images: ImageFileType[]): 
     if (data.name) payload.name = data.name;
     if (data.slug) payload.slug = data.slug;
     if (data.description) payload.description = data.description;
-    if (data.content) payload.content = data.content;
     if (data.sku) payload.sku = data.sku;
     if (data.stock) payload.stock = data.stock;
     if (data.MRP) payload.MRP = data.MRP;
@@ -29,6 +28,21 @@ const createProductPayload = (data: IProductFormData, images: ImageFileType[]): 
             .filter((attr) => attr);
 
         payload.attributes = _attrs;
+    }
+
+    if (data.specs) {
+        const _specs = data.specs
+            .map((spec) => {
+                if (spec.name && spec.value) {
+                    return {
+                        name: spec.name,
+                        value: spec.value,
+                    };
+                }
+            })
+            .filter((spec) => spec);
+
+        payload.specs = _specs;
     }
 
     if (data.collections) {
