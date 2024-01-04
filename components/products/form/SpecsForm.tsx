@@ -31,21 +31,16 @@ const SpecsForm: FC<Props> = ({ control }) => {
                                         name={`specs.${index}.name`}
                                         rules={{
                                             required: 'Product Title is required!',
-                                            minLength: {
-                                                value: 10,
-                                                message: 'Product Title must be at least 10 characters',
-                                            },
                                         }}
                                         control={control}
                                         render={({ field: { name, onBlur, onChange, value }, formState, fieldState: { invalid, error } }) => (
                                             <Input
-                                                id={'NAME_' + field.id.toUpperCase()}
                                                 name={name}
                                                 onValueChange={onChange}
                                                 defaultValue={value}
                                                 onBlur={onBlur}
                                                 type="text"
-                                                label="Product Title"
+                                                label="Property"
                                                 variant="bordered"
                                                 classNames={inputClassNames}
                                                 disabled={formState.isSubmitting}
@@ -59,10 +54,6 @@ const SpecsForm: FC<Props> = ({ control }) => {
                                         name={`specs.${index}.value`}
                                         rules={{
                                             required: 'Product Title is required!',
-                                            minLength: {
-                                                value: 10,
-                                                message: 'Product Title must be at least 10 characters',
-                                            },
                                         }}
                                         control={control}
                                         render={({ field: { name, onBlur, onChange, value }, formState, fieldState: { invalid, error } }) => (
@@ -72,7 +63,7 @@ const SpecsForm: FC<Props> = ({ control }) => {
                                                 defaultValue={value}
                                                 onBlur={onBlur}
                                                 type="text"
-                                                label="Product Title"
+                                                label="Value"
                                                 variant="bordered"
                                                 classNames={inputClassNames}
                                                 disabled={formState.isSubmitting}
@@ -83,7 +74,7 @@ const SpecsForm: FC<Props> = ({ control }) => {
                                     />
                                 </div>
 
-                                <Button color="danger" variant="flat" isIconOnly className="w-full lg:h-12 lg:w-12">
+                                <Button color="danger" variant="flat" isIconOnly className="w-full lg:h-12 lg:w-12" onPress={() => remove(index)}>
                                     <MdDeleteForever size={20} />
                                 </Button>
                             </div>
