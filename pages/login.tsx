@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAuthStore } from '@/store/useAuthStore';
 import { NextPageWithLayout } from './_app';
 import GuestGuard from '@/guards/GuestGuard';
 import useLogin from '@/hooks/auth/useLogin';

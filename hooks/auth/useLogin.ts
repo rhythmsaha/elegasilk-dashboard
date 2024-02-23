@@ -27,7 +27,7 @@ const useLogin = () => {
             login(user, accessToken);
             setSession(accessToken);
         } catch (error: any) {
-            toast.error(error.message);
+            toast.error(error.message || 'Something went wrong!');
         }
     };
 
