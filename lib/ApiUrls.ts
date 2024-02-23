@@ -41,6 +41,8 @@ const API_URLS = {
 
     // Products
     createProduct: '/products/create-new',
+    getProducts: '/products',
+    getSingleProduct: (productId: string) => `/products/${productId}`,
 };
 
 export default API_URLS;

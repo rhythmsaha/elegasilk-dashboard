@@ -1,10 +1,11 @@
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 
 export interface INavLink {
     title: string;
-    href: string;
+    href?: string;
 }
 
 interface Props {
@@ -16,6 +17,8 @@ interface Props {
 const Separator = () => <span className="mx-2">•</span>;
 
 const PageName: FC<Props> = ({ title, breadcrumb, Button }) => {
+    const router = useRouter();
+
     return (
         <section className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex-1">
@@ -26,7 +29,7 @@ const PageName: FC<Props> = ({ title, breadcrumb, Button }) => {
                         <Breadcrumbs separator={<Separator />}>
                             {breadcrumb.map((item, index) => (
                                 <BreadcrumbItem key={index}>
-                                    <Link href={item.href}>{item.title}</Link>
+                                    <Link href={item.href || router.asPath}>{item.title}</Link>
                                 </BreadcrumbItem>
                             ))}
                         </Breadcrumbs>
