@@ -4,8 +4,10 @@ import useFetchCategory from '@/hooks/category/useFetchCategory';
 import API_URLS from '@/lib/ApiUrls';
 import axios from '@/utils/axios';
 import createProductPayload from '@/utils/products/createProductPayload';
+import { useRouter } from 'next/router';
 import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 export interface IProductFormData {
     name: string;
@@ -14,7 +16,7 @@ export interface IProductFormData {
     images?: string[];
     sku?: string;
     MRP: number;
-    price: number;
+    discount: number;
     published: boolean;
     colors: string;
     collections?: string;
@@ -47,6 +49,8 @@ const NewProductSection: FC = () => {
         },
     });
 
+    const router = useRouter();
+
     useEffect(() => {
         getCategories(true);
     }, [getCategories, setValue]);
@@ -70,11 +74,14 @@ const NewProductSection: FC = () => {
 
         const productPayload = createProductPayload(data, images);
         console.log(productPayload);
+        await router.push('/products');
+        toast.success('Product Created Successfully!');
 
         try {
             const response = await axios.post(API_URLS.createProduct, productPayload);
-            console.log(response.data);
+            if (response.status !== 201) throw new Error('Something Went Wrong!');
         } catch (error: any) {
+            toast.error(error.message);
             console.log(error.message);
         }
     };

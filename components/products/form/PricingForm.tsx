@@ -46,9 +46,9 @@ const PricingForm = ({ control }: Props) => {
                     {/* Price */}
 
                     <Controller
-                        name="price"
+                        name="discount"
                         rules={{
-                            required: 'Sale Price is required!',
+                            required: 'Sale Dsicount is required!',
                             min: {
                                 value: 0,
                                 message: 'Sale Price must not be negative!',
@@ -63,7 +63,7 @@ const PricingForm = ({ control }: Props) => {
                                 onBlur={onBlur}
                                 type="number"
                                 min={0}
-                                label="Sale Price"
+                                label="Discount (%)"
                                 variant="bordered"
                                 classNames={inputClassNames}
                                 disabled={formState.isSubmitting}

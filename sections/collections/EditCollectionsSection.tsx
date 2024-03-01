@@ -31,7 +31,6 @@ const EditCollectionsSection: React.FC<Props> = ({ collection }) => {
             status: collection.status,
             name: collection.name,
             description: collection.description,
-            subcategory: collection.subcategory._id,
         },
     });
 

@@ -25,8 +25,8 @@ const ProductsSection = () => {
     const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>();
 
     // Table States
-    const [isLoading, setIsLoading] = useState(true);
-    const [products, setProducts] = useState<IProductTableData[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [products, setProducts] = useState<IProductTableData[]>([...Array.from(Array(3))]);
 
     // Pagination States
     const [rowsPerPage, setRowsPerPage] = useState(new Set(['5'])); // State for rows per page

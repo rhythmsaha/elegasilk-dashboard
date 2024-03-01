@@ -27,7 +27,14 @@ const EditProductSection: FC = () => {
         getCategories(true);
     }, [getCategories, setValue]);
 
-    return <section className="mt-10">EditProductSection</section>;
+    return (
+        <section className="mt-10 grid grid-cols-2 gap-4">
+            <div>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur eaque nulla aut odit, enim eius eos rerum illum quas laborum, reiciendis consequuntur harum ex quod asperiores
+                omnis, similique necessitatibus unde.
+            </div>
+        </section>
+    );
 };
 
 export default EditProductSection;
