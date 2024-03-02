@@ -48,7 +48,6 @@ const PricingForm = ({ control }: Props) => {
                     <Controller
                         name="discount"
                         rules={{
-                            required: 'Sale Dsicount is required!',
                             min: {
                                 value: 0,
                                 message: 'Sale Price must not be negative!',

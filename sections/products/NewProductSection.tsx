@@ -71,12 +71,13 @@ const NewProductSection: FC = () => {
 
         const productPayload = createProductPayload(data, images);
         console.log(productPayload);
-        await router.push('/products');
-        toast.success('Product Created Successfully!');
 
         try {
             const response = await axios.post(API_URLS.createProduct, productPayload);
             if (response.status !== 201) throw new Error('Something Went Wrong!');
+
+            await router.push('/products');
+            toast.success('Product Created Successfully!');
         } catch (error: any) {
             toast.error(error.message);
             console.log(error.message);

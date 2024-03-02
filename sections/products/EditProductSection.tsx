@@ -5,13 +5,17 @@ import { useForm } from 'react-hook-form';
 import { IProductFormData } from './NewProductSection';
 import toast from 'react-hot-toast';
 import ProductForm from '@/components/products/ProductForm';
+import createProductPayload from '@/utils/products/createProductPayload';
+import axios from '@/utils/axios';
+import API_URLS from '@/lib/ApiUrls';
 
 interface Props {
-    product?: IProduct;
+    product: IProduct;
 }
 
 const EditProductSection: FC<Props> = ({ product }) => {
-    const [images, setImages] = useState<ImageFileType[]>([]);
+    const myImages = product?.images?.map((img, i) => ({ preview: img, id: i, publicUrl: img }));
+    const [images, setImages] = useState<ImageFileType[]>(myImages as any[]);
     const { getCategories, categories } = useFetchCategory();
 
     const {
@@ -24,7 +28,7 @@ const EditProductSection: FC<Props> = ({ product }) => {
         defaultValues: {
             name: product?.name,
             description: product?.description,
-            images: product?.images,
+            // images: product?.images,
             sku: product?.sku,
             MRP: product?.MRP,
             discount: product?.discount,
@@ -42,11 +46,7 @@ const EditProductSection: FC<Props> = ({ product }) => {
 
     useEffect(() => {
         const _cat = categories.map((c, i) => {
-            // const _field = getValues('attributes')[i];
-            // if (_field?.subcategory) return _field;
-
             const defaultAttr = product?.attributes.find((attr) => attr.category === c._id);
-            // if (defaultAttr) return defaultAttr;
 
             if (defaultAttr) {
                 return {
@@ -68,7 +68,12 @@ const EditProductSection: FC<Props> = ({ product }) => {
     const submitHandler = async (data: IProductFormData) => {
         if (isSubmitting) return;
 
+        const productPayload = createProductPayload(data, images);
+        console.log(productPayload);
+
         try {
+            const response = await axios.put(API_URLS.updateProduct(product._id), productPayload);
+            if (response.status !== 200) throw new Error('Something Went Wrong!');
             toast.success('Product Updated Successfully!');
         } catch (error: any) {
             toast.error(error.message);

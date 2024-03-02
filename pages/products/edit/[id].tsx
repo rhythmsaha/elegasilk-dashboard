@@ -15,6 +15,10 @@ const EditProductPage: NextPageWithLayout = () => {
 
     if (productLoading) return <LoadingScreen />;
 
+    if (!product) {
+        return <LoadingScreen />;
+    }
+
     return (
         <>
             <PageName title="Edit Product" breadcrumb={[{ title: 'Dashboard', href: '/' }, { title: 'Products', href: '/products' }, { title: 'Edit' }]} />
