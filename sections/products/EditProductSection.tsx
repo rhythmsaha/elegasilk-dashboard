@@ -1,19 +1,18 @@
-import { ImageFileType } from '@/Typings';
+import { IProduct, ImageFileType } from '@/Typings';
 import useFetchCategory from '@/hooks/category/useFetchCategory';
 import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IProductFormData } from './NewProductSection';
-import useSingleProduct from '@/hooks/products/useSingleProduct';
-import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import ProductForm from '@/components/products/ProductForm';
 
-const EditProductSection: FC = () => {
+interface Props {
+    product?: IProduct;
+}
+
+const EditProductSection: FC<Props> = ({ product }) => {
     const [images, setImages] = useState<ImageFileType[]>([]);
     const { getCategories, categories } = useFetchCategory();
-    const router = useRouter();
-
-    const { product, productLoading } = useSingleProduct(router.query.id as string);
 
     const {
         handleSubmit,
@@ -23,8 +22,17 @@ const EditProductSection: FC = () => {
         formState: { errors, isSubmitting },
     } = useForm<IProductFormData>({
         defaultValues: {
-            published: true,
-            specs: [{ name: 'Product Category', value: 'Saree' }],
+            name: product?.name,
+            description: product?.description,
+            images: product?.images,
+            sku: product?.sku,
+            MRP: product?.MRP,
+            discount: product?.discount,
+            published: product?.published,
+            stock: product?.stock,
+            specs: product?.specs,
+            collections: product?.collections.join(','),
+            colors: product?.colors.join(','),
         },
     });
 
@@ -34,17 +42,28 @@ const EditProductSection: FC = () => {
 
     useEffect(() => {
         const _cat = categories.map((c, i) => {
-            const _field = getValues('attributes')[i];
-            if (_field?.subcategory) return _field;
+            // const _field = getValues('attributes')[i];
+            // if (_field?.subcategory) return _field;
 
-            return {
-                _id: c._id,
-                category: c.name,
-            };
+            const defaultAttr = product?.attributes.find((attr) => attr.category === c._id);
+            // if (defaultAttr) return defaultAttr;
+
+            if (defaultAttr) {
+                return {
+                    _id: c._id,
+                    category: c.name,
+                    subcategory: defaultAttr?.subcategory.join(','),
+                };
+            } else {
+                return {
+                    _id: c._id,
+                    category: c.name,
+                };
+            }
         });
 
         setValue('attributes', _cat);
-    }, [categories, setValue, getValues]);
+    }, [categories, setValue, getValues, product?.attributes]);
 
     const submitHandler = async (data: IProductFormData) => {
         if (isSubmitting) return;

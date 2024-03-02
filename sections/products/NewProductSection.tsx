@@ -57,9 +57,6 @@ const NewProductSection: FC = () => {
 
     useEffect(() => {
         const _cat = categories.map((c, i) => {
-            const _field = getValues('attributes')[i];
-            if (_field?.subcategory) return _field;
-
             return {
                 _id: c._id,
                 category: c.name,

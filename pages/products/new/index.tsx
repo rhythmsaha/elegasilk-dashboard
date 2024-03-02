@@ -4,9 +4,7 @@ import { NextPageWithLayout } from '@/pages/_app';
 import NewProductSection from '@/sections/products/NewProductSection';
 import React from 'react';
 
-type Props = {};
-
-const CreateNewProductPage: NextPageWithLayout = (props: Props) => {
+const CreateNewProductPage: NextPageWithLayout = () => {
     return (
         <>
             <PageName

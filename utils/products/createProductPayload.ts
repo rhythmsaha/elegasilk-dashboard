@@ -11,7 +11,7 @@ const createProductPayload = (data: IProductFormData, images: ImageFileType[]): 
     if (data.sku) payload.sku = data.sku;
     if (data.stock) payload.stock = data.stock;
     if (data.MRP) payload.MRP = data.MRP;
-    if (data.price) payload.price = data.price;
+    if (data.MRP) payload.MRP = data.MRP;
     if (data.published) payload.published = data.published;
     if (data.attributes) {
         const _attrs = data.attributes
