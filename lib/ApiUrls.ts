@@ -44,6 +44,7 @@ const API_URLS = {
     getProducts: '/products',
     getSingleProduct: (productId: string) => `/products/${productId}`,
     updateProduct: (productId: string) => `/products/${productId}`,
+    deleteProduct: (productId: string) => `/products/${productId}`,
 };
 
 export default API_URLS;

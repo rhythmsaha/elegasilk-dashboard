@@ -1,14 +1,12 @@
 import CollectionsFilter from '@/components/collections/CollectionsFilter';
 import CollectionsTable from '@/components/collections/collectionstable/CollectionsTable';
-import { ISubCategory } from '@/components/subcategories/SubCategoryCard';
 import EmptyState from '@/components/ui/table/EmptyState';
 import TableLoading from '@/components/ui/table/TableLoading';
 import TableRowsControl from '@/components/ui/table/TableRowsControl';
 import API_URLS from '@/lib/ApiUrls';
 import axios from '@/utils/axios';
-import { faker } from '@faker-js/faker';
 import { Card, CardBody, Pagination, Selection } from '@nextui-org/react';
-import React, { use, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDebounce } from 'react-use';
 
 export interface ICollectionTableData {

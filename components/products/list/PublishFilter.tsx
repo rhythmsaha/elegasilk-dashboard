@@ -19,7 +19,7 @@ const PublishFilter: FC<Props> = ({ selectedPublish, setSelectedPublish }) => {
 
     return (
         <Select aria-label="Select Publish" label="Publish" selectionMode="single" className="flex-grow" selectedKeys={selectedPublish} onChange={handlePublishSelection}>
-            {publishOptions.map(({ name }) => (
+            {publishOptions.map(({ name, val }) => (
                 <SelectItem key={name.toLowerCase()} value={name.toLowerCase()}>
                     {name}
                 </SelectItem>

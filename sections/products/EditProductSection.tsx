@@ -82,7 +82,7 @@ const EditProductSection: FC<Props> = ({ product }) => {
 
     return (
         <section className="mt-10">
-            <ProductForm control={control} images={images} setImages={setImages} categories={categories} onSubmit={handleSubmit(submitHandler)} />
+            <ProductForm control={control} images={images} setImages={setImages} categories={categories} onSubmit={handleSubmit(submitHandler)} edit={true} />
         </section>
     );
 };

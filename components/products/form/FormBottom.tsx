@@ -5,9 +5,10 @@ import { Control, Controller } from 'react-hook-form';
 
 interface Props {
     control: Control<IProductFormData>;
+    edit?: boolean;
 }
 
-const FormBottom = ({ control }: Props) => {
+const FormBottom = ({ control, edit }: Props) => {
     return (
         <Card>
             <CardBody className="p-4 lg:p-5">
@@ -23,7 +24,7 @@ const FormBottom = ({ control }: Props) => {
                     />
 
                     <Button variant="shadow" color="primary" type="submit">
-                        Create Product
+                        {edit ? 'Update Product' : 'Create Product'}
                     </Button>
                 </div>
             </CardBody>

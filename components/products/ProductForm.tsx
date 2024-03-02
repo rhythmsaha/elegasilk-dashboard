@@ -15,16 +15,17 @@ interface Props {
     setImages: React.Dispatch<React.SetStateAction<ImageFileType[]>>;
     categories: ICategory[];
     onSubmit: () => void;
+    edit?: boolean;
 }
 
-const ProductForm: FC<Props> = ({ control, images, setImages, categories, onSubmit }) => {
+const ProductForm: FC<Props> = ({ control, images, setImages, categories, onSubmit, edit }) => {
     return (
         <form className="space-y-6" onSubmit={onSubmit}>
             <DetailsForm control={control} images={images} setImages={setImages} />
             <PropertiesForm control={control} categories={categories} />
             <SpecsForm control={control} />
             <PricingForm control={control} />
-            <FormBottom control={control} />
+            <FormBottom control={control} edit={edit} />
         </form>
     );
 };

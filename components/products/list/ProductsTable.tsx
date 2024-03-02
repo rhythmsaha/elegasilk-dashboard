@@ -5,6 +5,11 @@ import { IProductTableData } from '@/sections/products/ProductsSection';
 import formatTimestamp from '@/utils/formatTimestamp';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import React, { FC } from 'react';
+import ProductNameCell from './body/ProductNameCell';
+import StocksCell from './body/StocksCell';
+import priceFormatter from '@/utils/FormatPrice';
+import PublishCell from './body/PublishCell';
+import ActionCell from './body/ActionCell';
 
 interface Props {
     productsData: IProductTableData[];
@@ -16,10 +21,10 @@ interface Props {
 
 const columns: IColumn[] = [
     { label: 'Product', key: 'name', sortable: true },
-    { label: 'Created at', key: 'createdAt', sortable: true },
+    { label: 'Updated At', key: 'updatedAt', sortable: true },
     { label: 'Stock', key: 'stock', sortable: true },
-    { label: 'Price', key: 'price', sortable: true },
-    { label: 'Publish', key: 'publish', sortable: true },
+    { label: 'Price', key: 'MRP', sortable: true },
+    { label: 'Publish', key: 'published', sortable: true },
     { label: '', key: 'actions', sortable: false },
 ];
 
@@ -44,24 +49,28 @@ const ProductsTable: FC<Props> = ({ changeSortHandler, onDelete, productsData, s
                 </TableHeader>
 
                 <TableBody>
-                    {productsData.map((_, index) => (
-                        <TableRow className={`text-gray-600`} key={index}>
-                            <TableCell>
-                                <CollectionNameCell
-                                    name={'Lorem ipsum dolor sit amet.'}
-                                    image={'https://res.cloudinary.com/desihzeid/image/upload/v1702053189/elegasilk/avatars/hwdyvueqdevzmkdo5suw.webp'}
-                                />
+                    {productsData.map((product, index) => (
+                        <TableRow className={`text-gray-600`} key={product._id}>
+                            <TableCell className="capitalize">
+                                <ProductNameCell name={product.name} image={product.images.length > 0 ? product.images[0] : ''} discount={product.discount} />
                             </TableCell>
 
-                            <TableCell>{formatTimestamp(Date())}</TableCell>
-
                             <TableCell>
-                                <StatusCell status={true} />
+                                <p className="">{formatTimestamp(product.updatedAt)}</p>
                             </TableCell>
 
-                            <TableCell>1499</TableCell>
-                            <TableCell>Published</TableCell>
-                            <TableCell>{':'}</TableCell>
+                            <TableCell>
+                                <StocksCell stock={product.stock} />
+                            </TableCell>
+
+                            <TableCell className="">{priceFormatter(product.MRP)}</TableCell>
+                            <TableCell>
+                                <PublishCell published={product.published} />
+                            </TableCell>
+
+                            <TableCell>
+                                <ActionCell productId={product._id} onDelete={onDelete} />
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

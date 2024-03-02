@@ -20,8 +20,8 @@ const StocksFilter = (props: Props) => {
 
     return (
         <Select aria-label="Select Stock" label="Stock" selectionMode="single" className="flex-grow" selectedKeys={props.selectedStock} onChange={handleStockSelection}>
-            {stockOptions.map(({ name }) => (
-                <SelectItem key={name.toLowerCase()} value={name.toLowerCase()}>
+            {stockOptions.map(({ name, val }) => (
+                <SelectItem key={val} value={name.toLowerCase()}>
                     {name}
                 </SelectItem>
             ))}
