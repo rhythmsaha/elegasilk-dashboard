@@ -3,6 +3,9 @@ import ProductsTable from '@/components/products/list/ProductsTable';
 import EmptyState from '@/components/ui/table/EmptyState';
 import TableLoading from '@/components/ui/table/TableLoading';
 import TableRowsControl from '@/components/ui/table/TableRowsControl';
+import useDebouncedSearch from '@/hooks/browsing/useDebouncedSearch';
+import usePagination from '@/hooks/browsing/usePagination';
+import useSort from '@/hooks/browsing/useSort';
 import API_URLS from '@/lib/ApiUrls';
 import axios from '@/utils/axios';
 import { Card, CardBody, Pagination, Selection } from '@nextui-org/react';
@@ -24,40 +27,18 @@ const ProductsSection = () => {
     // Filter states
     const [selectedStockFilter, setSelectedStockFilter] = useState<Selection>(new Set([]));
     const [selectedPublishFilter, setSelectedPublishFilter] = useState<Selection>(new Set([]));
-    const [searchQuery, setSearchQuery] = useState('');
-    const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>();
+
+    const { searchQuery, debouncedSearchQuery, onSeachChangeHandler, cancel } = useDebouncedSearch();
 
     // Table States
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState<IProductTableData[]>([]);
 
     // Pagination States
-    const [rowsPerPage, setRowsPerPage] = useState(new Set(['5'])); // State for rows per page
-    const [maxPage, setmMaxPage] = useState(1);
-    const [currentPage, setCurrentPage] = useState(1);
+    const { rowsPerPage, currentPage, maxPage, setRowsPerPage, setCurrentPage, setmMaxPage } = usePagination();
 
     // Sort States
-    const [sortBy, setSortBy] = useState('name'); // State for sorting
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-
-    // Debounce search query
-    const [, cancel] = useDebounce(() => setDebouncedSearchQuery(searchQuery), 500, [searchQuery]);
-    const onSeachChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(e.target.value);
-    };
-
-    // Sort Change function
-    const changeSortHandler = useCallback(
-        (key: string) => {
-            if (sortBy === key) {
-                setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-            } else {
-                setSortBy(key);
-                setSortOrder('asc');
-            }
-        },
-        [sortBy, sortOrder]
-    );
+    const { sortBy, sortOrder, changeSortHandler } = useSort('name', 'asc');
 
     const fetchProducts = useCallback(async () => {
         const _status = Array.from(selectedPublishFilter)[0];
@@ -97,7 +78,7 @@ const ProductsSection = () => {
         console.log(response.data);
 
         setIsLoading(false);
-    }, [currentPage, debouncedSearchQuery, rowsPerPage, selectedPublishFilter, selectedStockFilter, sortBy, sortOrder]);
+    }, [currentPage, debouncedSearchQuery, rowsPerPage, selectedPublishFilter, selectedStockFilter, setCurrentPage, setmMaxPage, sortBy, sortOrder]);
 
     const deleteProductHandler = async (productId: string) => {
         const _products = [...products];
