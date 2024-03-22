@@ -45,15 +45,17 @@ const OrdersTable: React.FC<Props> = ({ changeSortHandler, onDelete, orders, sor
 
                 <TableBody>
                     {orders.map((order: any, index) => (
-                        <TableRow className={`text-gray-600`} key={order._id}>
-                            <TableCell>{order.orderId}</TableCell>
+                        <TableRow key={order._id}>
+                            <TableCell>
+                                <span className="text-gray-900">{order.orderId}</span>
+                            </TableCell>
 
                             <TableCell>
                                 <div>
-                                    <p className="capitalize">
+                                    <p className="capitalize text-black">
                                         {order.customer.firstName} {order.customer.lastName}
                                     </p>
-                                    <span className="text-gray-400">{order.customer.email}</span>
+                                    <span className="font-light tracking-wide text-gray-500">{order.customer.email}</span>
                                 </div>
                             </TableCell>
 
@@ -61,9 +63,11 @@ const OrdersTable: React.FC<Props> = ({ changeSortHandler, onDelete, orders, sor
                                 <OrderDateTime date={order.createdAt} time={order.orderTime} />
                             </TableCell>
 
-                            <TableCell>{order.totalQuantity}</TableCell>
+                            <TableCell className="text-center lg:text-start">
+                                <span>{order.totalQuantity}</span>
+                            </TableCell>
 
-                            <TableCell>₹ {order.total}</TableCell>
+                            <TableCell className="font-medium text-gray-700">₹ {order.total}</TableCell>
 
                             <TableCell>
                                 <StatusCell status={order.status} />

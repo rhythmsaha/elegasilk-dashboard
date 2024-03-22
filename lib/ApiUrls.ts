@@ -52,6 +52,7 @@ const API_URLS = {
         getSingle: (id: string) => `/orders/${id}`,
         update: (id: string) => `/orders/${id}`,
         delete: (id: string) => `/orders/${id}`,
+        updateStatus: (id: string) => `/orders/status/${id}`,
     },
 };
 

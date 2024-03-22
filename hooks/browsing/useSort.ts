@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 
-const useSort = (sortby: string, order: 'asc' | 'desc') => {
+const useSort = (sortby?: string, order?: 'asc' | 'desc') => {
     // Sort States
-    const [sortBy, setSortBy] = useState(sortby); // State for sorting
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>(order);
+    const [sortBy, setSortBy] = useState(sortby || ''); // State for sorting
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>(order || 'desc');
 
     // Sort Change function
     const changeSortHandler = useCallback(

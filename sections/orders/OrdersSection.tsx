@@ -19,7 +19,7 @@ interface Props {}
 const OrdersSection: React.FC<Props> = (props) => {
     const [selectedOrderStatus, setSelectedOrderStatus] = useState<OrderStatusType>();
     const { searchQuery, debouncedSearchQuery, onSeachChangeHandler, cancel } = useDebouncedSearch();
-    const { sortBy, sortOrder, changeSortHandler } = useSort('', 'desc');
+    const { sortBy, sortOrder, changeSortHandler } = useSort();
     const { rowsPerPage, currentPage, maxPage, setRowsPerPage, setCurrentPage, setmMaxPage } = usePagination();
 
     const [startDateFilter, setStartDateFilter] = useState<Date>();
@@ -28,12 +28,15 @@ const OrdersSection: React.FC<Props> = (props) => {
     // Table States
     const [orders, setOrders] = useState<any>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const changeSelectedOrderStatusHandler = (status: OrderStatusType) => {
         setSelectedOrderStatus(status);
     };
 
     const fetchOrders = useCallback(async () => {
+        if (!currentPage) return;
+        cancel();
         setIsLoading(true);
 
         const _status = selectedOrderStatus;
@@ -56,26 +59,23 @@ const OrdersSection: React.FC<Props> = (props) => {
 
         const url = `${API_URLS.orders.get}?${queries.join('&')}`;
 
-        console.log(endDateFilter?.toLocaleTimeString());
-
         try {
             const response = await axios.get(url);
+            setError('');
+
             setOrders(response.data.orders);
             setmMaxPage(response.data.maxPage);
             setCurrentPage(response.data.currentPage);
-
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            setError(error.message || 'Something went wrong!');
         } finally {
             setIsLoading(false);
         }
-    }, [currentPage, debouncedSearchQuery, endDateFilter, rowsPerPage, selectedOrderStatus, setCurrentPage, setmMaxPage, sortBy, sortOrder, startDateFilter]);
+    }, [cancel, currentPage, debouncedSearchQuery, endDateFilter, rowsPerPage, selectedOrderStatus, setCurrentPage, setmMaxPage, sortBy, sortOrder, startDateFilter]);
 
     useEffect(() => {
-        cancel();
         fetchOrders();
-    }, [cancel, fetchOrders]);
+    }, [fetchOrders]);
 
     return (
         <Card shadow="sm" className="mt-10 overflow-visible">
@@ -96,11 +96,15 @@ const OrdersSection: React.FC<Props> = (props) => {
 
                 {isLoading && <TableLoading rows={5} />}
 
-                {!isLoading && orders.length !== 0 && !isLoading && <OrdersTable changeSortHandler={changeSortHandler} onDelete={() => {}} sortBy={sortBy} sortOrder={sortOrder} orders={orders} />}
+                {!isLoading && error && <EmptyState message={error} />}
 
-                {!isLoading && orders.length === 0 && <EmptyState message="No Orders Found" />}
+                {!isLoading && !error && orders.length !== 0 && !isLoading && (
+                    <OrdersTable changeSortHandler={changeSortHandler} onDelete={() => {}} sortBy={sortBy} sortOrder={sortOrder} orders={orders} />
+                )}
 
-                {!isLoading && orders.length !== 0 && (
+                {!isLoading && !error && orders.length === 0 && <EmptyState message="No Orders Found" />}
+
+                {!isLoading && !error && orders.length !== 0 && (
                     <div className="table-pagination-container">
                         <Pagination
                             total={maxPage}

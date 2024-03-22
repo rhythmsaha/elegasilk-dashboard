@@ -1,16 +1,9 @@
-import { Chip } from '@nextui-org/react';
-import React from 'react';
-import { IOrderStatusTypesAll } from '../details/Header';
+import { IOrderStatusTypesAll } from '@/components/orders/details/Header';
 
-interface Props {
-    status: IOrderStatusTypesAll;
-}
+export const getOrderStatusText = (orderStatus: IOrderStatusTypesAll) => {
+    let orderStatusText, color: 'warning' | 'danger' | 'success' | 'default' | 'primary' | 'secondary' | undefined;
 
-const StatusCell: React.FC<Props> = ({ status }) => {
-    let orderStatusText,
-        color = 'default' as 'default' | 'warning' | 'danger' | 'success' | 'primary' | 'secondary' | undefined;
-
-    switch (status) {
+    switch (orderStatus) {
         case 'PENDING':
             orderStatusText = 'Processing';
             color = 'warning';
@@ -33,7 +26,7 @@ const StatusCell: React.FC<Props> = ({ status }) => {
             color = 'success';
             break;
         case 'DELIVERED':
-            orderStatusText = 'DELIVERED';
+            orderStatusText = 'Delivered';
             color = 'success';
             break;
         case 'RETURN_REQUESTED':
@@ -62,21 +55,21 @@ const StatusCell: React.FC<Props> = ({ status }) => {
             break;
     }
 
-    return (
-        <div>
-            <Chip
-                color={color}
-                size="sm"
-                classNames={{
-                    content: 'font-bold',
-                }}
-                variant="flat"
-                radius="sm"
-            >
-                {orderStatusText}
-            </Chip>
-        </div>
-    );
+    return {
+        orderStatusText,
+        color,
+    };
 };
 
-export default StatusCell;
+export const STATUSES: {
+    value: IOrderStatusTypesAll;
+    label: string;
+}[] = [
+    { value: 'PLACED', label: 'Pending' },
+    { value: 'CANCELLED', label: 'Cancelled' },
+    { value: 'SHIPPED', label: 'Shipped' },
+    { value: 'DELIVERED', label: 'Delivered' },
+    { value: 'EXCHANGED', label: 'Exchanged' },
+    { value: 'RETURNED', label: 'Returned' },
+    { value: 'REFUNDED', label: 'Refunded' },
+];

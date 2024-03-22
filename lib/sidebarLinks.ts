@@ -45,9 +45,9 @@ export const sidebarConfig: ISidebarConfig[] = [
         type: 'Management',
         menus: [
             { id: 'adminusersmenu', title: 'Users', icon: MdOutlineAdminPanelSettings, path: '/users', roles: ['admin', 'superadmin'] },
-            { id: 'customersmenu', title: 'Customers', icon: LiaUsersCogSolid, path: '/customers' },
+            // { id: 'customersmenu', title: 'Customers', icon: LiaUsersCogSolid, path: '/customers' },
             { id: 'ordersMenu', title: 'Orders', icon: MdOutlineShoppingCartCheckout, path: '/orders' },
-            { id: 'invoiceMenu', title: 'Invoices', icon: TbFileInvoice, path: '/invoices' },
+            // { id: 'invoiceMenu', title: 'Invoices', icon: TbFileInvoice, path: '/invoices' },
         ],
     },
 ];
