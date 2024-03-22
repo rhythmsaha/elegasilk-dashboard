@@ -3,6 +3,7 @@ import React from 'react';
 import { NextPageWithLayout } from '../_app';
 import PageName from '@/components/ui/PageName';
 import OrdersSection from '@/sections/orders/OrdersSection';
+import 'react-day-picker/dist/style.css';
 
 const OrdersPage: NextPageWithLayout = () => {
     return (
