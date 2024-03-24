@@ -1,32 +1,28 @@
 import TableHeaderCol, { IColumn } from '@/components/users/usersTable/TableHeaderCol';
-import { IProductTableData } from '@/sections/products/ProductsSection';
+import { ICustomerTableData } from '@/sections/customers/CustomersSection';
 import formatTimestamp from '@/utils/formatTimestamp';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
-import React, { FC } from 'react';
-import ProductNameCell from './body/ProductNameCell';
-import StocksCell from './body/StocksCell';
-import priceFormatter from '@/utils/FormatPrice';
-import PublishCell from './body/PublishCell';
-import ActionCell from './body/ActionCell';
+import React from 'react';
+import NameCell from './cells/NameCell';
 
 interface Props {
-    productsData: IProductTableData[];
+    customersData: ICustomerTableData[];
     sortBy: string;
     sortOrder: 'asc' | 'desc';
     changeSortHandler: (key: string) => void;
-    onDelete: (productId: string) => void;
+    onDelete: (customerId: string) => void;
 }
 
 const columns: IColumn[] = [
-    { label: 'Product', key: 'name', sortable: true },
-    { label: 'Updated At', key: 'updatedAt', sortable: true },
-    { label: 'Stock', key: 'stock', sortable: true },
-    { label: 'Price', key: 'MRP', sortable: true },
-    { label: 'Publish', key: 'published', sortable: true },
+    { label: 'Name', key: 'firstName', sortable: true },
+    { label: 'Email', key: 'email', sortable: true },
+    { label: 'Verified', key: 'verified', sortable: true },
+    { label: 'Created At', key: 'createdAt', sortable: true },
+    { label: 'Status', key: 'status', sortable: true },
     { label: '', key: 'actions', sortable: false },
 ];
 
-const ProductsTable: FC<Props> = ({ changeSortHandler, onDelete, productsData, sortBy, sortOrder }) => {
+const CustomersTable: React.FC<Props> = ({ customersData, sortBy, sortOrder, changeSortHandler, onDelete }) => {
     return (
         <div className="mt-6 overflow-x-auto pb-2">
             <Table
@@ -47,28 +43,29 @@ const ProductsTable: FC<Props> = ({ changeSortHandler, onDelete, productsData, s
                 </TableHeader>
 
                 <TableBody>
-                    {productsData.map((product, index) => (
-                        <TableRow className={`text-gray-600`} key={product._id}>
+                    {customersData.map((customer, index) => (
+                        <TableRow className={`text-gray-600`} key={customer._id}>
                             <TableCell className="capitalize">
-                                <ProductNameCell name={product.name} image={product.images.length > 0 ? product.images[0] : ''} discount={product.discount} />
+                                <NameCell firstName={customer.firstName} lastName={customer.lastName} />
                             </TableCell>
 
                             <TableCell>
-                                <p className="">{formatTimestamp(product.updatedAt)}</p>
+                                <p className="">{customer.email}</p>
+                            </TableCell>
+
+                            <TableCell className="">
+                                <p className="">{customer.verified ? 'Verified' : 'Not Verified'}</p>
                             </TableCell>
 
                             <TableCell>
-                                <StocksCell stock={product.stock} />
-                            </TableCell>
-
-                            <TableCell className="">{priceFormatter(product.MRP)}</TableCell>
-                            <TableCell>
-                                <PublishCell published={product.published} />
+                                <p className="">{formatTimestamp(customer.createdAt!)}</p>
                             </TableCell>
 
                             <TableCell>
-                                <ActionCell productId={product._id} onDelete={onDelete} />
+                                <p className="">{customer.status ? 'Active' : 'Inactive'}</p>
                             </TableCell>
+
+                            <TableCell>f</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -77,4 +74,4 @@ const ProductsTable: FC<Props> = ({ changeSortHandler, onDelete, productsData, s
     );
 };
 
-export default ProductsTable;
+export default CustomersTable;

@@ -19,7 +19,7 @@ interface Props {}
 const OrdersSection: React.FC<Props> = (props) => {
     const [selectedOrderStatus, setSelectedOrderStatus] = useState<OrderStatusType>();
     const { searchQuery, debouncedSearchQuery, onSeachChangeHandler, cancel } = useDebouncedSearch();
-    const { sortBy, sortOrder, changeSortHandler } = useSort();
+    const { sortBy, sortOrder, changeSortHandler } = useSort('', 'desc');
     const { rowsPerPage, currentPage, maxPage, setRowsPerPage, setCurrentPage, setmMaxPage } = usePagination();
 
     const [startDateFilter, setStartDateFilter] = useState<Date>();
@@ -35,7 +35,6 @@ const OrdersSection: React.FC<Props> = (props) => {
     };
 
     const fetchOrders = useCallback(async () => {
-        if (!currentPage) return;
         cancel();
         setIsLoading(true);
 
@@ -65,7 +64,7 @@ const OrdersSection: React.FC<Props> = (props) => {
 
             setOrders(response.data.orders);
             setmMaxPage(response.data.maxPage);
-            setCurrentPage(response.data.currentPage);
+            setCurrentPage(response.data.page);
         } catch (error: any) {
             setError(error.message || 'Something went wrong!');
         } finally {
@@ -98,9 +97,7 @@ const OrdersSection: React.FC<Props> = (props) => {
 
                 {!isLoading && error && <EmptyState message={error} />}
 
-                {!isLoading && !error && orders.length !== 0 && !isLoading && (
-                    <OrdersTable changeSortHandler={changeSortHandler} onDelete={() => {}} sortBy={sortBy} sortOrder={sortOrder} orders={orders} />
-                )}
+                {!error && orders.length !== 0 && !isLoading && <OrdersTable changeSortHandler={changeSortHandler} onDelete={() => {}} sortBy={sortBy} sortOrder={sortOrder} orders={orders} />}
 
                 {!isLoading && !error && orders.length === 0 && <EmptyState message="No Orders Found" />}
 

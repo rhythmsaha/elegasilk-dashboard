@@ -6,7 +6,7 @@ import UsersTable, { IUserTableData } from '@/components/users/usersTable/UsersT
 import API_URLS from '@/lib/ApiUrls';
 import axios from '@/utils/axios';
 import paginate from '@/utils/paginate';
-import { Card, CardBody, Pagination, Selection, user } from '@nextui-org/react';
+import { Card, CardBody, Pagination, Selection } from '@nextui-org/react';
 import Fuse, { IFuseOptions } from 'fuse.js';
 import UsersFilter from '@/components/users/UsersFilter';
 

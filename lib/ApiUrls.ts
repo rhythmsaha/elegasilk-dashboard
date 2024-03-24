@@ -54,6 +54,11 @@ const API_URLS = {
         delete: (id: string) => `/orders/${id}`,
         updateStatus: (id: string) => `/orders/status/${id}`,
     },
+
+    // Customers
+    customers: {
+        getCustomers: '/customers',
+    },
 };
 
 export default API_URLS;

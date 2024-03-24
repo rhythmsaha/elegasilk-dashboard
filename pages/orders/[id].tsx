@@ -8,7 +8,6 @@ import OrderItems from '@/sections/orders/OrderItems';
 import axios from '@/utils/axios';
 import API_URLS from '@/lib/ApiUrls';
 import LoadingScreen from '@/components/ui/LoadingScreen';
-import EmptyState from '@/components/ui/table/EmptyState';
 
 export interface Customer {
     _id: string;
