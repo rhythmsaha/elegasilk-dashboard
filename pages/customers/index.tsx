@@ -2,9 +2,6 @@ import React from 'react';
 import { NextPageWithLayout } from '../_app';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import PageName from '@/components/ui/PageName';
-import CreateNewButton from '@/components/ui/buttons/CreateNewButton';
-import { BiPlus } from 'react-icons/bi';
-import Link from 'next/link';
 import CustomersSection from '@/sections/customers/CustomersSection';
 
 const CustomersPage: NextPageWithLayout = () => {
@@ -16,12 +13,6 @@ const CustomersPage: NextPageWithLayout = () => {
                     { title: 'Dashboard', href: '/' },
                     { title: 'Customers', href: '/customers' },
                 ]}
-                Button={CreateNewButton.bind(null, {
-                    text: 'Create New',
-                    Icon: <BiPlus />,
-                    href: '/customers/new/',
-                    as: Link,
-                })}
             />
 
             <CustomersSection />

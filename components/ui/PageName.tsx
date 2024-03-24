@@ -10,7 +10,7 @@ export interface INavLink {
 
 interface Props {
     title: string;
-    breadcrumb: INavLink[];
+    breadcrumb?: INavLink[];
     Button?: React.ElementType;
 }
 

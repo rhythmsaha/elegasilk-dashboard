@@ -4,6 +4,7 @@ import formatTimestamp from '@/utils/formatTimestamp';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import React from 'react';
 import NameCell from './cells/NameCell';
+import ActionCell from './cells/ActionCell';
 
 interface Props {
     customersData: ICustomerTableData[];
@@ -11,6 +12,7 @@ interface Props {
     sortOrder: 'asc' | 'desc';
     changeSortHandler: (key: string) => void;
     onDelete: (customerId: string) => void;
+    refetch: () => void;
 }
 
 const columns: IColumn[] = [
@@ -22,7 +24,7 @@ const columns: IColumn[] = [
     { label: '', key: 'actions', sortable: false },
 ];
 
-const CustomersTable: React.FC<Props> = ({ customersData, sortBy, sortOrder, changeSortHandler, onDelete }) => {
+const CustomersTable: React.FC<Props> = ({ customersData, sortBy, sortOrder, changeSortHandler, onDelete, refetch }) => {
     return (
         <div className="mt-6 overflow-x-auto pb-2">
             <Table
@@ -65,7 +67,9 @@ const CustomersTable: React.FC<Props> = ({ customersData, sortBy, sortOrder, cha
                                 <p className="">{customer.status ? 'Active' : 'Inactive'}</p>
                             </TableCell>
 
-                            <TableCell>f</TableCell>
+                            <TableCell>
+                                <ActionCell refetch={refetch} customerId={customer._id} customerStatus={customer.status} onDelete={onDelete} />
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

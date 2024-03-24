@@ -26,7 +26,7 @@ const CustomersSection: React.FC = () => {
     const { searchQuery, debouncedSearchQuery, onSeachChangeHandler, cancel } = useDebouncedSearch();
 
     // Table States
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [customers, setCustomers] = useState<ICustomerTableData[]>([]);
 
     // Pagination States
@@ -39,8 +39,6 @@ const CustomersSection: React.FC = () => {
         const _status = Array.from(selectedStatus)[0];
         const _searchQuery = debouncedSearchQuery;
         const _pageSize = Array.from(rowsPerPage)[0] as string;
-
-        setIsLoading(true);
 
         const queries = [];
 
@@ -92,7 +90,7 @@ const CustomersSection: React.FC = () => {
                 {isLoading && <TableLoading rows={5} />}
 
                 {!isLoading && customers.length !== 0 && (
-                    <CustomersTable customersData={customers} sortBy={sortBy} sortOrder={sortOrder} changeSortHandler={changeSortHandler} onDelete={deleteCustomerHandler} />
+                    <CustomersTable refetch={fetchCustomers} customersData={customers} sortBy={sortBy} sortOrder={sortOrder} changeSortHandler={changeSortHandler} onDelete={deleteCustomerHandler} />
                 )}
 
                 {!isLoading && customers.length === 0 && <EmptyState message="No Customers Found" />}

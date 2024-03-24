@@ -1,19 +1,18 @@
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import Head from 'next/head';
-import { faker } from '@faker-js/faker';
-import { IUserRoles } from '@/Typings';
+import DashboardSection from '@/sections/dashboard/DashboardSection';
+import PageName from '@/components/ui/PageName';
 
 export default function Home() {
     return (
-        <>
+        <div className="mx-auto w-11/12 max-w-screen-2xl">
             <Head>
                 <title>Dashboard | Elegasilk</title>
             </Head>
 
-            <div>
-                <div className="mx-10 my-10 rounded-xl border p-10 shadow"></div>
-            </div>
-        </>
+            <PageName title="Dashboard" />
+            <DashboardSection />
+        </div>
     );
 }
 

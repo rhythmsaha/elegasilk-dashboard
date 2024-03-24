@@ -58,6 +58,7 @@ const API_URLS = {
     // Customers
     customers: {
         getCustomers: '/customers',
+        updateStatus: `/customers/status`,
     },
 };
 
