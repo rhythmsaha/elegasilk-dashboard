@@ -60,6 +60,11 @@ const API_URLS = {
         getCustomers: '/customers',
         updateStatus: `/customers/status`,
     },
+
+    dashboard: {
+        salesAndOrderReport: '/dashboard/report',
+        graphData: '/dashboard/graph',
+    },
 };
 
 export default API_URLS;

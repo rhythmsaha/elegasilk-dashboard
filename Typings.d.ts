@@ -44,3 +44,48 @@ export interface IProduct {
     createdAt: string;
     updatedAt: string;
 }
+
+interface ISalesAndOrderReport {
+    salesData: {
+        today: {
+            sales: number;
+            quantity: number;
+        };
+        yesterday: {
+            sales: number;
+            quantity: number;
+        };
+        thisMonth: {
+            sales: number;
+            quantity: number;
+        };
+        total: {
+            sales: number;
+            quantity: number;
+        };
+    };
+
+    ordersData: {
+        placed: number;
+        shipped: number;
+        delivered: number;
+        total: number;
+    };
+}
+
+interface GraphSalesData {
+    date: string;
+    sales: number;
+}
+
+interface GraphRadialData {
+    sales: number;
+    salesQuantity: number;
+    returns: number;
+    returnsQuantity: number;
+}
+
+interface GraphData {
+    area: GraphSalesData[];
+    radial: GraphRadialData;
+}
