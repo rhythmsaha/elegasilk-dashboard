@@ -2,6 +2,7 @@ import DashboardLayout from '@/components/layouts/DashboardLayout';
 import Head from 'next/head';
 import DashboardSection from '@/sections/dashboard/DashboardSection';
 import PageName from '@/components/ui/PageName';
+import 'react-day-picker/dist/style.css';
 
 export default function Home() {
     return (

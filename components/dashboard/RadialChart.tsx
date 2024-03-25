@@ -8,8 +8,8 @@ interface Props {
 }
 
 const RadialChart: React.FC<Props> = ({ radial }) => {
-    const salesQtyPercent = (radial.salesQuantity / (radial.salesQuantity + radial.returnsQuantity)) * 100;
-    const returnsQtyPercent = (radial.returnsQuantity / (radial.salesQuantity + radial.returnsQuantity)) * 100;
+    const salesQtyPercent = Math.round((radial.salesQuantity / (radial.salesQuantity + radial.returnsQuantity)) * 100);
+    const returnsQtyPercent = Math.round((radial.returnsQuantity / (radial.salesQuantity + radial.returnsQuantity)) * 100);
 
     const series = [salesQtyPercent, returnsQtyPercent];
 
