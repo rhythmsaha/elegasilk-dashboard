@@ -1,18 +1,18 @@
 const API_URLS = {
     // auth
-    login: '/admin/login',
-    session: '/admin/session',
-    logout: '/admin/logout',
+    login: '/user/login',
+    session: '/user/session',
+    logout: '/user/logout',
 
     // Admin Self
-    upadateAccount: '/admin/user',
-    updatePassword: '/admin/password',
+    upadateAccount: '/user/user',
+    updatePassword: '/user/password',
 
     // Admin Users
-    createNewAdmin: '/admin/create-new',
-    getUsers: '/admin/users',
-    updateUser: '/admin/user',
-    deleteUser: (userId: string) => `/admin/user/${userId}`,
+    createNewAdmin: '/user/create-new',
+    getUsers: '/user/users',
+    updateUser: '/user/user',
+    deleteUser: (userId: string) => `/user/user/${userId}`,
 
     // Admin Categories
     createCategory: '/categories/create-new',

@@ -82,12 +82,6 @@ const LoginPage: NextPageWithLayout = () => {
                     Sign In
                 </Button>
             </form>
-
-            <div className="flex select-none items-center justify-center py-3">
-                <Link href="" className="text-xs font-medium text-primary transition  hover:underline sm:text-sm">
-                    Forgot your password?
-                </Link>
-            </div>
         </div>
     );
 };

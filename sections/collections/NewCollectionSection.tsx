@@ -1,5 +1,4 @@
 import { ImageFileType } from '@/Typings';
-import CategoryForm from '@/components/categories/CategoryForm';
 import CategoryStatus from '@/components/categories/CategoryStatus';
 import UploadImage from '@/components/categories/UploadImage';
 import CollectionsForm from '@/components/collections/CollectionsForm';
