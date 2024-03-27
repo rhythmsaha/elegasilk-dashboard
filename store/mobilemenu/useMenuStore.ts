@@ -10,7 +10,7 @@ interface IMobileMenu {
 export const useMobileMenuStore = create<IMobileMenu>()(
     devtools(
         (set) => ({
-            isOpen: true,
+            isOpen: false,
 
             open: () => {
                 set({ isOpen: true }, false, 'mobilemenu/open');
