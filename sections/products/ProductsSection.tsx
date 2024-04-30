@@ -10,7 +10,6 @@ import API_URLS from '@/lib/ApiUrls';
 import axios from '@/utils/axios';
 import { Card, CardBody, Pagination, Selection } from '@nextui-org/react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDebounce } from 'react-use';
 
 export interface IProductTableData {
     _id: string;

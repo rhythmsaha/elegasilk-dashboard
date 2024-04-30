@@ -1,0 +1,16 @@
+version: '3'
+services:
+    elegasilk-store-front:
+        environment:
+            - NODE_ENV=production
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            - .:/dashboard
+        container_name: elegasilk-dashboard
+        expose:
+            - '3001'
+        ports:
+            - '3001:3001'
+        command: npm start

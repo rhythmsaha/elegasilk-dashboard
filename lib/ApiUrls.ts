@@ -13,6 +13,7 @@ const API_URLS = {
     getUsers: '/user/users',
     updateUser: '/user/user',
     deleteUser: (userId: string) => `/user/user/${userId}`,
+    getSingleUser: (userId: string) => `/user/user/${userId}`,
 
     // Admin Categories
     createCategory: '/categories/create-new',

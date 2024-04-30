@@ -8,6 +8,7 @@ import axios from '@/utils/axios';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import { useAuthStore } from '@/store/useAuthStore';
 import EditUserSection from '@/sections/users/EditUserSection';
+import API_URLS from '@/lib/ApiUrls';
 
 const EditUserPage: NextPageWithLayout = () => {
     const [user, setUser] = useState(null);
@@ -19,25 +20,17 @@ const EditUserPage: NextPageWithLayout = () => {
 
     useEffect(() => {
         axios
-            .get(`/admin/user/${router.query.id}`)
+            .get(API_URLS.getSingleUser(router.query.id as string))
             .then((response) => {
                 if (response.status !== 200) throw new Error('Failed to fetch user!');
-
-                // check role permission
-                // if (response.data.user.role === 'superadmin' && currentUserRole !== 'superadmin') {
-                //     router.push('/not-found');
-                // } else {
-                // }
                 setUser(response.data.user);
             })
-            .catch((error) => {
+            .catch(() => {
                 setNoPemission(true);
-                // router.push('/not-found');
             });
     }, [currentUserRole, router]);
 
-    if (isYou) return <p>Permision Denied</p>;
-    if (noPemission) return <p>Permision Denied</p>;
+    if (isYou || noPemission) return <div className="flex min-h-screen items-center justify-center">Permision Denied</div>;
 
     if (!user) return <LoadingScreen />;
 
